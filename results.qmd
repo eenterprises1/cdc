@@ -6,7 +6,11 @@ library(readr)
 library(dplyr)
 library(forcats)
 library(ggplot2)
+library(scales)
+```
 
+
+```{r}
 lead_cod_2 = read_csv("NCHS_-_Leading_Causes_of_Death__United_States.csv")
 
 # BY STATE
@@ -87,3 +91,150 @@ ggplot(lead_cod_2_USA_from_2008_with_year, aes(x = `Cause Name`, y = Total_Death
        title = "Deaths by Cause and Year from 2008-2017 Broken Down By Year")
 ```
 
+
+
+
+We are going to categorize types of death in 4 groups: Chronic Diseases, Acute Illnesses, Mental Health, Accidents. First, let's observe the evolution across time.
+
+```{r}
+#Let's modify column names, filter out United States and All causes, as they are redundant for this anaylsis.
+df = lead_cod_2 |> filter(State != "United States")
+df$Cause <- df$`Cause Name`
+df$Age <- df$`Age-adjusted Death Rate`
+df = df |> select(-`113 Cause Name`) |> select(-`Cause Name`) |> select(-`Age-adjusted Death Rate`)
+df = df |> filter(Cause != 'All causes')
+
+#Here we create a category column according to the type of death
+df$Category = ifelse(df$Cause %in% c("Heart disease", "Diabetes", "Alzheimer's disease", "Cancer", "CLRD", "Kidney disease"), "Chronic",
+                 ifelse(df$Cause %in% c("Stroke", "Influenza and pneumonia"), "Acute",
+                 ifelse(df$Cause == "Suicide", "Mental", "Accident")))
+
+#Aggregating by year and category
+df_grouped = df |> group_by(Year, Category) |> summarise(TotalDeaths = sum(Deaths, na.rm = TRUE), .groups = 'drop')
+color_friendly = c("#E69F00", "#56B4E9", "#009E73", "#F0E442")
+
+#Time series
+ggplot(df_grouped, aes(x = Year, y = TotalDeaths, group = Category, color = Category)) +
+  geom_line(size = 1.5) + theme_minimal() + 
+  labs(title = "Deaths by Category Over Time", x = "Year", y = "Deaths", color = "Category") +
+  scale_color_manual(values = color_friendly) +
+  scale_y_continuous(labels = scales::comma, breaks = scales::pretty_breaks(n = 8)) + 
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 8))
+```
+The time series plot helps us have an understanding of the magnitude of each category and the evolution across time. We can see that Chronic causes are around 30x the minor variety (Mental), making it challenging to analyze the growth of smaller series. Although it is clear that since 2010, Chronic causes have been increasing, we will create a cumulative chart to understand the evolution of each category.
+
+A cumulative percentage time series chart will help us compare relative changes of different categories from a common starting point.
+
+
+```{r}
+#First we have to calculate the percetage change for each period, and the accumulate it through the years:
+df_wide <- df_grouped |> pivot_wider(names_from = Category, values_from = TotalDeaths, values_fill = list(TotalDeaths = 0))
+df_wide <- df_wide |> mutate(across(-Year, ~(. / lag(.) - 1)))
+df_wide[is.na(df_wide)] <- 0
+df_wide <- df_wide |> mutate(across(-Year, ~cumprod(1 + .) - 1))
+df_wide <- df_wide |> pivot_longer(cols = -Year, names_to = "Category", values_to = "CumulativeGrowth")
+
+
+ggplot(df_wide, aes(x = Year, y = CumulativeGrowth, color = Category)) +
+  geom_line(size = 1.5) + theme_minimal() + 
+  labs(title = "Cumulative Growth of Categories Over Time", x = "Year", y = "Cumulative Growth") +
+  scale_y_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8)) + 
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 8))+
+  scale_color_manual(values = color_friendly)
+```
+With the cumulative percentage evolution of deaths we can better understand the trends over time. We can make the following observations:
+- Deaths from chronic causes is the category that has remained most stable over time. This is despite the fact that the previous graph seemed to say that this category was the one that grew the most (an effect produced by the difference in magnitudes). However, there has been an upward trend since 2010.
+- Deaths from acute diseases showed a decreasing trend until 2012, but then began to grow again
+- Accidents and deaths from suicide (Mental) are growing at uncontrolled rates.
+
+From this arise two interesting questions to ask:
+- Which states lead the growth in deaths from suicide and accidents?
+- What types of acute deaths reflect the sharp decrease in the 2000s, and the recent increase since 2010?
+- Although chronic deaths seem more controlled in percentage terms, in absolute terms they accumulate more than 30x compared to the smallest category. What explains the recent increase in these types of deaths?
+
+
+To answer the first question, we can build a Cleveland plot to understand which states are leading:
+
+```{r, fig.height=8, fig.width= 5}
+
+
+# Filter the data for the specified conditions
+df_rank <- df %>% select(-Age)|> filter(Year %in% c(1999, 2017), Category == "Mental")
+
+# Calculate the percentual difference change from 2000 to 2017 for each state
+df_rank <- df_rank %>%
+  pivot_wider(names_from = Year, values_from = Deaths) |>
+  mutate(PercentChange = `2017`/`1999`-1) |>
+  arrange(desc(PercentChange))
+
+# Create a vertical bar chart
+ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
+  geom_point(size = 3, color = "brown") +
+  geom_point(aes(color = "green"), size = 2) +
+  labs(title = "Mental Deaths %Chg. - 1999 to 2017", x = "Percentual Change", y = 'State') +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed"))+
+  scale_x_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8))+ 
+  theme(legend.position = "none")
+
+#https://r-graphics.org/recipe-bar-graph-dot-plot
+
+```
+We can see that Utah, Idaho and North Dakota have seen the largest increase, while Delaware, Rhode Island and Louisiana the smallest.
+
+```{r, fig.height=8, fig.width= 5}
+# Filter the data for the specified conditions
+df_rank <- df %>% select(-Age)|> filter(Year %in% c(1999, 2017), Category == "Accident")
+
+# Calculate the percentual difference change from 2000 to 2017 for each state
+df_rank <- df_rank %>%
+  pivot_wider(names_from = Year, values_from = Deaths) |>
+  mutate(PercentChange = `2017`/`1999`-1) |>
+  arrange(desc(PercentChange))
+
+# Create a vertical bar chart
+ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
+  geom_point(size = 3, color = "darkblue") +
+  labs(title = "Mental Deaths %Chg. - 1999 to 2017", x = "Percentual Change", y = 'State') +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed"))+
+  scale_x_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8))+ 
+  theme(legend.position = "none")
+
+#https://r-graphics.org/recipe-bar-graph-dot-plot
+
+```
+
+Now we want to understand the underlying drivers of the changes across time for acute type of deaths. 
+```{r}
+#First we manipulate the data to analyize Acute deaths only
+df_acute <- df |> filter(Category == 'Acute') |> select(Year, Cause, Deaths)
+df_acute = df_acute |> group_by(Year, Cause) |> summarise(TotalDeaths = sum(Deaths, na.rm = TRUE), .groups = 'drop')
+df_acute <- df_acute |> pivot_wider(names_from = Cause, values_from = TotalDeaths, values_fill = list(TotalDeaths = 0))
+df_acute$Acute = df_acute$`Influenza and pneumonia` + df_acute$Stroke
+
+#Now we can understand the changes in trends by calculating percentual changes:
+df_acute <- df_acute |> mutate(across(-Year, ~(. / lag(.) - 1)))
+df_acute[is.na(df_acute)] <- 0
+df_acute <- df_acute |> mutate(across(-Year, ~cumprod(1 + .) - 1))
+df_acute <- df_acute |> pivot_longer(cols = -Year, names_to = "Dim", values_to = "CumulativeGrowth")
+df_acute <- df_acute |> mutate(Dim = if_else(Dim == "Acute", "Total Acute", Dim))
+
+#Now we can plot the evolution:
+ggplot(df_acute, aes(x = Year, y = CumulativeGrowth, color = Dim)) +
+  geom_line(size = 1.5, aes(linetype = ifelse(Dim == "Total Acute", "solid", "dashed"))) +
+  labs(title = "Breakdown of Acute Deaths Growth", x = "Year", y = "Cumulative Growth") +
+  scale_y_continuous(labels = percent_format(), breaks = pretty_breaks(n = 8)) + 
+  scale_x_continuous(breaks = pretty_breaks(n = 8)) +
+  scale_color_manual(values = c('brown', 'blue', 'Black')) +
+  guides(linetype = FALSE) +
+  theme(legend.position = "bottom")
+```
+We can observe the following:
+- Deaths by acute illnesses started to decrease after 2002, first led by a sharp decrease in Strokes. Still, in 2003, we also observed a declining rate of Influenza and Pneumonia, contributing to the overall trend.
+- From 2008 to 2017, the deaths caused by Influenza and Pneumonia were range-bound, although, with some volatility, they stayed somewhat constant.
+- However, Strokes started to pick up in 2013, which explains the overall trend observed in deaths by Acute illnesses.
