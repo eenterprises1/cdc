@@ -7,8 +7,8 @@ library(dplyr)
 library(forcats)
 library(ggplot2)
 library(scales)
+library(tidyr)
 ```
-
 
 ```{r}
 lead_cod_2 = read_csv("NCHS_-_Leading_Causes_of_Death__United_States.csv")
@@ -69,7 +69,6 @@ ggplot(yearly_data, aes(x = Year, y = Total_Deaths)) +
 
 ```
 
-
 ```{r}
 "Total Deaths by Cause and Year from 2008-2017 Broken Down By Year"
 lead_cod_2_USA_from_2008_with_year <- lead_cod_2_USA_from_2008 %>% 
@@ -90,9 +89,6 @@ ggplot(lead_cod_2_USA_from_2008_with_year, aes(x = `Cause Name`, y = Total_Death
   labs(x = "Cause Name", y = "Total Deaths", fill = "Year", 
        title = "Deaths by Cause and Year from 2008-2017 Broken Down By Year")
 ```
-
-
-
 
 We are going to categorize types of death in 4 groups: Chronic Diseases, Acute Illnesses, Mental Health, Accidents. First, let's observe the evolution across time.
 
@@ -121,10 +117,10 @@ ggplot(df_grouped, aes(x = Year, y = TotalDeaths, group = Category, color = Cate
   scale_y_continuous(labels = scales::comma, breaks = scales::pretty_breaks(n = 8)) + 
   scale_x_continuous(breaks = scales::pretty_breaks(n = 8))
 ```
+
 The time series plot helps us have an understanding of the magnitude of each category and the evolution across time. We can see that Chronic causes are around 30x the minor variety (Mental), making it challenging to analyze the growth of smaller series. Although it is clear that since 2010, Chronic causes have been increasing, we will create a cumulative chart to understand the evolution of each category.
 
 A cumulative percentage time series chart will help us compare relative changes of different categories from a common starting point.
-
 
 ```{r}
 #First we have to calculate the percetage change for each period, and the accumulate it through the years:
@@ -142,16 +138,10 @@ ggplot(df_wide, aes(x = Year, y = CumulativeGrowth, color = Category)) +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 8))+
   scale_color_manual(values = color_friendly)
 ```
-With the cumulative percentage evolution of deaths we can better understand the trends over time. We can make the following observations:
-- Deaths from chronic causes is the category that has remained most stable over time. This is despite the fact that the previous graph seemed to say that this category was the one that grew the most (an effect produced by the difference in magnitudes). However, there has been an upward trend since 2010.
-- Deaths from acute diseases showed a decreasing trend until 2012, but then began to grow again
-- Accidents and deaths from suicide (Mental) are growing at uncontrolled rates.
 
-From this arise two interesting questions to ask:
-- Which states lead the growth in deaths from suicide and accidents?
-- What types of acute deaths reflect the sharp decrease in the 2000s, and the recent increase since 2010?
-- Although chronic deaths seem more controlled in percentage terms, in absolute terms they accumulate more than 30x compared to the smallest category. What explains the recent increase in these types of deaths?
+With the cumulative percentage evolution of deaths we can better understand the trends over time. We can make the following observations: - Deaths from chronic causes is the category that has remained most stable over time. This is despite the fact that the previous graph seemed to say that this category was the one that grew the most (an effect produced by the difference in magnitudes). However, there has been an upward trend since 2010. - Deaths from acute diseases showed a decreasing trend until 2012, but then began to grow again - Accidents and deaths from suicide (Mental) are growing at uncontrolled rates.
 
+From this arise two interesting questions to ask: - Which states lead the growth in deaths from suicide and accidents? - What types of acute deaths reflect the sharp decrease in the 2000s, and the recent increase since 2010? - Although chronic deaths seem more controlled in percentage terms, in absolute terms they accumulate more than 30x compared to the smallest category. What explains the recent increase in these types of deaths?
 
 To answer the first question, we can build a Cleveland plot to understand which states are leading:
 
@@ -182,6 +172,7 @@ ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
 #https://r-graphics.org/recipe-bar-graph-dot-plot
 
 ```
+
 We can see that Utah, Idaho and North Dakota have seen the largest increase, while Delaware, Rhode Island and Louisiana the smallest.
 
 ```{r, fig.height=8, fig.width= 5}
@@ -209,7 +200,8 @@ ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
 
 ```
 
-Now we want to understand the underlying drivers of the changes across time for acute type of deaths. 
+Now we want to understand the underlying drivers of the changes across time for acute type of deaths.
+
 ```{r}
 #First we manipulate the data to analyize Acute deaths only
 df_acute <- df |> filter(Category == 'Acute') |> select(Year, Cause, Deaths)
@@ -234,7 +226,5 @@ ggplot(df_acute, aes(x = Year, y = CumulativeGrowth, color = Dim)) +
   guides(linetype = FALSE) +
   theme(legend.position = "bottom")
 ```
-We can observe the following:
-- Deaths by acute illnesses started to decrease after 2002, first led by a sharp decrease in Strokes. Still, in 2003, we also observed a declining rate of Influenza and Pneumonia, contributing to the overall trend.
-- From 2008 to 2017, the deaths caused by Influenza and Pneumonia were range-bound, although, with some volatility, they stayed somewhat constant.
-- However, Strokes started to pick up in 2013, which explains the overall trend observed in deaths by Acute illnesses.
+
+We can observe the following: - Deaths by acute illnesses started to decrease after 2002, first led by a sharp decrease in Strokes. Still, in 2003, we also observed a declining rate of Influenza and Pneumonia, contributing to the overall trend. - From 2008 to 2017, the deaths caused by Influenza and Pneumonia were range-bound, although, with some volatility, they stayed somewhat constant. - However, Strokes started to pick up in 2013, which explains the overall trend observed in deaths by Acute illnesses.
