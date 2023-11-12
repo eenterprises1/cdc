@@ -228,3 +228,5 @@ ggplot(df_acute, aes(x = Year, y = CumulativeGrowth, color = Dim)) +
 ```
 
 We can observe the following: - Deaths by acute illnesses started to decrease after 2002, first led by a sharp decrease in Strokes. Still, in 2003, we also observed a declining rate of Influenza and Pneumonia, contributing to the overall trend. - From 2008 to 2017, the deaths caused by Influenza and Pneumonia were range-bound, although, with some volatility, they stayed somewhat constant. - However, Strokes started to pick up in 2013, which explains the overall trend observed in deaths by Acute illnesses.
+
+
