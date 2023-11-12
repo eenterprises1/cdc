@@ -197,7 +197,7 @@ df_rank <- df_rank %>%
 # Create a vertical bar chart
 ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   geom_point(size = 3, color = "darkblue") +
-  labs(title = "Mental Deaths %Chg. - 1999 to 2017", x = "Percentual Change", y = 'State') +
+  labs(title = "Accident Deaths %Chg. - 1999 to 2017", x = "Percentual Change", y = 'State') +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
