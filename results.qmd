@@ -236,7 +236,7 @@ df_rank <- df_rank %>%
 ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   geom_point(size = 3, color = "brown") +
   geom_point(aes(color = "green"), size = 2) +
-  labs(title = "Suicide Deaths %Chg. - 1999 to 2017", x = "Percentual Change", y = 'State') +
+  labs(title = "Suicide Deaths %Chg. - 1999 to 2017", x = "Percentage Change", y = 'State') +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
@@ -269,7 +269,7 @@ df_rank <- df_rank %>%
 # Create a vertical bar chart
 ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   geom_point(size = 3, color = "purple") +
-  labs(title = "Alzheimer's disease Deaths %Chg. - 1999 to 2017", x = "Percentual Change", y = 'State') +
+  labs(title = "Alzheimer's disease Deaths %Chg. - 1999 to 2017", x = "Percentage Change", y = 'State') +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
@@ -301,7 +301,7 @@ df_rank <- df_rank %>%
 # Create a vertical bar chart
 ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   geom_point(size = 3, color = "darkblue") +
-  labs(title = "Unintentional injuries %Chg. - 1999 to 2017", x = "Percentual Change", y = 'State') +
+  labs(title = "Unintentional injuries %Chg. - 1999 to 2017", x = "Percentage Change", y = 'State') +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
