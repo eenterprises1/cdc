@@ -436,8 +436,18 @@ Returning the palette you asked for with that many colors</code></pre>
 <p><img src="results_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>With the cumulative percentage evolution of deaths we can better understand the trends over time. We can make the following observations: - Deaths from chronic causes is the category that has remained most stable over time. This is despite the fact that the previous graph seemed to say that this category was the one that grew the most (an effect produced by the difference in magnitudes). However, there has been an upward trend since 2010. - Deaths from acute diseases showed a decreasing trend until 2012, but then began to grow again - Accidents and deaths from suicide (Mental) are growing at uncontrolled rates.</p>
-<p>From this arise two interesting questions to ask: - Which states lead the growth in deaths from suicide and accidents? - What types of acute deaths reflect the sharp decrease in the 2000s, and the recent increase since 2010? - Although chronic deaths seem more controlled in percentage terms, in absolute terms they accumulate more than 30x compared to the smallest category. What explains the recent increase in these types of deaths?</p>
+<p>With the cumulative percentage evolution of deaths we can better understand the trends over time. We can make the following observations:</p>
+<ul>
+<li><p>Deaths from chronic causes is the category that has remained most stable over time. This is despite the fact that the previous graph seemed to say that this category was the one that grew the most (an effect produced by the difference in magnitudes). However, there has been an upward trend since 2010.</p></li>
+<li><p>Deaths from acute diseases showed a decreasing trend until 2012, but then began to grow again</p></li>
+<li><p>Accidents and deaths from suicide (Mental) are growing at uncontrolled rates.</p></li>
+</ul>
+<p>From this arise two interesting questions to ask:</p>
+<ul>
+<li>Which states lead the growth in deaths from suicide and accidents?</li>
+<li>What types of acute deaths reflect the sharp decrease in the 2000s, and the recent increase since 2010?</li>
+<li>Although chronic deaths seem more controlled in percentage terms, in absolute terms they accumulate more than 30x compared to the smallest category. What explains the recent increase in these types of deaths?</li>
+</ul>
 <p>To answer the first question, we can build a Cleveland plot to understand which states are leading:</p>
 <div class="cell">
 <details>
@@ -538,7 +548,12 @@ of ggplot2 3.3.4.</code></pre>
 <p><img src="results_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>We can observe the following: - Deaths by acute illnesses started to decrease after 2002, first led by a sharp decrease in Strokes. Still, in 2003, we also observed a declining rate of Influenza and Pneumonia, contributing to the overall trend. - From 2008 to 2017, the deaths caused by Influenza and Pneumonia were range-bound, although, with some volatility, they stayed somewhat constant. - However, Strokes started to pick up in 2013, which explains the overall trend observed in deaths by Acute illnesses.</p>
+<p>We can observe the following:</p>
+<ul>
+<li><p>Deaths by acute illnesses started to decrease after 2002, first led by a sharp decrease in Strokes. Still, in 2003, we also observed a declining rate of Influenza and Pneumonia, contributing to the overall trend.</p></li>
+<li><p>From 2008 to 2017, the deaths caused by Influenza and Pneumonia were range-bound, although, with some volatility, they stayed somewhat constant.</p></li>
+<li><p>However, Strokes started to pick up in 2013, which explains the overall trend observed in deaths by Acute illnesses.</p></li>
+</ul>
 
 
 
