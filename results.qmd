@@ -1,6 +1,6 @@
 # Results
 
-```{r}
+```{r message=FALSE}
 library(dplyr)
 library(readr)
 library(dplyr)
@@ -10,7 +10,7 @@ library(scales)
 library(tidyr)
 ```
 
-```{r}
+```{r message=FALSE}
 lead_cod_2 = read_csv("NCHS_-_Leading_Causes_of_Death__United_States.csv")
 
 # BY STATE
@@ -26,13 +26,21 @@ lead_cod_2_USA_from_2008 = lead_cod_2_USA %>% filter(Year >= 2008)
 lead_cod_2_by_state_from_2008 = lead_cod_2_by_state %>% filter(Year >= 2008)
 ```
 
-```{r}
+
+
+
+
+
+
+
+
+```{r message=FALSE}
 ####################################################
 
-"Total Aggregate Deaths by Cause from 2008 through 2017"
+# "Total Aggregate Deaths by Cause from 1999 through 2017"
 # Group to do a factor reorder
 lead_cod_2_USA_from_2008_mod <- lead_cod_2_USA %>% 
-  filter(Year >= 2008) %>%
+  #filter(Year >= 2008) %>%
   mutate(`Cause Name` = as.factor(`Cause Name`)) %>% # Ensure 'Cause Name' is a factor
   group_by(`Cause Name`) %>%
   summarise(Total_Deaths = sum(Deaths, na.rm = TRUE)) %>%
@@ -40,37 +48,43 @@ lead_cod_2_USA_from_2008_mod <- lead_cod_2_USA %>%
   ungroup()
 
 # Now create the ggplot
-ggplot(lead_cod_2_USA_from_2008_mod, aes(x = `Cause Name`, y = Total_Deaths)) +
+ggplot(lead_cod_2_USA_from_2008_mod %>% filter(`Cause Name` != "All causes"), aes(x = `Cause Name`, y = Total_Deaths)) +
   geom_bar(stat = "identity", position = "dodge") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Cause Name", y = "Total Deaths", title = "Total Aggregate Deaths by Cause from 2008 through 2017")
+  labs(x = "Cause Name", y = "Total Deaths", title = "Top 10 Causes of Deaths from 1999 through 2017")
 
 ###################################################
 ```
 
 ```{r}
-###################################################
 # DEATHS INCREASING OVER THE YEARS
 yearly_data <- lead_cod_2_USA %>%
   group_by(Year) %>%
   summarise(Total_Deaths = sum(Deaths, na.rm = TRUE))
 
-# Create a bar chart
+# # Create a bar chart
+# ggplot(yearly_data, aes(x = Year, y = Total_Deaths)) +
+#   geom_bar(stat = "identity", position = "dodge") +
+#   scale_x_continuous(breaks = 1999:max(yearly_data$Year), limits = c(1998, 2018)) +
+#   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+#   labs(x = "Year", y = "Total Deaths", title = "Total Deaths per Year from 2008 Onwards")
+
+# A time series plot
 ggplot(yearly_data, aes(x = Year, y = Total_Deaths)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  scale_x_continuous(breaks = 2008:max(yearly_data$Year), limits = c(2007, 2018)) +
+  geom_line() +  # Using geom_line for a time series plot
+  geom_point() +  # Optionally add points to highlight each data point
+  scale_x_continuous(breaks = 1999:max(yearly_data$Year), limits = c(1998, 2018)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Year", y = "Total Deaths", title = "Total Deaths per Year from 2008 Onwards")
+  labs(x = "Year", y = "Total Deaths", title = "Total Deaths for each Year from 1999 through 2017") +
+  scale_y_continuous(breaks = seq(4e6, 5e6, by = 200000), 
+                     limits = c(4e6, 5e6))
 
-
-
-######################################################
 
 
 ```
 
 ```{r}
-"Total Deaths by Cause and Year from 2008-2017 Broken Down By Year"
+# "Total Deaths by Cause and Year from 2008-2017 Broken Down By Year"
 lead_cod_2_USA_from_2008_with_year <- lead_cod_2_USA_from_2008 %>% 
   group_by(Year, `Cause Name`) %>%
   summarise(Total_Deaths = sum(Deaths, na.rm = TRUE)) 
@@ -89,6 +103,11 @@ ggplot(lead_cod_2_USA_from_2008_with_year, aes(x = `Cause Name`, y = Total_Death
   labs(x = "Cause Name", y = "Total Deaths", fill = "Year", 
        title = "Deaths by Cause and Year from 2008-2017 Broken Down By Year")
 ```
+
+
+
+
+
 
 We are going to categorize types of death in 4 groups: Chronic Diseases, Acute Illnesses, Mental Health, Accidents. First, let's observe the evolution across time.
 
