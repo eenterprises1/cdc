@@ -83,7 +83,7 @@ ggplot(yearly_data, aes(x = Year, y = Total_Deaths)) +
 
 ```
 
-```{r message=FALSE}
+```{r}
 # "Total Deaths by Cause and Year from 2008-2017 Broken Down By Year"
 lead_cod_2_USA_from_2008_with_year <- lead_cod_2_USA_from_2008 %>% 
   group_by(Year, `Cause Name`) %>%
