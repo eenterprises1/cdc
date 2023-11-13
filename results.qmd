@@ -55,6 +55,12 @@ ggplot(lead_cod_2_USA_from_2008_mod %>% filter(`Cause Name` != "All causes"), ae
 
 ###################################################
 ```
+The bar chart above identifies 10 most common causes of death in the United States aggregated from year 1999 to 2017. It's is visible that heart disease and cancer account for a significant bulk of all deaths 
+
+
+
+
+
 
 ```{r}
 # DEATHS INCREASING OVER THE YEARS
@@ -71,8 +77,8 @@ yearly_data <- lead_cod_2_USA %>%
 
 # A time series plot
 ggplot(yearly_data, aes(x = Year, y = Total_Deaths)) +
-  geom_line() +  # Using geom_line for a time series plot
-  geom_point() +  # Optionally add points to highlight each data point
+  geom_line() +  
+  geom_point() +  
   scale_x_continuous(breaks = 1999:max(yearly_data$Year), limits = c(1998, 2018)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(x = "Year", y = "Total Deaths", title = "Total Deaths for each Year from 1999 through 2017") +
@@ -83,9 +89,15 @@ ggplot(yearly_data, aes(x = Year, y = Total_Deaths)) +
 
 ```
 
+The deaths have been rising over this period of time, which makes sense because the US population has been steadily growing 
+
+
+
+
 ```{r}
-# "Total Deaths by Cause and Year from 2008-2017 Broken Down By Year"
-lead_cod_2_USA_from_2008_with_year <- lead_cod_2_USA_from_2008 %>% 
+# THIS IS BETTER
+
+lead_cod_2_USA_facet_prepare <- lead_cod_2_USA %>% 
   group_by(Year, `Cause Name`) %>%
   summarise(Total_Deaths = sum(Deaths, na.rm = TRUE)) 
 
@@ -93,15 +105,40 @@ cause_order = c("All causes","Heart disease","Cancer","Stroke",
                 "CLRD", "Unintentional injuries","Alzheimer's disease", 
                 "Diabetes", "Influenza and pneumonia", "Kidney disease","Suicide" )
 
-lead_cod_2_USA_from_2008_with_year$`Cause Name` <- factor(lead_cod_2_USA_from_2008_with_year$`Cause Name`, levels = cause_order)
+lead_cod_2_USA_facet_prepare$`Cause Name` <- factor(lead_cod_2_USA_facet_prepare$`Cause Name`, levels = cause_order)
 
-# Fill = Year
-ggplot(lead_cod_2_USA_from_2008_with_year, aes(x = `Cause Name`, y = Total_Deaths, fill = as.factor(Year))) +
-  geom_bar(stat = "identity", position = "dodge") +
-  scale_fill_brewer(palette = "Set1") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Cause Name", y = "Total Deaths", fill = "Year", 
-       title = "Deaths by Cause and Year from 2008-2017 Broken Down By Year")
+
+set.seed(1)
+my_colors = sapply(1:19, function(x) rgb(runif(1), runif(1), runif(1)))
+
+# BAR CHART
+# ggplot(lead_cod_2_USA_facet_prepare %>% filter(`Cause Name` != "All causes"), aes(x = Year, y = Total_Deaths, fill = as.factor(Year))) +
+#   geom_bar(stat = "identity", position = "dodge") +
+#   scale_fill_manual(values = my_colors) +  # Use manual colors
+#   theme(axis.text.x = element_text(angle = 45, hjust = 1),
+#         legend.key.size = unit(0.5, "cm"),  # Smaller legend keys
+#         legend.text = element_text(size = 8)) +  # Smaller legend text +
+#   labs(x = "Year", y = "Total Deaths", fill = "Year",
+#        title = "Deaths by Cause from 1999-2017") +
+#   facet_wrap(~ `Cause Name`, scales = "free_y", ncol = 3)  # Add faceting
+
+
+# POINTS
+ggplot(lead_cod_2_USA_facet_prepare %>% filter(`Cause Name` != "All causes"), aes(x = Year, y = Total_Deaths, color = as.factor(Year))) +
+  geom_line() +  # Use geom_line for a time series plot
+  geom_point() +  # Optionally add points to highlight each data point
+  scale_color_manual(values = my_colors) +  # Use manual colors
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.key.size = unit(0.5, "cm"),  # Smaller legend keys
+        legend.text = element_text(size = 8)) +
+  labs(x = "Year", y = "Total Deaths", color = "Year",
+       title = "Deaths by Cause from 1999-2017") +
+  facet_wrap(~ `Cause Name`, scales = "free_y", ncol = 3)  # Add faceting
+
+
+
+
+
 ```
 
 
@@ -109,55 +146,72 @@ ggplot(lead_cod_2_USA_from_2008_with_year, aes(x = `Cause Name`, y = Total_Death
 
 
 
-We are going to categorize types of death in 4 groups: Chronic Diseases, Acute Illnesses, Mental Health, Accidents. First, let's observe the evolution across time.
+
+
+
+The time series plot helps us have an understanding of the magnitude of each category and the evolution across time. We can see that heart disease and cancer are around 15x Suicide making it challenging to analyze the growth of smaller series. We will create a cumulative chart to understand the evolution of each category. A cumulative percentage time series chart will help us compare relative changes of different causes. 
+
+
+
 
 ```{r}
-#Let's modify column names, filter out United States and All causes, as they are redundant for this anaylsis.
+
+# A MODIFICATION
 df = lead_cod_2 |> filter(State != "United States")
 df$Cause <- df$`Cause Name`
 df$Age <- df$`Age-adjusted Death Rate`
 df = df |> select(-`113 Cause Name`) |> select(-`Cause Name`) |> select(-`Age-adjusted Death Rate`)
 df = df |> filter(Cause != 'All causes')
 
-#Here we create a category column according to the type of death
-df$Category = ifelse(df$Cause %in% c("Heart disease", "Diabetes", "Alzheimer's disease", "Cancer", "CLRD", "Kidney disease"), "Chronic",
-                 ifelse(df$Cause %in% c("Stroke", "Influenza and pneumonia"), "Acute",
-                 ifelse(df$Cause == "Suicide", "Mental", "Accident")))
-
 #Aggregating by year and category
-df_grouped = df |> group_by(Year, Category) |> summarise(TotalDeaths = sum(Deaths, na.rm = TRUE), .groups = 'drop')
-color_friendly = c("#E69F00", "#56B4E9", "#009E73", "#F0E442")
+df_grouped = df |> group_by(Year, Cause) |> summarise(TotalDeaths = sum(Deaths, na.rm = TRUE), .groups = 'drop')
+
+color_blind_friendly <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", 
+                          "#0072B2", "#D55E00", "#CC79A7", "#999999", 
+                          "#882255", "#88CCEE")
 
 #Time series
-ggplot(df_grouped, aes(x = Year, y = TotalDeaths, group = Category, color = Category)) +
+ggplot(df_grouped, aes(x = Year, y = TotalDeaths, group = Cause, color = Cause)) +
   geom_line(size = 1.5) + theme_minimal() + 
   labs(title = "Deaths by Category Over Time", x = "Year", y = "Deaths", color = "Category") +
-  scale_color_manual(values = color_friendly) +
   scale_y_continuous(labels = scales::comma, breaks = scales::pretty_breaks(n = 8)) + 
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 8))
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 9)) +
+  scale_color_manual(values = color_blind_friendly)
+
+
+
 ```
 
-The time series plot helps us have an understanding of the magnitude of each category and the evolution across time. We can see that Chronic causes are around 30x the minor variety (Mental), making it challenging to analyze the growth of smaller series. Although it is clear that since 2010, Chronic causes have been increasing, we will create a cumulative chart to understand the evolution of each category.
 
-A cumulative percentage time series chart will help us compare relative changes of different categories from a common starting point.
+
+
 
 ```{r}
 #First we have to calculate the percetage change for each period, and the accumulate it through the years:
-df_wide <- df_grouped |> pivot_wider(names_from = Category, values_from = TotalDeaths, values_fill = list(TotalDeaths = 0))
+df_wide <- df_grouped |> pivot_wider(names_from = Cause, values_from = TotalDeaths, values_fill = list(TotalDeaths = 0))
 df_wide <- df_wide |> mutate(across(-Year, ~(. / lag(.) - 1)))
 df_wide[is.na(df_wide)] <- 0
 df_wide <- df_wide |> mutate(across(-Year, ~cumprod(1 + .) - 1))
-df_wide <- df_wide |> pivot_longer(cols = -Year, names_to = "Category", values_to = "CumulativeGrowth")
+df_wide <- df_wide |> pivot_longer(cols = -Year, names_to = "Cause", values_to = "CumulativeGrowth")
 
+color_blind_friendly <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", 
+                          "#0072B2", "#D55E00", "#CC79A7", "#999999", 
+                          "#882255", "#88CCEE")
 
-ggplot(df_wide, aes(x = Year, y = CumulativeGrowth, color = Category)) +
+ggplot(df_wide, aes(x = Year, y = CumulativeGrowth, color = Cause)) +
   geom_line(size = 1.5) + theme_minimal() + 
   labs(title = "Cumulative Growth of Categories Over Time", x = "Year", y = "Cumulative Growth") +
   scale_y_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8)) + 
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 8))+
-  scale_color_manual(values = color_friendly)
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 8)) +
+  scale_color_manual(values = color_blind_friendly)
 ```
 
+With the cumulative percentage time series graph broken down by cause, we can see some interesting trends. In particular, deaths caused by Alzheimer's disease is aggressively increasing year by year. Unintentional injuries and suicide is also the number two and number three fastest growing causes of death, respectively. Additionally, we can note that stroke, influenza and pneumonia, and heart disease have actually been decreasing during the same time of 1999-2017. 
+
+
+
+
+***** Needs work::
 With the cumulative percentage evolution of deaths we can better understand the trends over time. We can make the following observations:
 
 -   Deaths from chronic causes is the category that has remained most stable over time. This is despite the fact that the previous graph seemed to say that this category was the one that grew the most (an effect produced by the difference in magnitudes). However, there has been an upward trend since 2010.
@@ -166,11 +220,19 @@ With the cumulative percentage evolution of deaths we can better understand the 
 
 -   Accidents and deaths from suicide (Mental) are growing at uncontrolled rates.
 
+
+
 From this arise two interesting questions to ask:
 
--   Which states lead the growth in deaths from suicide and accidents?
--   What types of acute deaths reflect the sharp decrease in the 2000s, and the recent increase since 2010?
--   Although chronic deaths seem more controlled in percentage terms, in absolute terms they accumulate more than 30x compared to the smallest category. What explains the recent increase in these types of deaths?
+-   Which states lead the growth in deaths from Alzheimer, suicide and unintentional accidents?
+-   Can we find a few interesting associated factors that are correlated?
+
+
+
+
+
+
+
 
 To answer the first question, we can build a Cleveland plot to understand which states are leading:
 
@@ -178,7 +240,7 @@ To answer the first question, we can build a Cleveland plot to understand which 
 
 
 # Filter the data for the specified conditions
-df_rank <- df %>% select(-Age)|> filter(Year %in% c(1999, 2017), Category == "Mental")
+df_rank <- df %>% select(-Age)|> filter(Year %in% c(1999, 2017), Cause == "Suicide")
 
 # Calculate the percentual difference change from 2000 to 2017 for each state
 df_rank <- df_rank %>%
@@ -186,11 +248,46 @@ df_rank <- df_rank %>%
   mutate(PercentChange = `2017`/`1999`-1) |>
   arrange(desc(PercentChange))
 
+
+
 # Create a vertical bar chart
 ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   geom_point(size = 3, color = "brown") +
   geom_point(aes(color = "green"), size = 2) +
-  labs(title = "Mental Deaths %Chg. - 1999 to 2017", x = "Percentual Change", y = 'State') +
+  labs(title = "Suicide Deaths %Chg. - 1999 to 2017", x = "Percentual Change", y = 'State') +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey60", linetype = "dashed"))+
+  scale_x_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8))+ 
+  theme(legend.position = "none")
+
+#https://r-graphics.org/recipe-bar-graph-dot-plot
+
+```
+We can see that Utah, Idaho and North Dakota have seen the largest increase, while Delaware, Rhode Island and Louisiana the smallest.
+
+
+
+
+```{r, fig.height=8, fig.width= 5}
+
+
+# Filter the data for the specified conditions
+df_rank <- df %>% select(-Age)|> filter(Year %in% c(1999, 2017), Cause == "Alzheimer's disease")
+
+# Calculate the percentual difference change from 2000 to 2017 for each state
+df_rank <- df_rank %>%
+  pivot_wider(names_from = Year, values_from = Deaths) |>
+  mutate(PercentChange = `2017`/`1999`-1) |>
+  arrange(desc(PercentChange))
+
+
+
+# Create a vertical bar chart
+ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
+  geom_point(size = 3, color = "purple") +
+  labs(title = "Alzheimer's disease Deaths %Chg. - 1999 to 2017", x = "Percentual Change", y = 'State') +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
@@ -202,11 +299,16 @@ ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
 
 ```
 
-We can see that Utah, Idaho and North Dakota have seen the largest increase, while Delaware, Rhode Island and Louisiana the smallest.
+We can see that Mississippi, Nevada and Hawaii have seen the largest increase, while Massachussetts, Maine and Montana are the smallest.
+
+
+
+
+
 
 ```{r, fig.height=8, fig.width= 5}
 # Filter the data for the specified conditions
-df_rank <- df %>% select(-Age)|> filter(Year %in% c(1999, 2017), Category == "Accident")
+df_rank <- df %>% select(-Age)|> filter(Year %in% c(1999, 2017), Cause == "Unintentional injuries")
 
 # Calculate the percentual difference change from 2000 to 2017 for each state
 df_rank <- df_rank %>%
@@ -217,7 +319,7 @@ df_rank <- df_rank %>%
 # Create a vertical bar chart
 ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   geom_point(size = 3, color = "darkblue") +
-  labs(title = "Accident Deaths %Chg. - 1999 to 2017", x = "Percentual Change", y = 'State') +
+  labs(title = "Unintentional injuries %Chg. - 1999 to 2017", x = "Percentual Change", y = 'State') +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
@@ -229,37 +331,107 @@ ggplot(df_rank, aes(x = PercentChange, y = reorder(State, PercentChange))) +
 
 ```
 
-Now we want to understand the underlying drivers of the changes across time for acute type of deaths.
+We can see that Rhode Island, Massachussetts, and New Hampshire have seen the largest increase, while Nebraska, Alabama and Mississippi are the smallest.
+
+
+
 
 ```{r}
-#First we manipulate the data to analyize Acute deaths only
-df_acute <- df |> filter(Category == 'Acute') |> select(Year, Cause, Deaths)
-df_acute = df_acute |> group_by(Year, Cause) |> summarise(TotalDeaths = sum(Deaths, na.rm = TRUE), .groups = 'drop')
-df_acute <- df_acute |> pivot_wider(names_from = Cause, values_from = TotalDeaths, values_fill = list(TotalDeaths = 0))
-df_acute$Acute = df_acute$`Influenza and pneumonia` + df_acute$Stroke
 
-#Now we can understand the changes in trends by calculating percentual changes:
-df_acute <- df_acute |> mutate(across(-Year, ~(. / lag(.) - 1)))
-df_acute[is.na(df_acute)] <- 0
-df_acute <- df_acute |> mutate(across(-Year, ~cumprod(1 + .) - 1))
-df_acute <- df_acute |> pivot_longer(cols = -Year, names_to = "Dim", values_to = "CumulativeGrowth")
-df_acute <- df_acute |> mutate(Dim = if_else(Dim == "Acute", "Total Acute", Dim))
+# Average percent change increase for Unintentional Accidents
+# mean(df_rank$PercentChange)
 
-#Now we can plot the evolution:
-ggplot(df_acute, aes(x = Year, y = CumulativeGrowth, color = Dim)) +
-  geom_line(size = 1.5, aes(linetype = ifelse(Dim == "Total Acute", "solid", "dashed"))) +
-  labs(title = "Breakdown of Acute Deaths Growth", x = "Year", y = "Cumulative Growth") +
-  scale_y_continuous(labels = percent_format(), breaks = pretty_breaks(n = 8)) + 
-  scale_x_continuous(breaks = pretty_breaks(n = 8)) +
-  scale_color_manual(values = c('brown', 'blue', 'Black')) +
-  guides(linetype = FALSE) +
-  theme(legend.position = "bottom")
+df_rank <- df %>% select(-Age)|> filter(Year %in% c(1999, 2017))
+
+# Calculate the percentual difference change from 2000 to 2017 for each state
+df_rank <- df_rank %>%
+  pivot_wider(names_from = Year, values_from = Deaths) |>
+  mutate(PercentChange = `2017`/`1999`-1) |>
+  arrange(desc(PercentChange))
+
+#df_rank
+
+df_rank_average_increase = df_rank %>% group_by(Cause) %>% summarise(AvgPercentChange = mean(PercentChange))
+#df_rank_average_increase
+
+df_rank_average_increase$Cause <- fct_reorder(df_rank_average_increase$Cause, df_rank_average_increase$AvgPercentChange)
+
+
+# Create the bar chart
+ggplot(df_rank_average_increase, aes(x = Cause, y = AvgPercentChange)) +
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 0, hjust = 1, vjust = 1)) +
+  labs(x = "Cause", y = "Average % Change", title = "Average Percent Change Across All States from 1999 to 2017") +
+  scale_y_continuous(breaks = seq(-0.25, 2, by = 0.25), limits = c(-0.2, 1.75)) +
+  coord_flip()  # Flips the axes so the bars are horizontal
+
+```
+A more compact way to visualize the average percent change across states for each cause. It's clear that the rise in deaths due to Alzheimer's is quite remarkable. 
+
+
+
+
+```{r}
+df_life_expectancy <- read_csv("NCHS_-_Death_rates_and_life_expectancy_at_birth_20231111.csv")
+# View(df_life_expectancy)
+# 
+# df_life_expectancy
+
+df_life_expectancy_1999_to_2017 = df_life_expectancy %>% filter(Race == "All Races") %>% filter(Sex == "Both Sexes") %>% filter(Year >= 1999) %>% filter(Year <= 2017)
+# df_life_expectancy_1999_to_2017
+
+lead_cod_2_USA_Alzheimer = lead_cod_2_USA_facet_prepare %>% filter(`Cause Name` == "Alzheimer's disease")
+# lead_cod_2_USA_Alzheimer
+
+#life_expectacy_usa_alzheimer_joined 
+life_expectacy_usa_alzheimer_joined = inner_join(lead_cod_2_USA_Alzheimer,df_life_expectancy_1999_to_2017)
+#life_expectacy_usa_alzheimer_joined
+
+life_expectacy_usa_alzheimer_joined = life_expectacy_usa_alzheimer_joined %>% select(-Race,-Sex,-`Age-adjusted Death Rate`)
+#life_expectacy_usa_alzheimer_joined
+
+df_life_expectancy_1939_to_1957 = df_life_expectancy %>% filter(Race == "All Races") %>% filter(Sex == "Both Sexes") %>% filter(Year >= 1939) %>% filter(Year <= 1957)  %>% select(-Race,-Sex,-`Age-adjusted Death Rate`)
+#df_life_expectancy_1934_to_1952
+
+
+
+life_expectacy_usa_alzheimer_joined_bind = cbind(life_expectacy_usa_alzheimer_joined, df_life_expectancy_1939_to_1957)
+#life_expectacy_usa_alzheimer_joined_bind
+
+df_wide_alzheimer = df_wide %>% filter(Cause == "Alzheimer's disease")
+# df_wide_alzheimer
+
+life_expectacy_usa_alzheimer_joined_bind_cumul_growth = cbind(life_expectacy_usa_alzheimer_joined_bind,df_wide_alzheimer)
+# life_expectacy_usa_alzheimer_joined_bind_cumul_growth
+
+
 ```
 
-We can observe the following:
 
--   Deaths by acute illnesses started to decrease after 2002, first led by a sharp decrease in Strokes. Still, in 2003, we also observed a declining rate of Influenza and Pneumonia, contributing to the overall trend.
 
--   From 2008 to 2017, the deaths caused by Influenza and Pneumonia were range-bound, although, with some volatility, they stayed somewhat constant.
 
--   However, Strokes started to pick up in 2013, which explains the overall trend observed in deaths by Acute illnesses.
+
+```{r}
+# Assuming your data frame is called df and it has two continuous variables: Variable1 and Variable2
+# Create a scatterplot with a regression line
+ggplot(life_expectacy_usa_alzheimer_joined_bind_cumul_growth, aes(x = `Average Life Expectancy (Years)...6`, y = CumulativeGrowth)) +
+  geom_point() +  # Add the scatterplot points
+  geom_smooth(method = "lm") +  # Add the linear regression line without the standard error
+  labs(x = "Average Life Expectancy", y = "Cumulative Growth", title = "Scatterplot w/ Regression Line for Alzheimer's Deaths vs Life Expectancy") 
+  
+```
+
+
+
+```{r}
+y = life_expectacy_usa_alzheimer_joined_bind_cumul_growth$CumulativeGrowth
+x = life_expectacy_usa_alzheimer_joined_bind_cumul_growth$`Average Life Expectancy (Years)...6`
+
+regression_model_cumul_growth <- lm(y ~ x)
+cor.test(y,x)
+```
+```{r}
+summary(regression_model_cumul_growth)
+```
+
+According to CDC, the Alzheimer's onset is around 60 years old. It's interesting to note that there has been a steady increase in life expectancy for people born between 193 and 1952. Life expectancy rose from 61.1 to 68.6. The change in life expectancy is a bit less pronounced. Naturally, we see a very high positive correlation between deaths due to Alzheimer's disease and the rise in life expectancy.
