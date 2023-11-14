@@ -29,13 +29,15 @@ df_rank_unintentional <- df_rank_unintentional %>%
 df_alz_sui_unt = rbind(df_rank_alz,df_rank_suicide,df_rank_unintentional)
 #df_alz_sui_unt
 
-# DO THE PLOT
+# DO THE PLOTS
+
+# PLOT 1
 ggplot(df_alz_sui_unt, aes(x=PercentChange, y=Cause)) + geom_boxplot()
 
+# PLOT 2
 ggplot(df_alz_sui_unt, aes(x=PercentChange)) + geom_boxplot()
 
-df_alz_sui_unt %>% filter(PercentChange >= 2.5)
-
+# EXTRACT OUTLIERS
 Q1 <- quantile(df_alz_sui_unt$PercentChange, 0.25)
 Q3 <- quantile(df_alz_sui_unt$PercentChange, 0.75)
 IQR <- Q3 - Q1
