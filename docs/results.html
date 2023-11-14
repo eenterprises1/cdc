@@ -201,83 +201,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.3.2</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lead_cod_2 <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"NCHS_-_Leading_Causes_of_Death__United_States.csv"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># BY STATE</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>lead_cod_2_by_state <span class="ot">=</span> lead_cod_2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">"United States"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># lead_cod_2_by_state</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># LOOKING AT USA</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>lead_cod_2_USA <span class="ot">=</span> lead_cod_2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"United States"</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#lead_cod_2_USA</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># FILTER FOR 2008-2017</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>lead_cod_2_USA_from_2008 <span class="ot">=</span> lead_cod_2_USA <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2008</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>lead_cod_2_by_state_from_2008 <span class="ot">=</span> lead_cod_2_by_state <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2008</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lead_cod_2 <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"NCHS_-_Leading_Causes_of_Death__United_States.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># BY STATE</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>lead_cod_2_by_state <span class="ot">=</span> lead_cod_2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">"United States"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># lead_cod_2_by_state</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># LOOKING AT USA</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>lead_cod_2_USA <span class="ot">=</span> lead_cod_2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"United States"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#lead_cod_2_USA</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># FILTER FOR 2008-2017</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>lead_cod_2_USA_from_2008 <span class="ot">=</span> lead_cod_2_USA <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2008</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>lead_cod_2_by_state_from_2008 <span class="ot">=</span> lead_cod_2_by_state <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2008</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">####################################################</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># "Total Aggregate Deaths by Cause from 1999 through 2017"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Group to do a factor reorder</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>lead_cod_2_USA_from_2008_mod <span class="ot">&lt;-</span> lead_cod_2_USA <span class="sc">%&gt;%</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#filter(Year &gt;= 2008) %&gt;%</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">as.factor</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> <span class="co"># Ensure 'Cause Name' is a factor</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Deaths =</span> <span class="fu">sum</span>(Deaths, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">fct_reorder</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>, Total_Deaths, <span class="at">.desc=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now create the ggplot</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lead_cod_2_USA_from_2008_mod <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">"All causes"</span>), <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>, <span class="at">y =</span> Total_Deaths)) <span class="sc">+</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cause Name"</span>, <span class="at">y =</span> <span class="st">"Total Deaths"</span>, <span class="at">title =</span> <span class="st">"Top 10 Causes of Deaths from 1999 through 2017"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">####################################################</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># "Total Aggregate Deaths by Cause from 1999 through 2017"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Group to do a factor reorder</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>lead_cod_2_USA_from_2008_mod <span class="ot">&lt;-</span> lead_cod_2_USA <span class="sc">%&gt;%</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#filter(Year &gt;= 2008) %&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">as.factor</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> <span class="co"># Ensure 'Cause Name' is a factor</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Deaths =</span> <span class="fu">sum</span>(Deaths, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">fct_reorder</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>, Total_Deaths, <span class="at">.desc=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now create the ggplot</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lead_cod_2_USA_from_2008_mod <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">"All causes"</span>), <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>, <span class="at">y =</span> Total_Deaths)) <span class="sc">+</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cause Name"</span>, <span class="at">y =</span> <span class="st">"Total Deaths"</span>, <span class="at">title =</span> <span class="st">"Top 10 Causes of Deaths from 1999 through 2017"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">###################################################</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">###################################################</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>The bar chart above identifies 10 most common causes of death in the United States aggregated from year 1999 to 2017. It’s is visible that heart disease and cancer account for a significant bulk of all deaths</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DEATHS INCREASING OVER THE YEARS</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>yearly_data <span class="ot">&lt;-</span> lead_cod_2_USA <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Deaths =</span> <span class="fu">sum</span>(Deaths, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># # Create a bar chart</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(yearly_data, aes(x = Year, y = Total_Deaths)) +</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_bar(stat = "identity", position = "dodge") +</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   scale_x_continuous(breaks = 1999:max(yearly_data$Year), limits = c(1998, 2018)) +</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(x = "Year", y = "Total Deaths", title = "Total Deaths per Year from 2008 Onwards")</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># A time series plot</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(yearly_data, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Total_Deaths)) <span class="sc">+</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span>  </span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>  </span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1999</span><span class="sc">:</span><span class="fu">max</span>(yearly_data<span class="sc">$</span>Year), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1998</span>, <span class="dv">2018</span>)) <span class="sc">+</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Deaths"</span>, <span class="at">title =</span> <span class="st">"Total Deaths for each Year from 1999 through 2017"</span>) <span class="sc">+</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fl">4e6</span>, <span class="fl">5e6</span>, <span class="at">by =</span> <span class="dv">200000</span>), </span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">4e6</span>, <span class="fl">5e6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DEATHS INCREASING OVER THE YEARS</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>yearly_data <span class="ot">&lt;-</span> lead_cod_2_USA <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Deaths =</span> <span class="fu">sum</span>(Deaths, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># # Create a bar chart</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(yearly_data, aes(x = Year, y = Total_Deaths)) +</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_bar(stat = "identity", position = "dodge") +</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   scale_x_continuous(breaks = 1999:max(yearly_data$Year), limits = c(1998, 2018)) +</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(x = "Year", y = "Total Deaths", title = "Total Deaths per Year from 2008 Onwards")</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># A time series plot</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(yearly_data, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Total_Deaths)) <span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span>  </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>  </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1999</span><span class="sc">:</span><span class="fu">max</span>(yearly_data<span class="sc">$</span>Year), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1998</span>, <span class="dv">2018</span>)) <span class="sc">+</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Deaths"</span>, <span class="at">title =</span> <span class="st">"Total Deaths for each Year from 1999 through 2017"</span>) <span class="sc">+</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fl">4e6</span>, <span class="fl">5e6</span>, <span class="at">by =</span> <span class="dv">200000</span>), </span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">4e6</span>, <span class="fl">5e6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
@@ -287,11 +293,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># THIS IS BETTER</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>lead_cod_2_USA_facet_prepare <span class="ot">&lt;-</span> lead_cod_2_USA <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, <span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Deaths =</span> <span class="fu">sum</span>(Deaths, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># THIS IS BETTER</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>lead_cod_2_USA_facet_prepare <span class="ot">&lt;-</span> lead_cod_2_USA <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, <span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Deaths =</span> <span class="fu">sum</span>(Deaths, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'Year'. You can override using the
@@ -299,39 +305,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cause_order <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"All causes"</span>,<span class="st">"Heart disease"</span>,<span class="st">"Cancer"</span>,<span class="st">"Stroke"</span>, </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"CLRD"</span>, <span class="st">"Unintentional injuries"</span>,<span class="st">"Alzheimer's disease"</span>, </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Diabetes"</span>, <span class="st">"Influenza and pneumonia"</span>, <span class="st">"Kidney disease"</span>,<span class="st">"Suicide"</span> )</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>lead_cod_2_USA_facet_prepare<span class="sc">$</span><span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">factor</span>(lead_cod_2_USA_facet_prepare<span class="sc">$</span><span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>, <span class="at">levels =</span> cause_order)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>my_colors <span class="ot">=</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>, <span class="cf">function</span>(x) <span class="fu">rgb</span>(<span class="fu">runif</span>(<span class="dv">1</span>), <span class="fu">runif</span>(<span class="dv">1</span>), <span class="fu">runif</span>(<span class="dv">1</span>)))</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># BAR CHART</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(lead_cod_2_USA_facet_prepare %&gt;% filter(`Cause Name` != "All causes"), aes(x = Year, y = Total_Deaths, fill = as.factor(Year))) +</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_bar(stat = "identity", position = "dodge") +</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   scale_fill_manual(values = my_colors) +  # Use manual colors</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme(axis.text.x = element_text(angle = 45, hjust = 1),</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#         legend.key.size = unit(0.5, "cm"),  # Smaller legend keys</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#         legend.text = element_text(size = 8)) +  # Smaller legend text +</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(x = "Year", y = "Total Deaths", fill = "Year",</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#        title = "Deaths by Cause from 1999-2017") +</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   facet_wrap(~ `Cause Name`, scales = "free_y", ncol = 3)  # Add faceting</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># POINTS</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lead_cod_2_USA_facet_prepare <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">"All causes"</span>), <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Total_Deaths, <span class="at">color =</span> <span class="fu">as.factor</span>(Year))) <span class="sc">+</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span>  <span class="co"># Use geom_line for a time series plot</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>  <span class="co"># Optionally add points to highlight each data point</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> my_colors) <span class="sc">+</span>  <span class="co"># Use manual colors</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.5</span>, <span class="st">"cm"</span>),  <span class="co"># Smaller legend keys</span></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>)) <span class="sc">+</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Deaths"</span>, <span class="at">color =</span> <span class="st">"Year"</span>,</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Deaths by Cause from 1999-2017"</span>) <span class="sc">+</span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> <span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">ncol =</span> <span class="dv">3</span>)  <span class="co"># Add faceting</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cause_order <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"All causes"</span>,<span class="st">"Heart disease"</span>,<span class="st">"Cancer"</span>,<span class="st">"Stroke"</span>, </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"CLRD"</span>, <span class="st">"Unintentional injuries"</span>,<span class="st">"Alzheimer's disease"</span>, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Diabetes"</span>, <span class="st">"Influenza and pneumonia"</span>, <span class="st">"Kidney disease"</span>,<span class="st">"Suicide"</span> )</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>lead_cod_2_USA_facet_prepare<span class="sc">$</span><span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">factor</span>(lead_cod_2_USA_facet_prepare<span class="sc">$</span><span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>, <span class="at">levels =</span> cause_order)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>my_colors <span class="ot">=</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>, <span class="cf">function</span>(x) <span class="fu">rgb</span>(<span class="fu">runif</span>(<span class="dv">1</span>), <span class="fu">runif</span>(<span class="dv">1</span>), <span class="fu">runif</span>(<span class="dv">1</span>)))</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># BAR CHART</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(lead_cod_2_USA_facet_prepare %&gt;% filter(`Cause Name` != "All causes"), aes(x = Year, y = Total_Deaths, fill = as.factor(Year))) +</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_bar(stat = "identity", position = "dodge") +</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   scale_fill_manual(values = my_colors) +  # Use manual colors</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme(axis.text.x = element_text(angle = 45, hjust = 1),</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#         legend.key.size = unit(0.5, "cm"),  # Smaller legend keys</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#         legend.text = element_text(size = 8)) +  # Smaller legend text +</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(x = "Year", y = "Total Deaths", fill = "Year",</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#        title = "Deaths by Cause from 1999-2017") +</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   facet_wrap(~ `Cause Name`, scales = "free_y", ncol = 3)  # Add faceting</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co"># POINTS</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lead_cod_2_USA_facet_prepare <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">"All causes"</span>), <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Total_Deaths, <span class="at">color =</span> <span class="fu">as.factor</span>(Year))) <span class="sc">+</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span>  <span class="co"># Use geom_line for a time series plot</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>  <span class="co"># Optionally add points to highlight each data point</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> my_colors) <span class="sc">+</span>  <span class="co"># Use manual colors</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.5</span>, <span class="st">"cm"</span>),  <span class="co"># Smaller legend keys</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>)) <span class="sc">+</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Deaths"</span>, <span class="at">color =</span> <span class="st">"Year"</span>,</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Deaths by Cause from 1999-2017"</span>) <span class="sc">+</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> <span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">ncol =</span> <span class="dv">3</span>)  <span class="co"># Add faceting</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_line()`: Each group consists of only one observation.
@@ -363,27 +369,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A MODIFICATION</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> lead_cod_2 <span class="sc">|&gt;</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">"United States"</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Cause <span class="ot">&lt;-</span> df<span class="sc">$</span><span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Age <span class="ot">&lt;-</span> df<span class="sc">$</span><span class="st">`</span><span class="at">Age-adjusted Death Rate</span><span class="st">`</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">113 Cause Name</span><span class="st">`</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">Age-adjusted Death Rate</span><span class="st">`</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span> <span class="fu">filter</span>(Cause <span class="sc">!=</span> <span class="st">'All causes'</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Aggregating by year and category</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>df_grouped <span class="ot">=</span> df <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Year, Cause) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">TotalDeaths =</span> <span class="fu">sum</span>(Deaths, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">'drop'</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>color_blind_friendly <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>, <span class="st">"#009E73"</span>, <span class="st">"#F0E442"</span>, </span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#CC79A7"</span>, <span class="st">"#999999"</span>, </span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"#882255"</span>, <span class="st">"#88CCEE"</span>)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Time series</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_grouped, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> TotalDeaths, <span class="at">group =</span> Cause, <span class="at">color =</span> Cause)) <span class="sc">+</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Deaths by Category Over Time"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Deaths"</span>, <span class="at">color =</span> <span class="st">"Category"</span>) <span class="sc">+</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma, <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>)) <span class="sc">+</span> </span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">9</span>)) <span class="sc">+</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> color_blind_friendly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A MODIFICATION</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> lead_cod_2 <span class="sc">|&gt;</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">"United States"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Cause <span class="ot">&lt;-</span> df<span class="sc">$</span><span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Age <span class="ot">&lt;-</span> df<span class="sc">$</span><span class="st">`</span><span class="at">Age-adjusted Death Rate</span><span class="st">`</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">113 Cause Name</span><span class="st">`</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">Age-adjusted Death Rate</span><span class="st">`</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span> <span class="fu">filter</span>(Cause <span class="sc">!=</span> <span class="st">'All causes'</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Aggregating by year and category</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>df_grouped <span class="ot">=</span> df <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Year, Cause) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">TotalDeaths =</span> <span class="fu">sum</span>(Deaths, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">'drop'</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>color_blind_friendly <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>, <span class="st">"#009E73"</span>, <span class="st">"#F0E442"</span>, </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#CC79A7"</span>, <span class="st">"#999999"</span>, </span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"#882255"</span>, <span class="st">"#88CCEE"</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Time series</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_grouped, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> TotalDeaths, <span class="at">group =</span> Cause, <span class="at">color =</span> Cause)) <span class="sc">+</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Deaths by Category Over Time"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Deaths"</span>, <span class="at">color =</span> <span class="st">"Category"</span>) <span class="sc">+</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma, <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>)) <span class="sc">+</span> </span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">9</span>)) <span class="sc">+</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> color_blind_friendly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
@@ -396,23 +402,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#First we have to calculate the percetage change for each period, and the accumulate it through the years:</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> df_grouped <span class="sc">|&gt;</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Cause, <span class="at">values_from =</span> TotalDeaths, <span class="at">values_fill =</span> <span class="fu">list</span>(<span class="at">TotalDeaths =</span> <span class="dv">0</span>))</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> df_wide <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>Year, <span class="sc">~</span>(. <span class="sc">/</span> <span class="fu">lag</span>(.) <span class="sc">-</span> <span class="dv">1</span>)))</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>df_wide[<span class="fu">is.na</span>(df_wide)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> df_wide <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>Year, <span class="sc">~</span><span class="fu">cumprod</span>(<span class="dv">1</span> <span class="sc">+</span> .) <span class="sc">-</span> <span class="dv">1</span>))</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> df_wide <span class="sc">|&gt;</span> <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Year, <span class="at">names_to =</span> <span class="st">"Cause"</span>, <span class="at">values_to =</span> <span class="st">"CumulativeGrowth"</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>color_blind_friendly <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>, <span class="st">"#009E73"</span>, <span class="st">"#F0E442"</span>, </span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#CC79A7"</span>, <span class="st">"#999999"</span>, </span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"#882255"</span>, <span class="st">"#88CCEE"</span>)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_wide, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> CumulativeGrowth, <span class="at">color =</span> Cause)) <span class="sc">+</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cumulative Growth of Categories Over Time"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Cumulative Growth"</span>) <span class="sc">+</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(), <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>)) <span class="sc">+</span> </span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>)) <span class="sc">+</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> color_blind_friendly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#First we have to calculate the percetage change for each period, and the accumulate it through the years:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> df_grouped <span class="sc">|&gt;</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Cause, <span class="at">values_from =</span> TotalDeaths, <span class="at">values_fill =</span> <span class="fu">list</span>(<span class="at">TotalDeaths =</span> <span class="dv">0</span>))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> df_wide <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>Year, <span class="sc">~</span>(. <span class="sc">/</span> <span class="fu">lag</span>(.) <span class="sc">-</span> <span class="dv">1</span>)))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>df_wide[<span class="fu">is.na</span>(df_wide)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> df_wide <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>Year, <span class="sc">~</span><span class="fu">cumprod</span>(<span class="dv">1</span> <span class="sc">+</span> .) <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> df_wide <span class="sc">|&gt;</span> <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Year, <span class="at">names_to =</span> <span class="st">"Cause"</span>, <span class="at">values_to =</span> <span class="st">"CumulativeGrowth"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>color_blind_friendly <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>, <span class="st">"#009E73"</span>, <span class="st">"#F0E442"</span>, </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#CC79A7"</span>, <span class="st">"#999999"</span>, </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"#882255"</span>, <span class="st">"#88CCEE"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_wide, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> CumulativeGrowth, <span class="at">color =</span> Cause)) <span class="sc">+</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cumulative Growth of Categories Over Time"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Cumulative Growth"</span>) <span class="sc">+</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(), <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>)) <span class="sc">+</span> </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>)) <span class="sc">+</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> color_blind_friendly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
@@ -428,43 +434,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for the specified conditions</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Age)<span class="sc">|&gt;</span> <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2017</span>), Cause <span class="sc">==</span> <span class="st">"Suicide"</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the percentual difference change from 2000 to 2017 for each state</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df_rank <span class="sc">%&gt;%</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Year, <span class="at">values_from =</span> Deaths) <span class="sc">|&gt;</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PercentChange =</span> <span class="st">`</span><span class="at">2017</span><span class="st">`</span><span class="sc">/</span><span class="st">`</span><span class="at">1999</span><span class="st">`</span><span class="sc">-</span><span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(PercentChange))</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vertical bar chart</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rank, <span class="fu">aes</span>(<span class="at">x =</span> PercentChange, <span class="at">y =</span> <span class="fu">reorder</span>(State, PercentChange))) <span class="sc">+</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"brown"</span>) <span class="sc">+</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">"green"</span>), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Suicide Deaths %Chg. - 1999 to 2017"</span>, <span class="at">x =</span> <span class="st">"Percentage Change"</span>, <span class="at">y =</span> <span class="st">'State'</span>) <span class="sc">+</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>))<span class="sc">+</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(), <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>))<span class="sc">+</span> </span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="480"></p>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#https://r-graphics.org/recipe-bar-graph-dot-plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>We can see that Utah, Idaho and North Dakota have seen the largest increase, while Delaware, Rhode Island and Louisiana the smallest.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for the specified conditions</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Age)<span class="sc">|&gt;</span> <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2017</span>), Cause <span class="sc">==</span> <span class="st">"Alzheimer's disease"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Age)<span class="sc">|&gt;</span> <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2017</span>), Cause <span class="sc">==</span> <span class="st">"Suicide"</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the percentual difference change from 2000 to 2017 for each state</span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df_rank <span class="sc">%&gt;%</span></span>
@@ -476,29 +447,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vertical bar chart</span></span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rank, <span class="fu">aes</span>(<span class="at">x =</span> PercentChange, <span class="at">y =</span> <span class="fu">reorder</span>(State, PercentChange))) <span class="sc">+</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"purple"</span>) <span class="sc">+</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Alzheimer's disease Deaths %Chg. - 1999 to 2017"</span>, <span class="at">x =</span> <span class="st">"Percentage Change"</span>, <span class="at">y =</span> <span class="st">'State'</span>) <span class="sc">+</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>))<span class="sc">+</span></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(), <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>))<span class="sc">+</span> </span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"brown"</span>) <span class="sc">+</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">"green"</span>), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Suicide Deaths %Chg. - 1999 to 2017"</span>, <span class="at">x =</span> <span class="st">"Percentage Change"</span>, <span class="at">y =</span> <span class="st">'State'</span>) <span class="sc">+</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>))<span class="sc">+</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(), <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>))<span class="sc">+</span> </span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="480"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="480"></p>
 </div>
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#https://r-graphics.org/recipe-bar-graph-dot-plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>We can see that Mississippi, Nevada and Hawaii have seen the largest increase, while Massachussetts, Maine and Montana are the smallest.</p>
+<p>We can see that Utah, Idaho and North Dakota have seen the largest increase, while Delaware, Rhode Island and Louisiana the smallest.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for the specified conditions</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Age)<span class="sc">|&gt;</span> <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2017</span>), Cause <span class="sc">==</span> <span class="st">"Unintentional injuries"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Age)<span class="sc">|&gt;</span> <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2017</span>), Cause <span class="sc">==</span> <span class="st">"Alzheimer's disease"</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the percentual difference change from 2000 to 2017 for each state</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df_rank <span class="sc">%&gt;%</span></span>
@@ -506,55 +478,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PercentChange =</span> <span class="st">`</span><span class="at">2017</span><span class="st">`</span><span class="sc">/</span><span class="st">`</span><span class="at">1999</span><span class="st">`</span><span class="sc">-</span><span class="dv">1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(PercentChange))</span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vertical bar chart</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rank, <span class="fu">aes</span>(<span class="at">x =</span> PercentChange, <span class="at">y =</span> <span class="fu">reorder</span>(State, PercentChange))) <span class="sc">+</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unintentional injuries %Chg. - 1999 to 2017"</span>, <span class="at">x =</span> <span class="st">"Percentage Change"</span>, <span class="at">y =</span> <span class="st">'State'</span>) <span class="sc">+</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>))<span class="sc">+</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(), <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>))<span class="sc">+</span> </span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vertical bar chart</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rank, <span class="fu">aes</span>(<span class="at">x =</span> PercentChange, <span class="at">y =</span> <span class="fu">reorder</span>(State, PercentChange))) <span class="sc">+</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"purple"</span>) <span class="sc">+</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Alzheimer's disease Deaths %Chg. - 1999 to 2017"</span>, <span class="at">x =</span> <span class="st">"Percentage Change"</span>, <span class="at">y =</span> <span class="st">'State'</span>) <span class="sc">+</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>))<span class="sc">+</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(), <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>))<span class="sc">+</span> </span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="480"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="480"></p>
 </div>
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#https://r-graphics.org/recipe-bar-graph-dot-plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<p>We can see that Mississippi, Nevada and Hawaii have seen the largest increase, while Massachussetts, Maine and Montana are the smallest.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for the specified conditions</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Age)<span class="sc">|&gt;</span> <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2017</span>), Cause <span class="sc">==</span> <span class="st">"Unintentional injuries"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the percentual difference change from 2000 to 2017 for each state</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df_rank <span class="sc">%&gt;%</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Year, <span class="at">values_from =</span> Deaths) <span class="sc">|&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PercentChange =</span> <span class="st">`</span><span class="at">2017</span><span class="st">`</span><span class="sc">/</span><span class="st">`</span><span class="at">1999</span><span class="st">`</span><span class="sc">-</span><span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(PercentChange))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vertical bar chart</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rank, <span class="fu">aes</span>(<span class="at">x =</span> PercentChange, <span class="at">y =</span> <span class="fu">reorder</span>(State, PercentChange))) <span class="sc">+</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unintentional injuries %Chg. - 1999 to 2017"</span>, <span class="at">x =</span> <span class="st">"Percentage Change"</span>, <span class="at">y =</span> <span class="st">'State'</span>) <span class="sc">+</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>))<span class="sc">+</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(), <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>))<span class="sc">+</span> </span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="480"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#https://r-graphics.org/recipe-bar-graph-dot-plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <p>We can see that Rhode Island, Massachussetts, and New Hampshire have seen the largest increase, while Nebraska, Alabama and Mississippi are the smallest.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average percent change increase for Unintentional Accidents</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mean(df_rank$PercentChange)</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Age)<span class="sc">|&gt;</span> <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2017</span>))</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the percentual difference change from 2000 to 2017 for each state</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df_rank <span class="sc">%&gt;%</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Year, <span class="at">values_from =</span> Deaths) <span class="sc">|&gt;</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PercentChange =</span> <span class="st">`</span><span class="at">2017</span><span class="st">`</span><span class="sc">/</span><span class="st">`</span><span class="at">1999</span><span class="st">`</span><span class="sc">-</span><span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(PercentChange))</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#df_rank</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>df_rank_average_increase <span class="ot">=</span> df_rank <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Cause) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">AvgPercentChange =</span> <span class="fu">mean</span>(PercentChange))</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co">#df_rank_average_increase</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>df_rank_average_increase<span class="sc">$</span>Cause <span class="ot">&lt;-</span> <span class="fu">fct_reorder</span>(df_rank_average_increase<span class="sc">$</span>Cause, df_rank_average_increase<span class="sc">$</span>AvgPercentChange)</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the bar chart</span></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rank_average_increase, <span class="fu">aes</span>(<span class="at">x =</span> Cause, <span class="at">y =</span> AvgPercentChange)) <span class="sc">+</span></span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cause"</span>, <span class="at">y =</span> <span class="st">"Average % Change"</span>, <span class="at">title =</span> <span class="st">"Average Percent Change Across All States from 1999 to 2017"</span>) <span class="sc">+</span></span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.25</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="fl">0.25</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="fl">1.75</span>)) <span class="sc">+</span></span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()  <span class="co"># Flips the axes so the bars are horizontal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average percent change increase for Unintentional Accidents</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mean(df_rank$PercentChange)</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Age)<span class="sc">|&gt;</span> <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1999</span>, <span class="dv">2017</span>))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the percentual difference change from 2000 to 2017 for each state</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>df_rank <span class="ot">&lt;-</span> df_rank <span class="sc">%&gt;%</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Year, <span class="at">values_from =</span> Deaths) <span class="sc">|&gt;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PercentChange =</span> <span class="st">`</span><span class="at">2017</span><span class="st">`</span><span class="sc">/</span><span class="st">`</span><span class="at">1999</span><span class="st">`</span><span class="sc">-</span><span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(PercentChange))</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">#df_rank</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>df_rank_average_increase <span class="ot">=</span> df_rank <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Cause) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">AvgPercentChange =</span> <span class="fu">mean</span>(PercentChange))</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co">#df_rank_average_increase</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>df_rank_average_increase<span class="sc">$</span>Cause <span class="ot">&lt;-</span> <span class="fu">fct_reorder</span>(df_rank_average_increase<span class="sc">$</span>Cause, df_rank_average_increase<span class="sc">$</span>AvgPercentChange)</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the bar chart</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rank_average_increase, <span class="fu">aes</span>(<span class="at">x =</span> Cause, <span class="at">y =</span> AvgPercentChange)) <span class="sc">+</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cause"</span>, <span class="at">y =</span> <span class="st">"Average % Change"</span>, <span class="at">title =</span> <span class="st">"Average Percent Change Across All States from 1999 to 2017"</span>) <span class="sc">+</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.25</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="fl">0.25</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="fl">1.75</span>)) <span class="sc">+</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()  <span class="co"># Flips the axes so the bars are horizontal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
@@ -564,7 +570,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df_life_expectancy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"NCHS_-_Death_rates_and_life_expectancy_at_birth_20231111.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df_life_expectancy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"NCHS_-_Death_rates_and_life_expectancy_at_birth_20231111.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 1071 Columns: 5
@@ -578,35 +584,35 @@ dbl (3): Year, Average Life Expectancy (Years), Age-adjusted Death Rate
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View(df_life_expectancy)</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># df_life_expectancy</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>df_life_expectancy_1999_to_2017 <span class="ot">=</span> df_life_expectancy <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Race <span class="sc">==</span> <span class="st">"All Races"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="st">"Both Sexes"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">1999</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&lt;=</span> <span class="dv">2017</span>)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># df_life_expectancy_1999_to_2017</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>lead_cod_2_USA_Alzheimer <span class="ot">=</span> lead_cod_2_USA_facet_prepare <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Alzheimer's disease"</span>)</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># lead_cod_2_USA_Alzheimer</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">#life_expectacy_usa_alzheimer_joined </span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>life_expectacy_usa_alzheimer_joined <span class="ot">=</span> <span class="fu">inner_join</span>(lead_cod_2_USA_Alzheimer,df_life_expectancy_1999_to_2017)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View(df_life_expectancy)</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># df_life_expectancy</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>df_life_expectancy_1999_to_2017 <span class="ot">=</span> df_life_expectancy <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Race <span class="sc">==</span> <span class="st">"All Races"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="st">"Both Sexes"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">1999</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&lt;=</span> <span class="dv">2017</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># df_life_expectancy_1999_to_2017</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>lead_cod_2_USA_Alzheimer <span class="ot">=</span> lead_cod_2_USA_facet_prepare <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Alzheimer's disease"</span>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># lead_cod_2_USA_Alzheimer</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#life_expectacy_usa_alzheimer_joined </span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>life_expectacy_usa_alzheimer_joined <span class="ot">=</span> <span class="fu">inner_join</span>(lead_cod_2_USA_Alzheimer,df_life_expectancy_1999_to_2017)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Joining with `by = join_by(Year)`</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#life_expectacy_usa_alzheimer_joined</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>life_expectacy_usa_alzheimer_joined <span class="ot">=</span> life_expectacy_usa_alzheimer_joined <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Race,<span class="sc">-</span>Sex,<span class="sc">-</span><span class="st">`</span><span class="at">Age-adjusted Death Rate</span><span class="st">`</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#life_expectacy_usa_alzheimer_joined</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>df_life_expectancy_1939_to_1957 <span class="ot">=</span> df_life_expectancy <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Race <span class="sc">==</span> <span class="st">"All Races"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="st">"Both Sexes"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">1939</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&lt;=</span> <span class="dv">1957</span>)  <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Race,<span class="sc">-</span>Sex,<span class="sc">-</span><span class="st">`</span><span class="at">Age-adjusted Death Rate</span><span class="st">`</span>)</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#df_life_expectancy_1934_to_1952</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>life_expectacy_usa_alzheimer_joined_bind <span class="ot">=</span> <span class="fu">cbind</span>(life_expectacy_usa_alzheimer_joined, df_life_expectancy_1939_to_1957)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#life_expectacy_usa_alzheimer_joined</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>life_expectacy_usa_alzheimer_joined <span class="ot">=</span> life_expectacy_usa_alzheimer_joined <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Race,<span class="sc">-</span>Sex,<span class="sc">-</span><span class="st">`</span><span class="at">Age-adjusted Death Rate</span><span class="st">`</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">#life_expectacy_usa_alzheimer_joined</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>df_life_expectancy_1939_to_1957 <span class="ot">=</span> df_life_expectancy <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Race <span class="sc">==</span> <span class="st">"All Races"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="st">"Both Sexes"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">1939</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&lt;=</span> <span class="dv">1957</span>)  <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Race,<span class="sc">-</span>Sex,<span class="sc">-</span><span class="st">`</span><span class="at">Age-adjusted Death Rate</span><span class="st">`</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">#df_life_expectancy_1934_to_1952</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>life_expectacy_usa_alzheimer_joined_bind <span class="ot">=</span> <span class="fu">cbind</span>(life_expectacy_usa_alzheimer_joined, df_life_expectancy_1939_to_1957)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>New names:
@@ -617,24 +623,24 @@ dbl (3): Year, Average Life Expectancy (Years), Age-adjusted Death Rate
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#life_expectacy_usa_alzheimer_joined_bind</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>df_wide_alzheimer <span class="ot">=</span> df_wide <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Cause <span class="sc">==</span> <span class="st">"Alzheimer's disease"</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># df_wide_alzheimer</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>life_expectacy_usa_alzheimer_joined_bind_cumul_growth <span class="ot">=</span> <span class="fu">cbind</span>(life_expectacy_usa_alzheimer_joined_bind,df_wide_alzheimer)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># life_expectacy_usa_alzheimer_joined_bind_cumul_growth</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#life_expectacy_usa_alzheimer_joined_bind</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>df_wide_alzheimer <span class="ot">=</span> df_wide <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Cause <span class="sc">==</span> <span class="st">"Alzheimer's disease"</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># df_wide_alzheimer</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>life_expectacy_usa_alzheimer_joined_bind_cumul_growth <span class="ot">=</span> <span class="fu">cbind</span>(life_expectacy_usa_alzheimer_joined_bind,df_wide_alzheimer)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># life_expectacy_usa_alzheimer_joined_bind_cumul_growth</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming your data frame is called df and it has two continuous variables: Variable1 and Variable2</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatterplot with a regression line</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(life_expectacy_usa_alzheimer_joined_bind_cumul_growth, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Average Life Expectancy (Years)...6</span><span class="st">`</span>, <span class="at">y =</span> CumulativeGrowth)) <span class="sc">+</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>  <span class="co"># Add the scatterplot points</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span>  <span class="co"># Add the linear regression line without the standard error</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Average Life Expectancy"</span>, <span class="at">y =</span> <span class="st">"Cumulative Growth"</span>, <span class="at">title =</span> <span class="st">"Scatterplot w/ Regression Line for Alzheimer's Deaths vs Life Expectancy"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming your data frame is called df and it has two continuous variables: Variable1 and Variable2</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatterplot with a regression line</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(life_expectacy_usa_alzheimer_joined_bind_cumul_growth, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Average Life Expectancy (Years)...6</span><span class="st">`</span>, <span class="at">y =</span> CumulativeGrowth)) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>  <span class="co"># Add the scatterplot points</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span>  <span class="co"># Add the linear regression line without the standard error</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Average Life Expectancy"</span>, <span class="at">y =</span> <span class="st">"Cumulative Growth"</span>, <span class="at">title =</span> <span class="st">"Scatterplot w/ Regression Line for Alzheimer's Deaths vs Life Expectancy"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
@@ -646,11 +652,11 @@ dbl (3): Year, Average Life Expectancy (Years), Age-adjusted Death Rate
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> life_expectacy_usa_alzheimer_joined_bind_cumul_growth<span class="sc">$</span>CumulativeGrowth</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> life_expectacy_usa_alzheimer_joined_bind_cumul_growth<span class="sc">$</span><span class="st">`</span><span class="at">Average Life Expectancy (Years)...6</span><span class="st">`</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>regression_model_cumul_growth <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(y,x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> life_expectacy_usa_alzheimer_joined_bind_cumul_growth<span class="sc">$</span>CumulativeGrowth</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> life_expectacy_usa_alzheimer_joined_bind_cumul_growth<span class="sc">$</span><span class="st">`</span><span class="at">Average Life Expectancy (Years)...6</span><span class="st">`</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>regression_model_cumul_growth <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(y,x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -669,7 +675,7 @@ sample estimates:
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(regression_model_cumul_growth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(regression_model_cumul_growth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -693,7 +699,7 @@ F-statistic: 65.16 on 1 and 17 DF,  p-value: 3.229e-07</code></pre>
 </div>
 </div>
 <p>According to CDC, the Alzheimer’s onset is around 60 years old. It’s interesting to note that there has been a steady increase in life expectancy for people born between 193 and 1952. Life expectancy rose from 61.1 to 68.6. The change in life expectancy is a bit less pronounced. Naturally, we see a very high positive correlation between deaths due to Alzheimer’s disease and the rise in life expectancy.</p>
-<p>#branch</p>
+<p>#branch ####</p>
 
 
 

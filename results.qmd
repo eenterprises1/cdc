@@ -419,3 +419,4 @@ summary(regression_model_cumul_growth)
 According to CDC, the Alzheimer's onset is around 60 years old. It's interesting to note that there has been a steady increase in life expectancy for people born between 193 and 1952. Life expectancy rose from 61.1 to 68.6. The change in life expectancy is a bit less pronounced. Naturally, we see a very high positive correlation between deaths due to Alzheimer's disease and the rise in life expectancy.
 
 #branch
+####
