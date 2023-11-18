@@ -1,4 +1,4 @@
-# 3. Results
+# Results
 
 *Instructions:* *You have a lot of freedom to choose what to do, as long as you restrict yourselves to exploratory techniques (rather than modeling / prediction approaches). In addition, your analysis must be clearly documented and reproducible.*
 
@@ -19,9 +19,9 @@ library(tidyr)
 library(maps)
 ```
 
-## 1.- Preliminary Analysis - Aggregate Numbers
+## Preliminary Analysis - Aggregate Numbers
 
-### 1.1. Main Causes
+### Main Causes
 
 First, we will get the dataset ready for analysis.
 
@@ -67,7 +67,7 @@ rm(cdc_usa_summary)
 
 Notice that the deaths incorporated in these 10 categories, are almost 90% of the total figure of deaths.
 
-### 1.2. Understanding overall trends
+### Understanding overall trends
 
 As population grows, deaths (with a lag) will eventually grow. We would like to understand the interplay between population growth, deaths growth, and the evolution of death rates since 1999. For this, we will create metrics and facet them in time series.
 
@@ -149,7 +149,7 @@ General observations:
 
 ![](https://www.census.gov/content/dam/Census/library/stories/2023/05/aging-united-states-population-fewer-children-in-2020-figure-2.jpg){width="110%"}
 
-### 1.3. Understanding the underlying causes of death
+### Understanding the underlying causes of death
 
 According to the CDC, the best metric to study death evolution is using age-adjusted death rates. We then begin by investigating the evolution of age adjusted death rate across time.
 
@@ -208,7 +208,7 @@ With the cumulative percentage time series graph broken down by cause, we can se
 
 The overall trend is downward for the age adjusted death rate. However, we have identified three causes that show a different behavior. Now we will try to identify which states are leading in these metrics.
 
-### 1.4. Disaggregating by state
+### Disaggregating by state
 
 
 ```{r, fig.height=7, fig.width= 5.5}
@@ -313,7 +313,7 @@ Matching these values with the previous cleveland dop plots, we can say that Mis
 
 
 
-### 1.5. Analyzing Alzheimer's Disease
+### Analyzing Alzheimer's Disease
 
 Apparently the states most affected by Alzheimer's are in the southern part of the United States. Given the possible geographical dependence, we propose to corroborate the information with the following geospatial visualization.
 
@@ -426,18 +426,21 @@ Although not perfect, we see a strong correlation that supports the study: south
 
 
 
-### 1.6. Analyzing Unintentional Injuries
+### Analyzing Unintentional Injuries
+
+
+The increase is clearly due to opioids:
+https://www.cdc.gov/opioids/basics/epidemic.html
+
+I was trying to get a dataset like: opioid sales.. but ofc, this is illegal market, and hard to record any data... it seems that deaths are the only dataset to track the consumption? Not sure....
 
 
 
 
 
+### Analyzing Suicide
 
-
-
-### 1.7. Analyzing Suicide
-
-
+Didnt manage to arrive here today.
 
 
 

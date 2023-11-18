@@ -1,6 +1,4 @@
-# 2. Data
-
-## 2.1 Technical description
+# Data
 
 Identify one or more data sources that you propose to draw on for the project. 
 
@@ -11,6 +9,28 @@ Identify one or more data sources that you propose to draw on for the project.
 - Carefully document your sources with links to the precise data sources that you used. If that is not possible (for example if your data is not available online, then explain that clearly.)
 
 (suggested: 1 page)
+
+
+## Technical description
+
+
+
+
+
+
+
+We are going to work with data related to deaths published by the The Centers for Disease Control and Prevention (CDC). 
+
+The CDC is a national public health institute in the United States, dedicated to protecting health and promoting quality of life through the prevention and control of disease, injury, and disability. The CDC provides free access to a wealth of public health data and resources.
+
+Specifically, we are going to work with the ICD-10 113 Cause List, which holds significant importance within the framework of the International Classification of Diseases. In particular this is the 10th Revision (ICD-10), which is widely acknowledged as a universally accepted standard for the systematic classification of health conditions and the determination of causes of mortality. 
+
+The dataset delves into 113 categorized causes, offering a thorough understanding of public health trends. However, we will be focusing on 49 key aggregations of these categories, as pre-defined by the CDC. This approach allows me to concentrate on the most significant classifications, rather than the more granular data. By analyzing these broader categories, we aim to gain insights into major health patterns and outcomes across different states, using variables like mortality figures, demographic data, crude and age-standardized mortality rates. This selection will enable a more targeted analysis of crucial public health issues.
+
+The dataset, consisting of 37,290 rows and 8 columns, presents a significant volume of data that can serve as a valuable resource for researchers, public health officials, and policy makers. This enables a more comprehensive comprehension of mortality trends and health-related obstacles at both the state and national scales. The inclusion of such comprehensive information aids in the identification of precise health hazards and the customization of interventions to effectively mitigate them, thereby providing guidance for the development of public health strategies and allocation of resources.
+
+With 37,290 rows and 8 columns, this dataset provides a wealth of information critical for researchers, public health officials, and policymakers. It's a valuable resource for gaining a better understanding of mortality trends and health issues at the state and national levels across time. 
+
 
 
 
@@ -28,13 +48,13 @@ https://www.health.ny.gov/diseases/chronic/ageadj.htm
 
 
 
-## 2.2 Research plan
+## Research plan
 
 Explain in detail how your data will enable you to answer your research questions from the introduction. 
 
 (suggested: 1 page)
 
-## 2.3 Missing value analysis
+## Missing value analysis
 
 Describe any patterns you discover in missing values. If no values are missing, graphs should still be included showing that.
 
@@ -43,17 +63,6 @@ Describe any patterns you discover in missing values. If no values are missing, 
 
 
 
-We are going to work with data related to deaths published by the The Centers for Disease Control and Prevention (CDC). 
-
-The CDC is a national public health institute in the United States, dedicated to protecting health and promoting quality of life through the prevention and control of disease, injury, and disability. The CDC provides free access to a wealth of public health data and resources.
-
-Specifically, we are going to work with the ICD-10 113 Cause List, which holds significant importance within the framework of the International Classification of Diseases. In particular this is the 10th Revision (ICD-10), which is widely acknowledged as a universally accepted standard for the systematic classification of health conditions and the determination of causes of mortality. 
-
-The dataset delves into 113 categorized causes, offering a thorough understanding of public health trends. However, we will be focusing on 49 key aggregations of these categories, as pre-defined by the CDC. This approach allows me to concentrate on the most significant classifications, rather than the more granular data. By analyzing these broader categories, we aim to gain insights into major health patterns and outcomes across different states, using variables like mortality figures, demographic data, crude and age-standardized mortality rates. This selection will enable a more targeted analysis of crucial public health issues.
-
-The dataset, consisting of 37,290 rows and 8 columns, presents a significant volume of data that can serve as a valuable resource for researchers, public health officials, and policy makers. This enables a more comprehensive comprehension of mortality trends and health-related obstacles at both the state and national scales. The inclusion of such comprehensive information aids in the identification of precise health hazards and the customization of interventions to effectively mitigate them, thereby providing guidance for the development of public health strategies and allocation of resources.
-
-With 37,290 rows and 8 columns, this dataset provides a wealth of information critical for researchers, public health officials, and policymakers. It's a valuable resource for gaining a better understanding of mortality trends and health issues at the state and national levels across time. 
 
 
 ## Missing value analysis
