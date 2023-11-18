@@ -3,3 +3,13 @@
 Explain why you chose this topic, and the questions you are interested in studying. Provide context for readers who are not familiar with the topic.
 
 (suggested: 1 page)
+
+
+
+
+
+
+The CDC is a national public health institute in the United States, dedicated to protecting health and promoting quality of life through the prevention and control of disease, injury, and disability. The CDC provides free access to a wealth of public health data and resources.
+
+
+Specifically, we are going to work with the ICD-10 113 Cause List, which holds significant importance within the framework of the International Classification of Diseases. In particular this is the 10th Revision (ICD-10), which is widely acknowledged as a universally accepted standard for the systematic classification of health conditions and the determination of causes of mortality.

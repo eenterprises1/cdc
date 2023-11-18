@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -142,10 +176,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#technical-description" id="toc-technical-description" class="nav-link active" data-scroll-target="#technical-description"><span class="header-section-number">2.1</span> Technical description</a></li>
+  <li><a href="#technical-description" id="toc-technical-description" class="nav-link active" data-scroll-target="#technical-description"><span class="header-section-number">2.1</span> Technical description</a>
+  <ul class="collapse">
+  <li><a href="#data-collection" id="toc-data-collection" class="nav-link" data-scroll-target="#data-collection"><span class="header-section-number">2.1.1</span> Data collection</a></li>
+  <li><a href="#description-of-the-data" id="toc-description-of-the-data" class="nav-link" data-scroll-target="#description-of-the-data"><span class="header-section-number">2.1.2</span> Description of the data</a></li>
+  </ul></li>
   <li><a href="#research-plan" id="toc-research-plan" class="nav-link" data-scroll-target="#research-plan"><span class="header-section-number">2.2</span> Research plan</a></li>
   <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</a></li>
-  <li><a href="#missing-value-analysis-1" id="toc-missing-value-analysis-1" class="nav-link" data-scroll-target="#missing-value-analysis-1"><span class="header-section-number">2.4</span> Missing value analysis</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/eenterprises1/cdc/edit/main/data.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/eenterprises1/cdc/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -178,17 +215,76 @@ ul.task-list li input[type="checkbox"] {
 <li>Carefully document your sources with links to the precise data sources that you used. If that is not possible (for example if your data is not available online, then explain that clearly.)</li>
 </ul>
 <p>(suggested: 1 page)</p>
+<p>CDC Leading Causes of Death Dataset is the primary data source for our project.</p>
 <section id="technical-description" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="technical-description"><span class="header-section-number">2.1</span> Technical description</h2>
-<p>We are going to work with data related to deaths published by the The Centers for Disease Control and Prevention (CDC).</p>
-<p>The CDC is a national public health institute in the United States, dedicated to protecting health and promoting quality of life through the prevention and control of disease, injury, and disability. The CDC provides free access to a wealth of public health data and resources.</p>
-<p>Specifically, we are going to work with the ICD-10 113 Cause List, which holds significant importance within the framework of the International Classification of Diseases. In particular this is the 10th Revision (ICD-10), which is widely acknowledged as a universally accepted standard for the systematic classification of health conditions and the determination of causes of mortality.</p>
-<p>The dataset delves into 113 categorized causes, offering a thorough understanding of public health trends. However, we will be focusing on 49 key aggregations of these categories, as pre-defined by the CDC. This approach allows me to concentrate on the most significant classifications, rather than the more granular data. By analyzing these broader categories, we aim to gain insights into major health patterns and outcomes across different states, using variables like mortality figures, demographic data, crude and age-standardized mortality rates. This selection will enable a more targeted analysis of crucial public health issues.</p>
-<p>The dataset, consisting of 37,290 rows and 8 columns, presents a significant volume of data that can serve as a valuable resource for researchers, public health officials, and policy makers. This enables a more comprehensive comprehension of mortality trends and health-related obstacles at both the state and national scales. The inclusion of such comprehensive information aids in the identification of precise health hazards and the customization of interventions to effectively mitigate them, thereby providing guidance for the development of public health strategies and allocation of resources.</p>
-<p>With 37,290 rows and 8 columns, this dataset provides a wealth of information critical for researchers, public health officials, and policymakers. It’s a valuable resource for gaining a better understanding of mortality trends and health issues at the state and national levels across time.</p>
-<p>The Crude Rate is a measure of the number of deaths in a given population, scaled to the size of that population, per unit of time. It is not adjusted for the age distribution of a population. An increase in the Crude Rate could be due to several factors, including an increase in the absolute number of deaths, a growing proportion of older individuals in the population who are more likely to die, or a decrease in the overall population size.</p>
-<p>On the other hand, the Age Adjusted Rate, or Age Adjusted Death Rate, is a mortality rate statistically modified to eliminate the effect of different age distributions in different populations. This rate is typically used to allow comparisons between populations that may have different age structures.</p>
-<p>https://www.health.ny.gov/diseases/chronic/ageadj.htm</p>
+<section id="data-collection" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="data-collection"><span class="header-section-number">2.1.1</span> Data collection</h3>
+<p>We are going to work with data related to deaths published by the The Centers for Disease Control and Prevention (CDC). The data is collected by the Centers for Disease Control and Prevention (CDC), specifically by the National Center for Health Statistics (NCHS). This involves gathering mortality and population data from the National Vital Statistics System (NVSS), which receives information from state and local health departments in the United States.</p>
+</section>
+<section id="description-of-the-data" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="description-of-the-data"><span class="header-section-number">2.1.2</span> Description of the data</h3>
+<ul>
+<li>Format: The dataset is publicly available in CSV files in the following website: https://wonder.cdc.gov/ucd-icd10.html</li>
+<li>Frequency: Annually updated from 1999 to 2020</li>
+<li>Features: key features include causes of death, demographic information (race, sex, age) and geographic location (state).</li>
+<li>Dimensions: the dataset provides the following metrics:
+<ul>
+<li>Deaths: number of deaths that ocurred in a specific year, for a specific race, sex, state.</li>
+<li>Population: the total popoulation for that specific year, race, state etc.</li>
+<li>Crude Death Rate: number of deaths divided total population</li>
+<li>Age Adjusted Death Rate: number o deaths adjusted by age</li>
+</ul></li>
+<li>Specific description: The main dataset has 37290 rows and 8 columns.</li>
+</ul>
+<p>It is important to differentiate between age-adjusted death rate, deaths and crude death rate. While the three of them provide information about mortality, we will focus on Age-Adjusted-Death-Rate: the <strong>Crude Rate</strong> is a measure of the number of deaths in a given population, scaled to the size of that population, per unit of time. It is not adjusted for the age distribution of a population. An increase in the Crude Rate could be due to several factors, including an increase in the absolute number of deaths, a growing proportion of older individuals in the population who are more likely to die, or a decrease in the overall population size. <strong>On the other hand</strong>, the Age Adjusted Rate, or Age Adjusted Death Rate, is a mortality rate statistically modified to eliminate the effect of different age distributions in different populations. This rate is typically used to allow comparisons between populations that may have different age structures. A good explanation of the different can be found here: https://www.health.ny.gov/diseases/chronic/ageadj.htm</p>
+<ul>
+<li>Importing the data: the dataset can be obtained frm the CDC webiste in a CSV format. Then we will import it into R using read_csv() function. The dataset will be stored in the repository.</li>
+<li>Note any issues / problems with the data:
+<ul>
+<li>In general there are no problems with the data in terms of inconsistencies. Numbers are sound and we did not encounter any number that seemed to be inherently wrong. However, the CDC does not calculate Age-Adjusted-Death-Rate or Crude-Death-Rate when the number of absolute Deaths is less than or equal to 10. Instead, they are labeled as Unrealiable. In any case, the number would be quite small, and we can treat Unreliable measures as zero.</li>
+</ul></li>
+</ul>
+<p>We can take a look to the first few rows of the dataset:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cdc_dataset <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"NCHS_Leading_Causes_of_Death_United_States_2020.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(cdc_dataset, <span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 8
+    Year `113 Cause Name`      `Cause Name` State Deaths Population `Crude Rate`
+   &lt;dbl&gt; &lt;chr&gt;                 &lt;chr&gt;        &lt;chr&gt;  &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
+ 1  1999 Tuberculosis (A16-A1… Tuberculosis Alab…     16    4430141         NA  
+ 2  1999 Septicemia (A40-A41)  Septicemia   Alab…    691    4430141         15.6
+ 3  1999 Viral hepatitis (B15… Viral hepat… Alab…     63    4430141          1.4
+ 4  1999 Human immunodeficien… Human immun… Alab…    177    4430141          4  
+ 5  1999 Malignant neoplasms … Cancer       Alab…   9506    4430141        215. 
+ 6  1999 In situ neoplasms, b… In situ neo… Alab…    237    4430141          5.3
+ 7  1999 Anemias (D50-D64)     Anemias      Alab…    110    4430141          2.5
+ 8  1999 Diabetes mellitus (E… Diabetes     Alab…   1341    4430141         30.3
+ 9  1999 Nutritional deficien… Nutritional… Alab…     85    4430141          1.9
+10  1999 Meningitis (G00,G03)  Meningitis   Alab…     11    4430141         NA  
+11  1999 Parkinson disease (G… Parkinson d… Alab…    207    4430141          4.7
+12  1999 Alzheimer disease (G… Alzheimer's… Alab…    772    4430141         17.4
+13  1999 Diseases of heart (I… Heart disea… Alab…  13419    4430141        303. 
+14  1999 Essential hypertensi… Essential h… Alab…    313    4430141          7.1
+15  1999 Cerebrovascular dise… Stroke       Alab…   3148    4430141         71.1
+16  1999 Atherosclerosis (I70) Atheroscler… Alab…    215    4430141          4.9
+17  1999 Aortic aneurysm and … Aortic aneu… Alab…    224    4430141          5.1
+18  1999 Influenza and pneumo… Influenza a… Alab…   1228    4430141         27.7
+19  1999 Chronic lower respir… CLRD         Alab…   2179    4430141         49.2
+20  1999 Pneumoconioses and c… Pneumoconio… Alab…     20    4430141          0.5
+# ℹ 1 more variable: `Age Adjusted Rate` &lt;dbl&gt;</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(cdc_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
 </section>
 <section id="research-plan" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="research-plan"><span class="header-section-number">2.2</span> Research plan</h2>
@@ -199,9 +295,6 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="2.3" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</h2>
 <p>Describe any patterns you discover in missing values. If no values are missing, graphs should still be included showing that.</p>
 <p>(suggested: 2 graphs plus commentary)</p>
-</section>
-<section id="missing-value-analysis-1" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="missing-value-analysis-1"><span class="header-section-number">2.4</span> Missing value analysis</h2>
 <p>The dataset contains missing values for entries regarded as Unreliable by the CDC. These values consists of calculations coming from number of deaths less than 20. We can check if this is definition is correct:</p>
 
 
