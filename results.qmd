@@ -56,13 +56,13 @@ ggplot(cdc_usa_summary, aes(x = reorder(Cause, Total_Deaths), y = Total_Deaths))
   theme_minimal()
 ```
 
-The bar chart above identifies 10 most common causes of death in the United States aggregated from year 1999 to 2017. It's is visible that heart disease and cancer account for a significant bulk of all deaths. We will focus our analysis on these.
+The bar chart above identifies 10 most common causes of death in the United States aggregated from year 1999 to 2020. It's is visible that heart disease and cancer account for a significant bulk of all deaths. We will focus our analysis on these.
 
 ```{r}
 #Filtering cdc_dataset by the top 10 Cause Name from cdc_usa_summary
 cdc_dataset <- cdc_dataset[cdc_dataset$Cause %in%  cdc_usa_summary$Cause, ]
 cdc_usa  <- cdc_usa[cdc_usa$Cause %in%  cdc_usa_summary$Cause, ]
-rm(cdc_usa_summary)
+# rm(cdc_usa_summary)
 ```
 
 Notice that the deaths incorporated in these 10 categories, are almost 90% of the total figure of deaths.
@@ -157,11 +157,12 @@ According to the CDC, the best metric to study death evolution is using age-adju
 #Creating a faceting chart, which will have age adjusted death rates by cause of death:
 df_usa_cause <- cdc_usa |> select(Year, Cause, Age_Adj_Rate)
 ggplot(df_usa_cause, aes(x = Year, y = Age_Adj_Rate, group = Cause, color = Cause)) +
-  geom_line(size = 1.5) + # Thicker lines
+  geom_line(size = 0.5) + # Thicker lines
   facet_wrap(~ Cause, scales = "free_y") +
   theme_bw() +
   labs(title = "Time Series of Causes of Death in the USA", x = "Year", y = "Age Adjusted Death Rate")+ 
-  guides(color = "none")
+  guides(color = "none") +
+  geom_point()
 ```
 
 We can make the following observations:
@@ -195,18 +196,22 @@ color_blind_friendly <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
 
 #Creating the time series plot
 ggplot(cdc_usa_wider, aes(x = Year, y = `Cumulative Change`, color = Metric)) +
-  geom_line(size = 1.3) +
-  labs(title = "Cumulative Change - Age Adj. Deaht Rate", x = "Year", y = "Cumulative Percentual Change", color = "Metric") +
+  geom_line(size = 1) +
+  labs(title = "Cumulative Change - Age Adj. Death Rate", x = "Year", y = "Cumulative Percentual Change", color = "Metric") +
   theme_minimal() +
   theme(legend.position = "right") +
   scale_y_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8))+
   scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
-  scale_color_manual(values = color_blind_friendly)
+  scale_color_manual(values = color_blind_friendly) 
+
 ```
 
 With the cumulative percentage time series graph broken down by cause, we can see some interesting trends and better understand the trends over time. In particular, deaths caused by Alzheimer's disease is aggressively increasing year by year. Unintentional injuries and suicide are the number two and number three fastest growing causes of death, respectively. Additionally, we can note that stroke, influenza and pneumonia, and heart disease have actually been decreasing during the same time of 1999-2020. Those we should note that death from Stroke, Influenza and pneumonia, and heart disease diseases showed a decreasing trend until 2012, but then began to grow again.
 
 The overall trend is downward for the age adjusted death rate. However, we have identified three causes that show a different behavior. Now we will try to identify which states are leading in these metrics.
+
+
+
 
 ### Disaggregating by state
 
@@ -227,7 +232,7 @@ df_rank1 <- df_rank1 %>%
 #Cleveland
 ggplot(df_rank1, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   geom_point(size = 3, color = "darkgreen") +
-  labs(title = "Alzheimer's Disiease %Chg. in Age Adj. Death Rate", x = "Percentage Change 1999 to 2020", y = 'State') +
+  labs(title = "Alzheimer's Disease %Chg. in Age Adj. Death Rate", x = "Percentage Change 1999 to 2020", y = 'State') +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
@@ -237,6 +242,7 @@ ggplot(df_rank1, aes(x = PercentChange, y = reorder(State, PercentChange))) +
 ```
 
 We can see that Mississippi, Arkansas and Alabama have seen the largest increase, while Maine, Maryland and Montana are the smallest.
+
 
 ```{r, fig.height=7, fig.width= 5.5}
 #Filter the data for the specified conditions
@@ -254,7 +260,7 @@ df_rank2 <- df_rank2 %>%
 #Cleveland
 ggplot(df_rank2, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   geom_point(size = 3, color = "darkblue") +
-  labs(title = "Unintentional Injuries %Chg. in Age Adj. Death Rate", x = "Percentage Change 1999 to 2020", y = 'State') +
+  labs(title = "Unintent. Injuries %Chg in Age Adj Death Rate", x = "Percentage Change 1999 to 2020", y = 'State') +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
@@ -290,7 +296,7 @@ ggplot(df_rank3, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   theme(legend.position = "none")
 ```
 
-We can see that Utah, Idaho and North Dakota have seen the largest increase, while Delaware, Rhode Island and Louisiana the smallest.
+We can see that Vermont, Iowa and Kansas have seen the largest increase, while California, Rhode Island and Nevada are the smallest.
 
 
 
@@ -309,7 +315,7 @@ ggplot(df_box, aes(x = Cause, y = PercentChange)) +
   scale_y_continuous(labels = scales::percent)
 
 ```
-Matching these values with the previous cleveland dop plots, we can say that Missisipi is an outlier for Alzheimer. Rhode Island and West Virginia are outliers for Unintentional Injuries. Finally, Suicide seems to not have any outlier. From the boxplots we also notice that the three causes are skewed to the right. 
+Matching these values with the previous cleveland dot plots, we can say that Mississippi is an outlier for Alzheimer. Rhode Island and West Virginia are outliers for Unintentional Injuries. Finally, Suicide seems to not have any outlier. From the boxplots we also notice that the three causes are skewed to the right. 
 
 
 
@@ -348,7 +354,7 @@ ggplot(data = df_map, aes(x = long, y = lat, group = group, fill = Top10Percent)
     labs(title = "Top 12% of States by Percent Change in Death Rates due to Alzheimer's")
 
 ```
-We can clearly see a cluster in the south-east of the U.S. This cluster concentrates the 12% that saw the biggest increase in deaths due to alzhmeier's (age-adjusted).
+We can clearly see a cluster in the south-east of the U.S. This cluster concentrates the 12% that saw the biggest increase in deaths due to Alzhmeier's (age-adjusted).
 
 According to this study: https://www.nia.nih.gov/news/data-shows-racial-disparities-alzheimers-disease-diagnosis-between-black-and-white-research, black people are almost twice more likely to develop dementia due to a higher exposure to risk factors. For this reason, we will investigate black race distribution by state.
 
@@ -434,6 +440,44 @@ https://www.cdc.gov/opioids/basics/epidemic.html
 
 I was trying to get a dataset like: opioid sales.. but ofc, this is illegal market, and hard to record any data... it seems that deaths are the only dataset to track the consumption? Not sure....
 
+```{r}
+library(readr)
+df_opiod <- read_csv("NCHS_Opiod_Dispense.csv")
+
+df_opiod_state = df_opiod %>% filter(State != 'United States')
+df_opiod_state = df_opiod_state %>% select(-StateAbb)
+df_opiod_state_arranged =  df_opiod_state %>% arrange(desc(OpiodDispenseRatePer100))
+df_opiod_state_arranged %>% filter(State == 'West Virginia')
+
+
+
+df_opiod_state_arranged %>% filter(Year < 2017) %>% group_by(State) %>% summarize(Avg = mean(OpiodDispenseRatePer100)) %>% arrange(desc(Avg)) %>% filter(Avg > 115)
+
+
+
+```
+
+We see that West Virginia has the highest average dispensing rate 
+
+```{r}
+df_opiod_state_arranged_top5_states = df_opiod_state_arranged %>% filter(State == "West Virginia" | State == "Alabama" | State == "Tennessee" | State == "Kentucky" | State == "Arkansas")
+
+df_opiod_state_arranged_top5_states
+  
+ggplot(df_opiod_state_arranged_top5_states, aes(x = as.numeric(Year), y = OpiodDispenseRatePer100, color = State)) +
+  geom_line(size = 1) +
+  geom_point() +
+  theme_minimal() +
+  theme(legend.position = "bottom") 
+
+
+```
+
+
+```{r}
+cude_rate_states = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Unintentional injuries")
+cude_rate_states %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg))
+```
 
 
 
