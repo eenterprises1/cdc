@@ -589,13 +589,22 @@ This topic is extremely broad and difficult to summarize. There are many life fa
 
 ```{r}
 top10_avg_suicide_states = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Suicide") %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg)) %>% filter(Avg > 16.9)
-top10_avg_suicide_states
-```
-These states have had the highest suicide rate on average from 1999 to 2020. We can see that there is interesting relationship between where most suicide tend to occur and the type of state it is. In particular, many of these states tend to have a sparsely population density. In other words, the land mass tends to be big compared to the population residing on that land mass. 
+#top10_avg_suicide_states
 
-```{r}
-# as.vector(top10_avg_suicide_states %>% distinct(State))
+# library(knitr)
+# kable(top10_avg_suicide_states %>% mutate(across(where(is.numeric), ~round(., 2))))
+# 
+# library(huxtable)
+# hux(top10_avg_suicide_states)
+# 
+library(flextable)
+flextable(top10_avg_suicide_states %>% mutate(across(where(is.numeric), ~round(., 2))))
+
+# library(formattable)
+# formattable()
 ```
+These states have had the highest suicide rate on average from 1999 to 2020. We can see that there is interesting relationship between where most suicide tend to occur and the type of state it is. In particular, many of these states tend to have a sparsely population density. In other words, the land mass tends to be big compared to the population residing on that land mass. We import a data set to isolate states that have the lower population density. Consider this next table of lowest population densities in US by state:
+
 
 
 
@@ -609,9 +618,9 @@ colnames(united_states_by_area_density) <- c('State','densityMi')
 #united_states_by_area_density
 
 lowest_population_density_states = united_states_by_area_density[1:10,]
-lowest_population_density_states
+#lowest_population_density_states
 
-
+flextable(lowest_population_density_states %>% mutate(across(where(is.numeric), ~round(., 2))))
 
 ```
 
@@ -630,9 +639,10 @@ b = top10_avg_suicide_states %>% distinct(State)
 intersect(a$State,b$State)
 
 
+
 ```
 
-We import a data set to isolate states that have the lower population density. These are states that have the lower population density. There is a peculiar pattern that emerges. Comparing the top 8 states for lowest population density and the top 8 states for the highest suicide rate, there is an overlap of 6 states.
+There is a peculiar pattern that emerges. Comparing the top 8 states for lowest population density and the top 8 states for the highest suicide rate, there is an overlap of 6 states.
 
 ```{r}
 avg_suicide_rate = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Suicide") %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg))
@@ -659,7 +669,7 @@ boxplot(united_states_by_area_density$densityMi,
 
 ```
 
-We see that there are some outliers in terms of population density (i.e. 6 states are very densely populated). The distribution is right skewed. This is a good candidate to do a log transform to further analyze the data in terms of how it relates to the average suicide rate over the last 20 years. After joining on state, we can run a linear regression. 
+We see that there are some outliers in terms of population density (i.e. 6 states are very densely populated). The distribution is right skewed. This is a good candidate to do a log transform to further analyze the data in terms of how it relates to the average suicide rate over the last 20 years. After joining the data on state, we can run a linear regression. 
 
 
 
