@@ -585,7 +585,7 @@ We see that choosing 8 states that have had the highest average death rate from 
 
 ### Analyzing Suicide
 
-This topic is extremely broad and difficult to summarize. There are many life factors such as depression, mental illness, lack of access to mental health care, isolation, and quality of life that can contribute to the rising rates. However, there is peculiar pattern that emerges in terms of population density and suicide rates.  
+This topic is extremely broad and difficult to summarize. There are many life factors such as depression, mental illness, lack of access to mental health care, isolation, and quality of life that can contribute to the rising rates. However, there is peculiar pattern that emerges in terms of population density and suicide rates.  Consider these top 10 states with highest average suicide rates:
 
 ```{r}
 top10_avg_suicide_states = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Suicide") %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg)) %>% filter(Avg > 16.9)
@@ -602,6 +602,8 @@ flextable(top10_avg_suicide_states %>% mutate(across(where(is.numeric), ~round(.
 
 # library(formattable)
 # formattable()
+
+
 ```
 These states have had the highest suicide rate on average from 1999 to 2020. We can see that there is interesting relationship between where most suicide tend to occur and the type of state it is. In particular, many of these states tend to have a sparsely population density. In other words, the land mass tends to be big compared to the population residing on that land mass. We import a data set to isolate states that have the lower population density. Consider this next table of lowest population densities in US by state:
 
@@ -642,7 +644,7 @@ intersect(a$State,b$State)
 
 ```
 
-There is a peculiar pattern that emerges. Comparing the top 8 states for lowest population density and the top 8 states for the highest suicide rate, there is an overlap of 6 states.
+There is a peculiar pattern that emerges. Comparing the top 10 states for lowest population density and the top 8 states for the highest suicide rate, there is an overlap of 6 states.
 
 ```{r}
 avg_suicide_rate = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Suicide") %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg))
