@@ -1,15 +1,21 @@
 # Introduction
 
-Explain why you chose this topic, and the questions you are interested in studying. Provide context for readers who are not familiar with the topic.
+The first aspect of our investigation focuses on identifying the current leading causes of death in the United States. This analysis is very important because it helps us determine which health problems kill the most people. Knowing these causes will help healthcare professionals and policymakers decide where to focus their efforts and resources. We want to show you the biggest health risks Americans have had in the past and still face today by looking at CDC data.
 
-(suggested: 1 page)
+Next, we will explore how these leading causes have changed over the past decade. This historical perspective is important for noticing trends in public health, like when new health threats appear or when others are successfully lowered. By comparing past and present data, we can gain insights into the effectiveness of healthcare policies and medical advancements and identify areas that still need attention.
 
+Our third focus will be on the geographical and racial disparities in these causes of death. Examining the variation in mortality causes across different states and races uncovers the inequalities in health outcomes. This part of the investigation will highlight areas where certain groups are disproportionately affected, providing a foundation for more equitable health strategies and interventions.
 
+Finally, this analysis holds significant value for policymakers and health planners. By understanding the current trends and historical changes in mortality causes, decision-makers can better target and develop projects and policies to address these issues. This investigation aims to clarify the general trend in deaths, and where improvement can be done. For this, we will answer the following questions:
 
+-   What are the current leading causes of death in the United States?
 
+-   What causes seem to be more controlled? Which should be quickly tackled?
 
+-   How have these leading causes changed over the last two decades?
 
-The CDC is a national public health institute in the United States, dedicated to protecting health and promoting quality of life through the prevention and control of disease, injury, and disability. The CDC provides free access to a wealth of public health data and resources.
+-   How do these causes of death vary across different states and races?
 
+-   Are there states that need more urgent investment in health care to control some causes of death?
 
-Specifically, we are going to work with the ICD-10 113 Cause List, which holds significant importance within the framework of the International Classification of Diseases. In particular this is the 10th Revision (ICD-10), which is widely acknowledged as a universally accepted standard for the systematic classification of health conditions and the determination of causes of mortality.
+-   Is there any explanation we can offer for the trends visualized?
