@@ -676,7 +676,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df_map %&gt;% filter(TopPercent =="Top 25%") %&gt;% distinct(region)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Although not perfect, we see a strong correlation that supports the study: southern states have the most share of black people, and it coincides with the states that have had higher increases of deaths due to Alzheimer’s disease.</p>
+<p>Although not perfect, we see a strong correlation that supports the study: select southern states have a higher proportion of the population comprised of black people, and it coincides with the states that have had higher increases of deaths due to Alzheimer’s disease.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -731,149 +731,76 @@ sample estimates:
 </section>
 <section id="analyzing-unintentional-injuries" class="level3" data-number="3.1.6">
 <h3 data-number="3.1.6" class="anchored" data-anchor-id="analyzing-unintentional-injuries"><span class="header-section-number">3.1.6</span> Analyzing Unintentional Injuries</h3>
-<p>The increase is clearly due to opioids: https://www.cdc.gov/opioids/basics/epidemic.html</p>
-<p>I was trying to get a dataset like: opioid sales.. but ofc, this is illegal market, and hard to record any data… it seems that deaths are the only dataset to track the consumption? Not sure….</p>
+<p>A large bulk of what is under unintentional injuries is drug overdoses.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df_opiod <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"NCHS_Opiod_Dispense.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df_opiod <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"NCHS_Opiod_Dispense.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: One or more parsing issues, call `problems()` on your data frame for details,
-e.g.:
-  dat &lt;- vroom(...)
-  problems(dat)</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 771 Columns: 4
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (3): State, StateAbb, Year
-dbl (1): OpiodDispenseRatePer100
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df_opiod_state <span class="ot">=</span> df_opiod <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">'United States'</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>df_opiod_state <span class="ot">=</span> df_opiod_state <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>StateAbb)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>df_opiod_state_arranged <span class="ot">=</span>  df_opiod_state <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(OpiodDispenseRatePer100))</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#df_opiod_state_arranged %&gt;% filter(State == 'West Virginia')</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#df_opiod_state_arranged %&gt;% filter(Year &lt;= 2020) %&gt;% group_by(State) %&gt;% summarize(Avg = mean(OpiodDispenseRatePer100)) %&gt;% arrange(desc(Avg)) %&gt;% filter(Avg &gt; 95)</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> df_opiod_state_arranged <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&lt;=</span> <span class="dv">2020</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(State) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg =</span> <span class="fu">mean</span>(OpiodDispenseRatePer100)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Avg)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Avg <span class="sc">&gt;</span> <span class="dv">95</span>)</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>z_reverse <span class="ot">=</span> z[<span class="fu">order</span>(z<span class="sc">$</span>Avg), ]</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">#z_reverse</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(df_opiod_state_arranged %&gt;% filter(Year &lt;= 2020) %&gt;% group_by(State) %&gt;% summarize(Avg = mean(OpiodDispenseRatePer100)) %&gt;% arrange(desc(Avg)) %&gt;% filter(Avg &gt; 95), aes(x = State, y = Avg)) +</span></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_bar(stat = "identity", fill = '#8B4513')</span></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>my_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"darkgreen"</span>, <span class="st">"orange"</span>)</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="fu">dotchart</span>(z_reverse<span class="sc">$</span>Avg, <span class="at">labels =</span> z_reverse<span class="sc">$</span>State,<span class="at">gcolor =</span> <span class="st">"green"</span>,</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">cex =</span> <span class="fl">0.9</span>, <span class="at">xlab =</span> <span class="st">"Opioid Dispense Rate Per 100"</span>, <span class="at">main =</span> <span class="st">"Top 8 Highest States with Average Opioid Dispense Rate for 2006-2020"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>We see that West Virginia has the highest average dispensing rate</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df_opiod_state_arranged_top5_states <span class="ot">=</span> df_opiod_state_arranged <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"West Virginia"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Alabama"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Tennessee"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Kentucky"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Arkansas"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Mississippi"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Oklahoma"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Louisiana"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>df_opiod_state_arranged_top5_states</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 120 × 3
-   State         OpiodDispenseRatePer100 Year 
-   &lt;chr&gt;                           &lt;dbl&gt; &lt;chr&gt;
- 1 West Virginia                    147. 2009 
- 2 West Virginia                    146. 2008 
- 3 Alabama                          144. 2012 
- 4 West Virginia                    143. 2010 
- 5 Alabama                          142. 2013 
- 6 Tennessee                        140  2010 
- 7 West Virginia                    140. 2011 
- 8 Tennessee                        138. 2011 
- 9 Tennessee                        138. 2009 
-10 Kentucky                         137  2011 
-# ℹ 110 more rows</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_opiod_state_arranged_top5_states, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.numeric</span>(Year), <span class="at">y =</span> OpiodDispenseRatePer100, <span class="at">color =</span> State)) <span class="sc">+</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df_opiod_state <span class="ot">=</span> df_opiod <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">'United States'</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df_opiod_state <span class="ot">=</span> df_opiod_state <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>StateAbb)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df_opiod_state_arranged <span class="ot">=</span>  df_opiod_state <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(OpiodDispenseRatePer100))</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> df_opiod_state_arranged <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&lt;=</span> <span class="dv">2020</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(State) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg =</span> <span class="fu">mean</span>(OpiodDispenseRatePer100)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Avg)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Avg <span class="sc">&gt;</span> <span class="dv">95</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>z_reverse <span class="ot">=</span> z[<span class="fu">order</span>(z<span class="sc">$</span>Avg), ]</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">#z_reverse</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(df_opiod_state_arranged %&gt;% filter(Year &lt;= 2020) %&gt;% group_by(State) %&gt;% summarize(Avg = mean(OpiodDispenseRatePer100)) %&gt;% arrange(desc(Avg)) %&gt;% filter(Avg &gt; 95), aes(x = State, y = Avg)) +</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_bar(stat = "identity", fill = '#8B4513')</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="fu">dotchart</span>(z_reverse<span class="sc">$</span>Avg, <span class="at">labels =</span> z_reverse<span class="sc">$</span>State,</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">cex =</span> <span class="fl">0.9</span>, <span class="at">xlab =</span> <span class="st">"Opioid Dispense Rate Per 100"</span>, <span class="at">main =</span> <span class="st">"Top 8 Highest States with Average Opioid Dispense Rate for 2006-2020"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Averaging the rate of opioid dispense rate (via phramancies and medical facilities), here are top 8 highest states that were dispensing the most amount of perscription opioids.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>top5_states_adj_rate_unint <span class="ot">=</span> cdc_dataset <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">"United States"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Cause <span class="sc">==</span> <span class="st">"Unintentional injuries"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;</span> <span class="dv">2005</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>top5_states_adj_rate_unint <span class="ot">=</span> top5_states_adj_rate_unint <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(State) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg =</span> <span class="fu">mean</span>(Age_Adj_Rate)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Avg)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Avg <span class="sc">&gt;</span> <span class="dv">57</span>)<span class="co"># %&gt;% filter(Avg &gt; 57.4)</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co">#top5_states_adj_rate_unint</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>w <span class="ot">=</span> top5_states_adj_rate_unint</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">#w</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>w_reverse <span class="ot">=</span> w[<span class="fu">order</span>(w<span class="sc">$</span>Avg), ]</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">#w_reverse</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="fu">dotchart</span>(w_reverse<span class="sc">$</span>Avg, <span class="at">labels =</span> w_reverse<span class="sc">$</span>State,<span class="at">gcolor =</span> <span class="st">"green"</span>,</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">cex =</span> <span class="fl">0.9</span>, <span class="at">xlab =</span> <span class="st">"Age Adjusted Death Rate"</span>, <span class="at">main =</span> <span class="st">"Top 8 Highest States w/ Avg Age-Adj Death Rate for Unintentional '06-'20"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df_opiod_state_arranged_top5_states <span class="ot">=</span> df_opiod_state_arranged <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"West Virginia"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Alabama"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Tennessee"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Kentucky"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Arkansas"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Mississippi"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Oklahoma"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Louisiana"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># df_opiod_state_arranged_top5_states</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_opiod_state_arranged_top5_states, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.numeric</span>(Year), <span class="at">y =</span> OpiodDispenseRatePer100, <span class="at">color =</span> State)) <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)  <span class="sc">+</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span>.<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Opioid Dispense rate Per 100"</span>, <span class="at">title =</span> <span class="st">"Opioid Dispense Rate for Top 8 States (2006 - 2020)"</span>) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2006</span><span class="sc">:</span><span class="dv">2020</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>We can observe that these states accelerate in dispensing opioids and then dramatically decrease the opiod dispensing around 2012.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>selected_top5 <span class="ot">=</span> cdc_dataset <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Cause <span class="sc">==</span> <span class="st">"Unintentional injuries"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"West Virginia"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"New Mexico"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Kentucky"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Mississippi"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Alaska"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Wyoming"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Oklahoma"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Tennessee"</span>)  <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;</span> <span class="dv">2005</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>selected_top5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 120 × 7
-    Year Cause                  State  Deaths Population Crude_Rate Age_Adj_Rate
-   &lt;dbl&gt; &lt;chr&gt;                  &lt;chr&gt;   &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
- 1  2006 Unintentional injuries Alaska    316     675302       46.8         52.3
- 2  2006 Unintentional injuries Kentu…   2446    4219239       58           57.9
- 3  2006 Unintentional injuries Missi…   1856    2904978       63.9         64.7
- 4  2006 Unintentional injuries New M…   1297    1962137       66.1         67.6
- 5  2006 Unintentional injuries Oklah…   2039    3594090       56.7         56.6
- 6  2006 Unintentional injuries Tenne…   3307    6088766       54.3         54.3
- 7  2006 Unintentional injuries West …   1177    1827912       64.4         62.4
- 8  2006 Unintentional injuries Wyomi…    306     522667       58.5         58.9
- 9  2007 Unintentional injuries Alaska    354     680300       52           56.3
-10  2007 Unintentional injuries Kentu…   2372    4256672       55.7         55.6
-# ℹ 110 more rows</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(selected_top5, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.numeric</span>(Year), <span class="at">y =</span> Age_Adj_Rate, <span class="at">color =</span> State)) <span class="sc">+</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>top5_states_adj_rate_unint <span class="ot">=</span> cdc_dataset <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">"United States"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Cause <span class="sc">==</span> <span class="st">"Unintentional injuries"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;</span> <span class="dv">2005</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>top5_states_adj_rate_unint <span class="ot">=</span> top5_states_adj_rate_unint <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(State) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg =</span> <span class="fu">mean</span>(Age_Adj_Rate)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Avg)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Avg <span class="sc">&gt;</span> <span class="dv">57</span>)<span class="co"># %&gt;% filter(Avg &gt; 57.4)</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#top5_states_adj_rate_unint</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>w <span class="ot">=</span> top5_states_adj_rate_unint</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#w</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>w_reverse <span class="ot">=</span> w[<span class="fu">order</span>(w<span class="sc">$</span>Avg), ]</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#w_reverse</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="fu">dotchart</span>(w_reverse<span class="sc">$</span>Avg, <span class="at">labels =</span> w_reverse<span class="sc">$</span>State,<span class="at">gcolor =</span> <span class="st">"green"</span>,</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">cex =</span> <span class="fl">0.9</span>, <span class="at">xlab =</span> <span class="st">"Age Adjusted Death Rate"</span>, <span class="at">main =</span> <span class="st">"Top 8 Highest States w/ Avg Age-Adj Death Rate for Unintentional '06-'20"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
@@ -882,41 +809,52 @@ dbl (1): OpiodDispenseRatePer100
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>opiod_top8 <span class="ot">=</span> df_opiod_state_arranged_top5_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>opiod_top8<span class="sc">$</span>State</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>selected_top5 <span class="ot">=</span> cdc_dataset <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Cause <span class="sc">==</span> <span class="st">"Unintentional injuries"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"West Virginia"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"New Mexico"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Kentucky"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Mississippi"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Alaska"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Wyoming"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Oklahoma"</span> <span class="sc">|</span> State <span class="sc">==</span> <span class="st">"Tennessee"</span>)  <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;</span> <span class="dv">2005</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># selected_top5</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(selected_top5, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.numeric</span>(Year), <span class="at">y =</span> Age_Adj_Rate, <span class="at">color =</span> State)) <span class="sc">+</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Age Adjust Death Rate"</span>, <span class="at">title =</span> <span class="st">"Age Adjusted Death Rate for Unintentional for Top 8 States (2006 - 2020)"</span>) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2006</span><span class="sc">:</span><span class="dv">2020</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "West Virginia" "Alabama"       "Tennessee"     "Kentucky"     
-[5] "Oklahoma"      "Arkansas"      "Mississippi"   "Louisiana"    </code></pre>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
+</div>
+<p>What is interesting about the Unintentional deaths in these top 8 states is that they start to climb. This could be due to the fact that people initially developed addictions during the years of aggressive dispensing. Then, after a few years, the death rates started to increase.</p>
+<div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>death_rate_top8 <span class="ot">=</span> selected_top5 <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>death_rate_top8<span class="sc">$</span>State</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Alaska"        "Kentucky"      "Mississippi"   "New Mexico"   
-[5] "Oklahoma"      "Tennessee"     "West Virginia" "Wyoming"      </code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(opiod_top8<span class="sc">$</span>State,death_rate_top8<span class="sc">$</span>State)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>opiod_top8 <span class="ot">=</span> df_opiod_state_arranged_top5_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># opiod_top8$State</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>death_rate_top8 <span class="ot">=</span> selected_top5 <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># death_rate_top8$State</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(opiod_top8<span class="sc">$</span>State,death_rate_top8<span class="sc">$</span>State)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "West Virginia" "Tennessee"     "Kentucky"      "Oklahoma"     
 [5] "Mississippi"  </code></pre>
 </div>
 </div>
-<p>We see that chooseing 8 states that have had the highest average death rate from 2006 to 2020, and choosing 8 states that have had the highest average opiod dispensing, 5 states intersect.</p>
+<p>We see that choosing 8 states that have had the highest average death rate from 2006 to 2020 and choosing 8 states that have had the highest average opioid dispensing, we can see that 5 of states intersect. There is significant overlap between the states that had the highest average opioid dispensing rates and the states that had the highest average death rates.</p>
 </section>
 <section id="analyzing-suicide" class="level3" data-number="3.1.7">
 <h3 data-number="3.1.7" class="anchored" data-anchor-id="analyzing-suicide"><span class="header-section-number">3.1.7</span> Analyzing Suicide</h3>
-<p>Didnt manage to arrive here today.</p>
+<p>This topic is extremely broad and difficult to summarize. There are many life factors such as depression, mental illness, lack of access to mental health care, isolation, and quality of life that can contribute to the rising rates. However, there is peculiar pattern that emerges in terms of population density and suicide rates.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>top10_avg_suicide_states <span class="ot">=</span> cdc_dataset <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">"United States"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Cause <span class="sc">==</span> <span class="st">"Suicide"</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(State) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg =</span> <span class="fu">mean</span>(Age_Adj_Rate)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Avg)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Avg <span class="sc">&gt;</span> <span class="fl">16.9</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>top10_avg_suicide_states</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>top10_avg_suicide_states <span class="ot">=</span> cdc_dataset <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">"United States"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Cause <span class="sc">==</span> <span class="st">"Suicide"</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(State) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg =</span> <span class="fu">mean</span>(Age_Adj_Rate)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Avg)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Avg <span class="sc">&gt;</span> <span class="fl">16.9</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>top10_avg_suicide_states</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 2
@@ -934,21 +872,17 @@ dbl (1): OpiodDispenseRatePer100
 10 Arizona     16.9</code></pre>
 </div>
 </div>
+<p>These states have had the highest suicide rate on average from 1999 to 2020. We can see that there is interesting relationship between where most suicide tend to occur and the type of state it is. In particular, many of these states tend to have a sparsely population density. In other words, the land mass tends to be big compared to the population residing on that land mass.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.vector</span>(top10_avg_suicide_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># as.vector(top10_avg_suicide_states %&gt;% distinct(State))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>$State
- [1] "Wyoming"    "Alaska"     "Montana"    "New Mexico" "Nevada"    
- [6] "Idaho"      "Utah"       "Colorado"   "Oklahoma"   "Arizona"   </code></pre>
-</div>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>united_states_by_area <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"united-states-by-area.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>united_states_by_area <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"united-states-by-area.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 50 Columns: 14
@@ -962,55 +896,11 @@ dbl (13): fips, densityMi, pop2023, pop2022, pop2020, pop2019, pop2010, grow...
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View(united_states_by_area)</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>united_states_by_area_density <span class="ot">=</span> united_states_by_area <span class="sc">%&gt;%</span> <span class="fu">select</span>(state,densityMi) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(densityMi)</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>lowest_population_density_states <span class="ot">=</span> united_states_by_area_density[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>lowest_population_density_states</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 2
-   state        densityMi
-   &lt;chr&gt;            &lt;dbl&gt;
- 1 Alaska            1.28
- 2 Wyoming           6.01
- 3 Montana           7.83
- 4 North Dakota     11.3 
- 5 South Dakota     12.2 
- 6 New Mexico       17.4 
- 7 Idaho            23.9 
- 8 Nebraska         25.7 
- 9 Nevada           29.2 
-10 Kansas           35.9 </code></pre>
-</div>
-</div>
-<section id="section" class="level14">
-<p class="heading"></p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>united_states_by_area_density</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 50 × 2
-   state        densityMi
-   &lt;chr&gt;            &lt;dbl&gt;
- 1 Alaska            1.28
- 2 Wyoming           6.01
- 3 Montana           7.83
- 4 North Dakota     11.3 
- 5 South Dakota     12.2 
- 6 New Mexico       17.4 
- 7 Idaho            23.9 
- 8 Nebraska         25.7 
- 9 Nevada           29.2 
-10 Kansas           35.9 
-# ℹ 40 more rows</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(united_states_by_area_density) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'State'</span>,<span class="st">'densityMi'</span>)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>united_states_by_area_density</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View(united_states_by_area)</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>united_states_by_area_density <span class="ot">=</span> united_states_by_area <span class="sc">%&gt;%</span> <span class="fu">select</span>(state,densityMi) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(densityMi)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(united_states_by_area_density) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'State'</span>,<span class="st">'densityMi'</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>united_states_by_area_density</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 50 × 2
@@ -1028,119 +918,128 @@ dbl (13): fips, densityMi, pop2023, pop2022, pop2020, pop2019, pop2010, grow...
 10 Kansas           35.9 
 # ℹ 40 more rows</code></pre>
 </div>
-</div>
-<div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>avg_suicide_rate <span class="ot">=</span> cdc_dataset <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">"United States"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Cause <span class="sc">==</span> <span class="st">"Suicide"</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(State) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg =</span> <span class="fu">mean</span>(Age_Adj_Rate)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Avg))</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>avg_suicide_rate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>lowest_population_density_states <span class="ot">=</span> united_states_by_area_density[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>lowest_population_density_states</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 51 × 2
-   State        Avg
-   &lt;chr&gt;      &lt;dbl&gt;
- 1 Wyoming     22.6
- 2 Alaska      22.6
- 3 Montana     22.1
- 4 New Mexico  20.6
- 5 Nevada      19.4
- 6 Idaho       18.5
- 7 Utah        18.4
- 8 Colorado    18.0
- 9 Oklahoma    17.0
-10 Arizona     16.9
-# ℹ 41 more rows</code></pre>
+<pre><code># A tibble: 10 × 2
+   State        densityMi
+   &lt;chr&gt;            &lt;dbl&gt;
+ 1 Alaska            1.28
+ 2 Wyoming           6.01
+ 3 Montana           7.83
+ 4 North Dakota     11.3 
+ 5 South Dakota     12.2 
+ 6 New Mexico       17.4 
+ 7 Idaho            23.9 
+ 8 Nebraska         25.7 
+ 9 Nevada           29.2 
+10 Kansas           35.9 </code></pre>
 </div>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>merged_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(united_states_by_area_density, avg_suicide_rate, <span class="at">by =</span> <span class="st">"State"</span>)</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>merged_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>lowest_population_density_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>            State  densityMi       Avg
-1         Alabama  100.67620 13.677273
-2          Alaska    1.28449 22.559091
-3         Arizona   65.61541 16.927273
-4        Arkansas   58.86715 15.818182
-5      California  249.81347  9.977273
-6        Colorado   56.62333 18.009091
-7     Connecticut  749.49504  8.977273
-8        Delaware  529.49461 11.472727
-9         Florida  422.59351 13.577273
-10        Georgia  191.91701 11.972727
-11         Hawaii  223.14152 11.740909
-12          Idaho   23.88287 18.527273
-13       Illinois  224.74459  9.445455
-14        Indiana  191.27287 13.268182
-15           Iowa   57.34903 12.804545
-16         Kansas   35.91504 14.759091
-17       Kentucky  114.42109 14.840909
-18      Louisiana  105.39265 12.586364
-19          Maine   45.17855 14.472727
-20       Maryland  634.04862  9.086364
-21  Massachusetts  894.13564  7.822727
-22       Michigan  177.41244 12.131818
-23      Minnesota   71.87131 11.454545
-24    Mississippi   62.45398 12.890909
-25       Missouri   89.98998 14.854545
-26        Montana    7.82919 22.145455
-27       Nebraska   25.67286 11.750000
-28         Nevada   29.23222 19.436364
-29  New Hampshire  156.70245 13.845455
-30     New Jersey 1258.55820  7.186364
-31     New Mexico   17.39527 20.636364
-32       New York  413.71663  7.263636
-33 North Carolina  222.79940 12.386364
-34   North Dakota   11.31271 15.136364
-35           Ohio  287.50579 12.177273
-36       Oklahoma   59.01851 16.977273
-37         Oregon   44.00522 16.522727
-38   Pennsylvania  289.02749 12.281818
-39   Rhode Island 1054.62573  9.427273
-40 South Carolina  178.70337 13.245455
-41   South Dakota   12.18140 16.650000
-42      Tennessee  173.01630 14.618182
-43          Texas  116.75553 11.645455
-44           Utah   41.65130 18.440909
-45        Vermont   70.21330 14.845455
-46       Virginia  220.55895 12.022727
-47     Washington  117.83476 14.031818
-48  West Virginia   73.41651 16.036364
-49      Wisconsin  109.03241 12.913636
-50        Wyoming    6.00743 22.604545</code></pre>
+<pre><code># A tibble: 10 × 1
+   State       
+   &lt;chr&gt;       
+ 1 Alaska      
+ 2 Wyoming     
+ 3 Montana     
+ 4 North Dakota
+ 5 South Dakota
+ 6 New Mexico  
+ 7 Idaho       
+ 8 Nebraska    
+ 9 Nevada      
+10 Kansas      </code></pre>
 </div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.vector</span>(top10_avg_suicide_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>$State
+ [1] "Wyoming"    "Alaska"     "Montana"    "New Mexico" "Nevada"    
+ [6] "Idaho"      "Utah"       "Colorado"   "Oklahoma"   "Arizona"   </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> lowest_population_density_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span>State</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Alaska"       "Wyoming"      "Montana"      "North Dakota" "South Dakota"
+ [6] "New Mexico"   "Idaho"        "Nebraska"     "Nevada"       "Kansas"      </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> top10_avg_suicide_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>b<span class="sc">$</span>State</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Wyoming"    "Alaska"     "Montana"    "New Mexico" "Nevada"    
+ [6] "Idaho"      "Utah"       "Colorado"   "Oklahoma"   "Arizona"   </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(a<span class="sc">$</span>State,b<span class="sc">$</span>State)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Alaska"     "Wyoming"    "Montana"    "New Mexico" "Idaho"     
+[6] "Nevada"    </code></pre>
+</div>
+</div>
+<p>We import a data set to isolate states that have the lower population density. These are states that have the lower population density. There is a peculiar pattern that emerges. Comparing the top 8 states for lowest population density and the top 8 states for the highest suicide rate, there is an overlap of 6 states.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>avg_suicide_rate <span class="ot">=</span> cdc_dataset <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">"United States"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Cause <span class="sc">==</span> <span class="st">"Suicide"</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(State) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg =</span> <span class="fu">mean</span>(Age_Adj_Rate)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Avg))</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># avg_suicide_rate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(united_states_by_area_density<span class="sc">$</span>densityMi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>merged_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(united_states_by_area_density, avg_suicide_rate, <span class="at">by =</span> <span class="st">"State"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># merged_df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
-</div>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(merged_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(densityMi), <span class="at">y =</span> Avg)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span>.<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(united_states_by_area_density<span class="sc">$</span>densityMi,</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Boxplot of Population Density per Square Mile"</span>,  </span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"States"</span>,                    </span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Population density (# of people per sq. mile)"</span>)             </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>We see that there are some outliers in terms of population density (i.e.&nbsp;6 states are very densely populated). The distribution is right skewed. This is a good candidate to do a log transform to further analyze the data in terms of how it relates to the average suicide rate over the last 20 years. After joining on state, we can run a linear regression.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> merged_df<span class="sc">$</span>Avg</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">log</span>(merged_df<span class="sc">$</span>densityMi)</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>regression_model_cumul_growth <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(y,x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(merged_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(densityMi), <span class="at">y =</span> Avg)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span>.<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> merged_df<span class="sc">$</span>Avg</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">log</span>(merged_df<span class="sc">$</span>densityMi)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>regression_model_cumul_growth <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(y,x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1157,362 +1056,12 @@ sample estimates:
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(regression_model_cumul_growth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(regression_model_cumul_growth)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = y ~ x)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--5.2630 -1.2212  0.2523  1.3288  3.0195 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  24.4925     0.9385   26.10  &lt; 2e-16 ***
-x            -2.3046     0.1966  -11.72 1.08e-15 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 1.915 on 48 degrees of freedom
-Multiple R-squared:  0.7412,    Adjusted R-squared:  0.7358 
-F-statistic: 137.4 on 1 and 48 DF,  p-value: 1.081e-15</code></pre>
 </div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>summary_gdp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"SASUMMARY__ALL_AREAS_1998_2022.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: One or more parsing issues, call `problems()` on your data frame for details,
-e.g.:
-  dat &lt;- vroom(...)
-  problems(dat)</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 784 Columns: 33
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (31): GeoFIPS, GeoName, TableName, IndustryClassification, Description, ...
-dbl  (2): Region, LineCode
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(summary_gdp)</span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>summary_gdp_only <span class="ot">=</span> summary_gdp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Description <span class="sc">==</span> <span class="st">"Gross domestic product (GDP)"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(GeoName,<span class="st">`</span><span class="at">2017</span><span class="st">`</span>,<span class="st">`</span><span class="at">2018</span><span class="st">`</span>,<span class="st">`</span><span class="at">2019</span><span class="st">`</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(GeoName <span class="sc">!=</span> <span class="st">'United States'</span>)</span>
-<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>summary_gdp_only <span class="ot">=</span> summary_gdp_only <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">AvgGDP =</span> (<span class="fu">as.numeric</span>(<span class="st">`</span><span class="at">2017</span><span class="st">`</span>)<span class="sc">+</span><span class="fu">as.numeric</span>(<span class="st">`</span><span class="at">2018</span><span class="st">`</span>)<span class="sc">+</span><span class="fu">as.numeric</span>(<span class="st">`</span><span class="at">2019</span><span class="st">`</span>)) <span class="sc">/</span> <span class="dv">3</span>)</span>
-<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>summary_gdp_only</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 51 × 5
-   GeoName              `2017`    `2018`    `2019`      AvgGDP
-   &lt;chr&gt;                &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;
- 1 Alabama              216615.5  226263.8  234526.4   225802.
- 2 Alaska               53550.9   54762.0   54469.9     54261.
- 3 Arizona              333099.0  353671.0  375545.0   354105 
- 4 Arkansas             123882.6  129213.8  132637.2   128578.
- 5 California           2740550.3 2899530.9 3062158.9 2900747.
- 6 Colorado             350209.1  373923.1  397701.6   373945.
- 7 Connecticut          273875.1  280535.4  285466.4   279959.
- 8 Delaware             69555.6   73376.0   78685.8     73872.
- 9 District of Columbia 134298.8  141240.2  145171.0   140237.
-10 Florida              1014866.9 1072085.6 1127988.6 1071647.
-# ℹ 41 more rows</code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(summary_gdp_only) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'State'</span>,<span class="st">'2017'</span>,<span class="st">'2018'</span>,<span class="st">'2019'</span>,<span class="st">'AvgGDP'</span>)</span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>summary_gdp_only</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 51 × 5
-   State                `2017`    `2018`    `2019`      AvgGDP
-   &lt;chr&gt;                &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;
- 1 Alabama              216615.5  226263.8  234526.4   225802.
- 2 Alaska               53550.9   54762.0   54469.9     54261.
- 3 Arizona              333099.0  353671.0  375545.0   354105 
- 4 Arkansas             123882.6  129213.8  132637.2   128578.
- 5 California           2740550.3 2899530.9 3062158.9 2900747.
- 6 Colorado             350209.1  373923.1  397701.6   373945.
- 7 Connecticut          273875.1  280535.4  285466.4   279959.
- 8 Delaware             69555.6   73376.0   78685.8     73872.
- 9 District of Columbia 134298.8  141240.2  145171.0   140237.
-10 Florida              1014866.9 1072085.6 1127988.6 1071647.
-# ℹ 41 more rows</code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>merged_df2 <span class="ot">&lt;-</span> <span class="fu">merge</span>(merged_df, summary_gdp_only, <span class="at">by =</span> <span class="st">"State"</span>)</span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>merged_df2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>            State  densityMi       Avg      2017      2018      2019     AvgGDP
-1         Alabama  100.67620 13.677273  216615.5  226263.8  234526.4  225801.90
-2          Alaska    1.28449 22.559091   53550.9   54762.0   54469.9   54260.93
-3         Arizona   65.61541 16.927273  333099.0  353671.0  375545.0  354105.00
-4        Arkansas   58.86715 15.818182  123882.6  129213.8  132637.2  128577.87
-5      California  249.81347  9.977273 2740550.3 2899530.9 3062158.9 2900746.70
-6        Colorado   56.62333 18.009091  350209.1  373923.1  397701.6  373944.60
-7     Connecticut  749.49504  8.977273  273875.1  280535.4  285466.4  279958.97
-8        Delaware  529.49461 11.472727   69555.6   73376.0   78685.8   73872.47
-9         Florida  422.59351 13.577273 1014866.9 1072085.6 1127988.6 1071647.03
-10        Georgia  191.91701 11.972727  583543.3  612803.4  646939.0  614428.57
-11         Hawaii  223.14152 11.740909   87436.4   90933.5   93356.2   90575.37
-12          Idaho   23.88287 18.527273   72935.1   79072.4   84550.2   78852.57
-13       Illinois  224.74459  9.445455  832826.8  871024.2  895800.0  866550.33
-14        Indiana  191.27287 13.268182  357535.8  377376.9  385446.2  373452.97
-15           Iowa   57.34903 12.804545  187125.0  193155.1  196085.1  192121.73
-16         Kansas   35.91504 14.759091  166273.6  173373.0  176917.7  172188.10
-17       Kentucky  114.42109 14.840909  203564.0  210509.1  220683.3  211585.47
-18      Louisiana  105.39265 12.586364  239830.7  256444.4  257096.7  251123.93
-19          Maine   45.17855 14.472727   63000.6   66216.0   69298.2   66171.60
-20       Maryland  634.04862  9.086364  399714.5  410771.8  419447.6  409977.97
-21  Massachusetts  894.13564  7.822727  530129.4  559605.0  588617.5  559450.63
-22       Michigan  177.41244 12.131818  505101.5  525240.8  536975.6  522439.30
-23      Minnesota   71.87131 11.454545  354721.9  372439.2  383961.6  370374.23
-24    Mississippi   62.45398 12.890909  110281.4  113166.4  115441.7  112963.17
-25       Missouri   89.98998 14.854545  311273.8  320451.6  334364.7  322030.03
-26        Montana    7.82919 22.145455   48470.5   51152.1   52772.5   50798.37
-27       Nebraska   25.67286 11.750000  123219.9  127954.4  132741.0  127971.77
-28         Nevada   29.23222 19.436364  163199.1  172547.9  184343.9  173363.63
-29  New Hampshire  156.70245 13.845455   81179.6   83859.4   87472.0   84170.33
-30     New Jersey 1258.55820  7.186364  590086.7  619340.2  641877.6  617101.50
-31     New Mexico   17.39527 20.636364   93210.1   98838.2  103869.2   98639.17
-32       New York  413.71663  7.263636 1624800.7 1710665.6 1793261.3 1709575.87
-33 North Carolina  222.79940 12.386364  546810.1  568037.3  593126.9  569324.77
-34   North Dakota   11.31271 15.136364   56530.2   60377.1   60516.3   59141.20
-35           Ohio  287.50579 12.177273  652187.5  672540.1  703127.8  675951.80
-36       Oklahoma   59.01851 16.977273  192538.6  204193.9  205262.6  200665.03
-37         Oregon   44.00522 16.522727  225534.5  238466.9  248939.8  237647.07
-38   Pennsylvania  289.02749 12.281818  754318.0  780620.7  803078.0  779338.90
-39   Rhode Island 1054.62573  9.427273   58771.6   60064.9   62526.9   60454.47
-40 South Carolina  178.70337 13.245455  224937.6  236561.7  248046.5  236515.27
-41   South Dakota   12.18140 16.650000   51615.1   53349.5   55007.4   53324.00
-42      Tennessee  173.01630 14.618182  355417.5  369713.2  385819.5  370316.73
-43          Texas  116.75553 11.645455 1667313.0 1808026.9 1860108.3 1778482.73
-44           Utah   41.65130 18.440909  172075.0  186805.7  201285.4  186722.03
-45        Vermont   70.21330 14.845455   32589.2   33482.6   34628.1   33566.63
-46       Virginia  220.55895 12.022727  515167.2  537158.3  561989.6  538105.03
-47     Washington  117.83476 14.031818  527169.4  570337.8  608966.4  568824.53
-48  West Virginia   73.41651 16.036364   75172.4   79794.3   79883.8   78283.50
-49      Wisconsin  109.03241 12.913636  321886.8  335144.3  347398.6  334809.90
-50        Wyoming    6.00743 22.604545   37620.3   39614.5   39971.4   39068.73</code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(merged_df2<span class="sc">$</span>AvgGDP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>merged_df2 <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(AvgGDP))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>            State  densityMi       Avg      2017      2018      2019     AvgGDP
-1      California  249.81347  9.977273 2740550.3 2899530.9 3062158.9 2900746.70
-2           Texas  116.75553 11.645455 1667313.0 1808026.9 1860108.3 1778482.73
-3        New York  413.71663  7.263636 1624800.7 1710665.6 1793261.3 1709575.87
-4         Florida  422.59351 13.577273 1014866.9 1072085.6 1127988.6 1071647.03
-5        Illinois  224.74459  9.445455  832826.8  871024.2  895800.0  866550.33
-6    Pennsylvania  289.02749 12.281818  754318.0  780620.7  803078.0  779338.90
-7            Ohio  287.50579 12.177273  652187.5  672540.1  703127.8  675951.80
-8      New Jersey 1258.55820  7.186364  590086.7  619340.2  641877.6  617101.50
-9         Georgia  191.91701 11.972727  583543.3  612803.4  646939.0  614428.57
-10 North Carolina  222.79940 12.386364  546810.1  568037.3  593126.9  569324.77
-11     Washington  117.83476 14.031818  527169.4  570337.8  608966.4  568824.53
-12  Massachusetts  894.13564  7.822727  530129.4  559605.0  588617.5  559450.63
-13       Virginia  220.55895 12.022727  515167.2  537158.3  561989.6  538105.03
-14       Michigan  177.41244 12.131818  505101.5  525240.8  536975.6  522439.30
-15       Maryland  634.04862  9.086364  399714.5  410771.8  419447.6  409977.97
-16       Colorado   56.62333 18.009091  350209.1  373923.1  397701.6  373944.60
-17        Indiana  191.27287 13.268182  357535.8  377376.9  385446.2  373452.97
-18      Minnesota   71.87131 11.454545  354721.9  372439.2  383961.6  370374.23
-19      Tennessee  173.01630 14.618182  355417.5  369713.2  385819.5  370316.73
-20        Arizona   65.61541 16.927273  333099.0  353671.0  375545.0  354105.00
-21      Wisconsin  109.03241 12.913636  321886.8  335144.3  347398.6  334809.90
-22       Missouri   89.98998 14.854545  311273.8  320451.6  334364.7  322030.03
-23    Connecticut  749.49504  8.977273  273875.1  280535.4  285466.4  279958.97
-24      Louisiana  105.39265 12.586364  239830.7  256444.4  257096.7  251123.93
-25         Oregon   44.00522 16.522727  225534.5  238466.9  248939.8  237647.07
-26 South Carolina  178.70337 13.245455  224937.6  236561.7  248046.5  236515.27
-27        Alabama  100.67620 13.677273  216615.5  226263.8  234526.4  225801.90
-28       Kentucky  114.42109 14.840909  203564.0  210509.1  220683.3  211585.47
-29       Oklahoma   59.01851 16.977273  192538.6  204193.9  205262.6  200665.03
-30           Iowa   57.34903 12.804545  187125.0  193155.1  196085.1  192121.73
-31           Utah   41.65130 18.440909  172075.0  186805.7  201285.4  186722.03
-32         Nevada   29.23222 19.436364  163199.1  172547.9  184343.9  173363.63
-33         Kansas   35.91504 14.759091  166273.6  173373.0  176917.7  172188.10
-34       Arkansas   58.86715 15.818182  123882.6  129213.8  132637.2  128577.87
-35       Nebraska   25.67286 11.750000  123219.9  127954.4  132741.0  127971.77
-36    Mississippi   62.45398 12.890909  110281.4  113166.4  115441.7  112963.17
-37     New Mexico   17.39527 20.636364   93210.1   98838.2  103869.2   98639.17
-38         Hawaii  223.14152 11.740909   87436.4   90933.5   93356.2   90575.37
-39  New Hampshire  156.70245 13.845455   81179.6   83859.4   87472.0   84170.33
-40          Idaho   23.88287 18.527273   72935.1   79072.4   84550.2   78852.57
-41  West Virginia   73.41651 16.036364   75172.4   79794.3   79883.8   78283.50
-42       Delaware  529.49461 11.472727   69555.6   73376.0   78685.8   73872.47
-43          Maine   45.17855 14.472727   63000.6   66216.0   69298.2   66171.60
-44   Rhode Island 1054.62573  9.427273   58771.6   60064.9   62526.9   60454.47
-45   North Dakota   11.31271 15.136364   56530.2   60377.1   60516.3   59141.20
-46         Alaska    1.28449 22.559091   53550.9   54762.0   54469.9   54260.93
-47   South Dakota   12.18140 16.650000   51615.1   53349.5   55007.4   53324.00
-48        Montana    7.82919 22.145455   48470.5   51152.1   52772.5   50798.37
-49        Wyoming    6.00743 22.604545   37620.3   39614.5   39971.4   39068.73
-50        Vermont   70.21330 14.845455   32589.2   33482.6   34628.1   33566.63</code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>merged_df2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>            State  densityMi       Avg      2017      2018      2019     AvgGDP
-1         Alabama  100.67620 13.677273  216615.5  226263.8  234526.4  225801.90
-2          Alaska    1.28449 22.559091   53550.9   54762.0   54469.9   54260.93
-3         Arizona   65.61541 16.927273  333099.0  353671.0  375545.0  354105.00
-4        Arkansas   58.86715 15.818182  123882.6  129213.8  132637.2  128577.87
-5      California  249.81347  9.977273 2740550.3 2899530.9 3062158.9 2900746.70
-6        Colorado   56.62333 18.009091  350209.1  373923.1  397701.6  373944.60
-7     Connecticut  749.49504  8.977273  273875.1  280535.4  285466.4  279958.97
-8        Delaware  529.49461 11.472727   69555.6   73376.0   78685.8   73872.47
-9         Florida  422.59351 13.577273 1014866.9 1072085.6 1127988.6 1071647.03
-10        Georgia  191.91701 11.972727  583543.3  612803.4  646939.0  614428.57
-11         Hawaii  223.14152 11.740909   87436.4   90933.5   93356.2   90575.37
-12          Idaho   23.88287 18.527273   72935.1   79072.4   84550.2   78852.57
-13       Illinois  224.74459  9.445455  832826.8  871024.2  895800.0  866550.33
-14        Indiana  191.27287 13.268182  357535.8  377376.9  385446.2  373452.97
-15           Iowa   57.34903 12.804545  187125.0  193155.1  196085.1  192121.73
-16         Kansas   35.91504 14.759091  166273.6  173373.0  176917.7  172188.10
-17       Kentucky  114.42109 14.840909  203564.0  210509.1  220683.3  211585.47
-18      Louisiana  105.39265 12.586364  239830.7  256444.4  257096.7  251123.93
-19          Maine   45.17855 14.472727   63000.6   66216.0   69298.2   66171.60
-20       Maryland  634.04862  9.086364  399714.5  410771.8  419447.6  409977.97
-21  Massachusetts  894.13564  7.822727  530129.4  559605.0  588617.5  559450.63
-22       Michigan  177.41244 12.131818  505101.5  525240.8  536975.6  522439.30
-23      Minnesota   71.87131 11.454545  354721.9  372439.2  383961.6  370374.23
-24    Mississippi   62.45398 12.890909  110281.4  113166.4  115441.7  112963.17
-25       Missouri   89.98998 14.854545  311273.8  320451.6  334364.7  322030.03
-26        Montana    7.82919 22.145455   48470.5   51152.1   52772.5   50798.37
-27       Nebraska   25.67286 11.750000  123219.9  127954.4  132741.0  127971.77
-28         Nevada   29.23222 19.436364  163199.1  172547.9  184343.9  173363.63
-29  New Hampshire  156.70245 13.845455   81179.6   83859.4   87472.0   84170.33
-30     New Jersey 1258.55820  7.186364  590086.7  619340.2  641877.6  617101.50
-31     New Mexico   17.39527 20.636364   93210.1   98838.2  103869.2   98639.17
-32       New York  413.71663  7.263636 1624800.7 1710665.6 1793261.3 1709575.87
-33 North Carolina  222.79940 12.386364  546810.1  568037.3  593126.9  569324.77
-34   North Dakota   11.31271 15.136364   56530.2   60377.1   60516.3   59141.20
-35           Ohio  287.50579 12.177273  652187.5  672540.1  703127.8  675951.80
-36       Oklahoma   59.01851 16.977273  192538.6  204193.9  205262.6  200665.03
-37         Oregon   44.00522 16.522727  225534.5  238466.9  248939.8  237647.07
-38   Pennsylvania  289.02749 12.281818  754318.0  780620.7  803078.0  779338.90
-39   Rhode Island 1054.62573  9.427273   58771.6   60064.9   62526.9   60454.47
-40 South Carolina  178.70337 13.245455  224937.6  236561.7  248046.5  236515.27
-41   South Dakota   12.18140 16.650000   51615.1   53349.5   55007.4   53324.00
-42      Tennessee  173.01630 14.618182  355417.5  369713.2  385819.5  370316.73
-43          Texas  116.75553 11.645455 1667313.0 1808026.9 1860108.3 1778482.73
-44           Utah   41.65130 18.440909  172075.0  186805.7  201285.4  186722.03
-45        Vermont   70.21330 14.845455   32589.2   33482.6   34628.1   33566.63
-46       Virginia  220.55895 12.022727  515167.2  537158.3  561989.6  538105.03
-47     Washington  117.83476 14.031818  527169.4  570337.8  608966.4  568824.53
-48  West Virginia   73.41651 16.036364   75172.4   79794.3   79883.8   78283.50
-49      Wisconsin  109.03241 12.913636  321886.8  335144.3  347398.6  334809.90
-50        Wyoming    6.00743 22.604545   37620.3   39614.5   39971.4   39068.73</code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> merged_df2<span class="sc">$</span>Avg</span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">log</span>(merged_df2<span class="sc">$</span>densityMi)</span>
-<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> <span class="fu">log</span>(merged_df2<span class="sc">$</span>AvgGDP)</span>
-<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>regression_model_cumul_growth_densityMil_AvgGDP <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> z)</span>
-<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(regression_model_cumul_growth_densityMil_AvgGDP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = y ~ x + z)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--5.2688 -1.1119  0.0983  1.1103  3.3515 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  28.4530     3.3949   8.381 6.92e-11 ***
-x            -2.1344     0.2407  -8.867 1.34e-11 ***
-z            -0.3833     0.3159  -1.213    0.231    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 1.905 on 47 degrees of freedom
-Multiple R-squared:  0.749, Adjusted R-squared:  0.7383 
-F-statistic: 70.14 on 2 and 47 DF,  p-value: 7.786e-15</code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> merged_df2<span class="sc">$</span>Avg</span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">log</span>(merged_df2<span class="sc">$</span>AvgGDP)</span>
-<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="co"># x = merged_df2$AvgGDP</span></span>
-<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = y ~ x)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--7.2588 -1.9921 -0.0845  1.8413  5.6551 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  38.8748     5.1525   7.545 1.08e-09 ***
-x            -2.0154     0.4153  -4.853 1.33e-05 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 3.082 on 48 degrees of freedom
-Multiple R-squared:  0.3292,    Adjusted R-squared:  0.3152 
-F-statistic: 23.55 on 1 and 48 DF,  p-value: 1.326e-05</code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(merged_df2, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(AvgGDP), <span class="at">y =</span> Avg)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span>.<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
+<p>We observe a remarkable pattern: suicide is highly (negatively) correlated with population density. Hence, areas that have high population density tend to have a significantly low rates of suicide. Areas that have low population density tend to have high rates of suicide. The correlation coefficient found here is -0.86, which is quite high.</p>
 
 
-</section>
 </section>
 </section>
 
