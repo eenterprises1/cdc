@@ -601,12 +601,12 @@ These states have had the highest suicide rate on average from 1999 to 2020. We 
 
 
 ```{r}
-united_states_by_area <- read_csv("united-states-by-area.csv")
+united_states_by_area <- read_csv("united-states-by-area.csv", show_col_types = FALSE)
 # View(united_states_by_area)
 
 united_states_by_area_density = united_states_by_area %>% select(state,densityMi) %>% arrange(densityMi)
 colnames(united_states_by_area_density) <- c('State','densityMi')
-united_states_by_area_density
+#united_states_by_area_density
 
 lowest_population_density_states = united_states_by_area_density[1:10,]
 lowest_population_density_states
