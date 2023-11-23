@@ -71,7 +71,7 @@ Notice that the deaths incorporated in these 10 categories, are almost 90% of th
 
 As population grows, deaths (with a lag) will eventually grow. We would like to understand the interplay between population growth, deaths growth, and the evolution of death rates since 1999. For this, we will create metrics and facet them in time series.
 
-```{r}
+```{r warning=FALSE}
 #Grouping by Year and State, and summarizing the data. We can take min(Population) to keep the population of that year
 cdc_usa_grouped <- cdc_usa |> group_by(Year) |>
   summarize(
