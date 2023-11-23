@@ -489,16 +489,16 @@ df_opiod <- read_csv("NCHS_Opiod_Dispense.csv")
 df_opiod_state = df_opiod %>% filter(State != 'United States')
 df_opiod_state = df_opiod_state %>% select(-StateAbb)
 df_opiod_state_arranged =  df_opiod_state %>% arrange(desc(OpiodDispenseRatePer100))
-df_opiod_state_arranged %>% filter(State == 'West Virginia')
+#df_opiod_state_arranged %>% filter(State == 'West Virginia')
 
 
 
-df_opiod_state_arranged %>% filter(Year <= 2020) %>% group_by(State) %>% summarize(Avg = mean(OpiodDispenseRatePer100)) %>% arrange(desc(Avg)) %>% filter(Avg > 95)
+#df_opiod_state_arranged %>% filter(Year <= 2020) %>% group_by(State) %>% summarize(Avg = mean(OpiodDispenseRatePer100)) %>% arrange(desc(Avg)) %>% filter(Avg > 95)
 
 
 z = df_opiod_state_arranged %>% filter(Year <= 2020) %>% group_by(State) %>% summarize(Avg = mean(OpiodDispenseRatePer100)) %>% arrange(desc(Avg)) %>% filter(Avg > 95)
 z_reverse = z[order(z$Avg), ]
-z_reverse
+#z_reverse
 
 # ggplot(df_opiod_state_arranged %>% filter(Year <= 2020) %>% group_by(State) %>% summarize(Avg = mean(OpiodDispenseRatePer100)) %>% arrange(desc(Avg)) %>% filter(Avg > 95), aes(x = State, y = Avg)) +
 #   geom_bar(stat = "identity", fill = '#8B4513')
@@ -532,13 +532,13 @@ ggplot(df_opiod_state_arranged_top5_states, aes(x = as.numeric(Year), y = OpiodD
 ```{r}
 top5_states_adj_rate_unint = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Unintentional injuries") %>% filter(Year > 2005)
 top5_states_adj_rate_unint = top5_states_adj_rate_unint %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg)) %>% filter(Avg > 57)# %>% filter(Avg > 57.4)
-top5_states_adj_rate_unint
+#top5_states_adj_rate_unint
 
 w = top5_states_adj_rate_unint
-w
+#w
 
 w_reverse = w[order(w$Avg), ]
-w_reverse
+#w_reverse
 
 
 
@@ -594,9 +594,7 @@ top10_avg_suicide_states
 as.vector(top10_avg_suicide_states %>% distinct(State))
 ```
 
-```{r}
-lowest_population_density_states$
-```
+
 
 
 ```{r}
