@@ -42,7 +42,7 @@ We can take a look to the first few rows of the dataset:
 library(readr)
 cdc_dataset = read_csv("NCHS_Leading_Causes_of_Death_United_States_2020.csv")
 print(head(cdc_dataset, 20))
-rm(cdc_dataset)
+
 ```
 
 ## Research plan
