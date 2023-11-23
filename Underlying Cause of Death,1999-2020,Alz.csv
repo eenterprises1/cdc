@@ -1,0 +1,262 @@
+Notes,State,State Code,Race,Race Code,Deaths,Population,Crude Rate
+,Alabama,1,American Indian or Alaska Native,1002-5,31,728703,4.3
+,Alabama,1,Asian or Pacific Islander,A-PI,41,1364562,3.0
+,Alabama,1,Black or African American,2054-5,5811,27817070,20.9
+,Alabama,1,White,2106-3,31685,73693831,43.0
+,Alaska,2,American Indian or Alaska Native,1002-5,192,2612953,7.3
+,Alaska,2,Asian or Pacific Islander,A-PI,42,1087791,3.9
+,Alaska,2,Black or African American,2054-5,41,705338,5.8
+,Alaska,2,White,2106-3,1425,10894802,13.1
+,Arizona,4,American Indian or Alaska Native,1002-5,521,7694265,6.8
+,Arizona,4,Asian or Pacific Islander,A-PI,405,4778677,8.5
+,Arizona,4,Black or African American,2054-5,1029,6726549,15.3
+,Arizona,4,White,2106-3,46199,118879934,38.9
+,Arkansas,5,American Indian or Alaska Native,1002-5,23,612644,3.8
+,Arkansas,5,Asian or Pacific Islander,A-PI,40,1005398,4.0
+,Arkansas,5,Black or African American,2054-5,1786,10147982,17.6
+,Arkansas,5,White,2106-3,19376,51415793,37.7
+,California,6,American Indian or Alaska Native,1002-5,818,14692140,5.6
+,California,6,Asian or Pacific Islander,A-PI,15249,120401160,12.7
+,California,6,Black or African American,2054-5,12280,59456716,20.7
+,California,6,White,2106-3,206590,621156047,33.3
+,Colorado,8,American Indian or Alaska Native,1002-5,66,1905421,3.5
+,Colorado,8,Asian or Pacific Islander,A-PI,294,3792505,7.8
+,Colorado,8,Black or African American,2054-5,708,5405419,13.1
+,Colorado,8,White,2106-3,27562,99285975,27.8
+,Connecticut,9,Asian or Pacific Islander,A-PI,72,3213242,2.2
+,Connecticut,9,Black or African American,2054-5,634,9022615,7.0
+,Connecticut,9,White,2106-3,16924,65056396,26.0
+,Delaware,10,American Indian or Alaska Native,1002-5,18,127540,Unreliable
+,Delaware,10,Asian or Pacific Islander,A-PI,38,690916,5.5
+,Delaware,10,Black or African American,2054-5,588,4393053,13.4
+,Delaware,10,White,2106-3,4281,14320732,29.9
+,District of Columbia,11,Asian or Pacific Islander,A-PI,17,555448,Unreliable
+,District of Columbia,11,Black or African American,2054-5,1521,7325678,20.8
+,District of Columbia,11,White,2106-3,865,5671090,15.3
+,Florida,12,American Indian or Alaska Native,1002-5,70,2134372,3.3
+,Florida,12,Asian or Pacific Islander,A-PI,492,11726529,4.2
+,Florida,12,Black or African American,2054-5,6599,69361200,9.5
+,Florida,12,White,2106-3,105213,330543318,31.8
+,Georgia,13,American Indian or Alaska Native,1002-5,24,1049414,2.3
+,Georgia,13,Asian or Pacific Islander,A-PI,333,7671843,4.3
+,Georgia,13,Black or African American,2054-5,9284,65931689,14.1
+,Georgia,13,White,2106-3,44797,134728066,33.2
+,Hawaii,15,Asian or Pacific Islander,A-PI,4198,19573673,21.4
+,Hawaii,15,Black or African American,2054-5,17,831904,Unreliable
+,Hawaii,15,White,2106-3,1790,8953835,20.0
+,Idaho,16,American Indian or Alaska Native,1002-5,28,630881,4.4
+,Idaho,16,Asian or Pacific Islander,A-PI,67,566243,11.8
+,Idaho,16,Black or African American,2054-5,13,335868,Unreliable
+,Idaho,16,White,2106-3,9484,32361019,29.3
+,Illinois,17,American Indian or Alaska Native,1002-5,23,1633962,1.4
+,Illinois,17,Asian or Pacific Islander,A-PI,569,13993119,4.1
+,Illinois,17,Black or African American,2054-5,6191,42900783,14.4
+,Illinois,17,White,2106-3,60590,220705616,27.5
+,Indiana,18,American Indian or Alaska Native,1002-5,14,600663,Unreliable
+,Indiana,18,Asian or Pacific Islander,A-PI,95,2691527,3.5
+,Indiana,18,Black or African American,2054-5,2095,13925246,15.0
+,Indiana,18,White,2106-3,41087,124300821,33.1
+,Iowa,19,Asian or Pacific Islander,A-PI,49,1397896,3.5
+,Iowa,19,Black or African American,2054-5,246,2357523,10.4
+,Iowa,19,White,2106-3,26109,62777345,41.6
+,Kansas,20,American Indian or Alaska Native,1002-5,85,843625,10.1
+,Kansas,20,Asian or Pacific Islander,A-PI,57,1719221,3.3
+,Kansas,20,Black or African American,2054-5,523,4203572,12.4
+,Kansas,20,White,2106-3,17060,55285123,30.9
+,Kentucky,21,Asian or Pacific Islander,A-PI,49,1274346,3.8
+,Kentucky,21,Black or African American,2054-5,1054,7930716,13.3
+,Kentucky,21,White,2106-3,28390,84902044,33.4
+,Louisiana,22,American Indian or Alaska Native,1002-5,51,767326,6.6
+,Louisiana,22,Asian or Pacific Islander,A-PI,105,1744586,6.0
+,Louisiana,22,Black or African American,2054-5,6054,33020093,18.3
+,Louisiana,22,White,2106-3,26968,64604372,41.7
+,Maine,23,American Indian or Alaska Native,1002-5,20,221845,9.0
+,Maine,23,Asian or Pacific Islander,A-PI,19,332349,Unreliable
+,Maine,23,Black or African American,2054-5,15,413829,Unreliable
+,Maine,23,White,2106-3,10826,28078709,38.6
+,Maryland,24,American Indian or Alaska Native,1002-5,20,729742,2.7
+,Maryland,24,Asian or Pacific Islander,A-PI,313,7634165,4.1
+,Maryland,24,Black or African American,2054-5,3617,38757911,9.3
+,Maryland,24,White,2106-3,17270,79186818,21.8
+,Massachusetts,25,American Indian or Alaska Native,1002-5,28,717758,3.9
+,Massachusetts,25,Asian or Pacific Islander,A-PI,355,8531606,4.2
+,Massachusetts,25,Black or African American,2054-5,868,11978934,7.2
+,Massachusetts,25,White,2106-3,35467,123693130,28.7
+,Michigan,26,American Indian or Alaska Native,1002-5,188,1845372,10.2
+,Michigan,26,Asian or Pacific Islander,A-PI,196,6089878,3.2
+,Michigan,26,Black or African American,2054-5,4199,32707362,12.8
+,Michigan,26,White,2106-3,60557,178444427,33.9
+,Minnesota,27,American Indian or Alaska Native,1002-5,92,1677862,5.5
+,Minnesota,27,Asian or Pacific Islander,A-PI,177,5141085,3.4
+,Minnesota,27,Black or African American,2054-5,303,6824349,4.4
+,Minnesota,27,White,2106-3,34463,102711040,33.6
+,Mississippi,28,American Indian or Alaska Native,1002-5,11,364989,Unreliable
+,Mississippi,28,Asian or Pacific Islander,A-PI,32,654608,4.9
+,Mississippi,28,Black or African American,2054-5,4203,24242193,17.3
+,Mississippi,28,White,2106-3,17455,39336769,44.4
+,Missouri,29,American Indian or Alaska Native,1002-5,43,842859,5.1
+,Missouri,29,Asian or Pacific Islander,A-PI,94,2528811,3.7
+,Missouri,29,Black or African American,2054-5,2255,15886229,14.2
+,Missouri,29,White,2106-3,38442,110912986,34.7
+,Montana,30,American Indian or Alaska Native,1002-5,83,1514447,5.5
+,Montana,30,Asian or Pacific Islander,A-PI,12,190374,Unreliable
+,Montana,30,White,2106-3,5824,19785894,29.4
+,Nebraska,31,American Indian or Alaska Native,1002-5,13,547036,Unreliable
+,Nebraska,31,Asian or Pacific Islander,A-PI,41,879215,4.7
+,Nebraska,31,Black or African American,2054-5,234,2086406,11.2
+,Nebraska,31,White,2106-3,11867,36565338,32.5
+,Nevada,32,American Indian or Alaska Native,1002-5,27,1046578,2.6
+,Nevada,32,Asian or Pacific Islander,A-PI,327,5031518,6.5
+,Nevada,32,Black or African American,2054-5,521,5518185,9.4
+,Nevada,32,White,2106-3,8708,45991912,18.9
+,New Hampshire,33,Asian or Pacific Islander,A-PI,21,685941,3.1
+,New Hampshire,33,Black or African American,2054-5,16,443337,Unreliable
+,New Hampshire,33,White,2106-3,8374,27570694,30.4
+,New Jersey,34,American Indian or Alaska Native,1002-5,24,1134990,2.1
+,New Jersey,34,Asian or Pacific Islander,A-PI,467,16654192,2.8
+,New Jersey,34,Black or African American,2054-5,2842,29314838,9.7
+,New Jersey,34,White,2106-3,39269,145305789,27.0
+,New Mexico,35,American Indian or Alaska Native,1002-5,209,4749772,4.4
+,New Mexico,35,Asian or Pacific Islander,A-PI,34,804753,4.2
+,New Mexico,35,Black or African American,2054-5,114,1230808,9.3
+,New Mexico,35,White,2106-3,8649,37192691,23.3
+,New York,36,American Indian or Alaska Native,1002-5,40,4184454,1.0
+,New York,36,Asian or Pacific Islander,A-PI,978,34015420,2.9
+,New York,36,Black or African American,2054-5,4159,77843206,5.3
+,New York,36,White,2106-3,50294,309807263,16.2
+,North Carolina,37,American Indian or Alaska Native,1002-5,564,3237494,17.4
+,North Carolina,37,Asian or Pacific Islander,A-PI,207,5354994,3.9
+,North Carolina,37,Black or African American,2054-5,8977,46477309,19.3
+,North Carolina,37,White,2106-3,54500,150612099,36.2
+,North Dakota,38,American Indian or Alaska Native,1002-5,59,861664,6.8
+,North Dakota,38,White,2106-3,7313,13831735,52.9
+,Ohio,39,American Indian or Alaska Native,1002-5,31,842702,3.7
+,Ohio,39,Asian or Pacific Islander,A-PI,233,4975080,4.7
+,Ohio,39,Black or African American,2054-5,6156,33071285,18.6
+,Ohio,39,White,2106-3,78980,214719962,36.8
+,Oklahoma,40,American Indian or Alaska Native,1002-5,837,8259782,10.1
+,Oklahoma,40,Asian or Pacific Islander,A-PI,87,1787001,4.9
+,Oklahoma,40,Black or African American,2054-5,1036,6994857,14.8
+,Oklahoma,40,White,2106-3,23006,64728944,35.5
+,Oregon,41,American Indian or Alaska Native,1002-5,118,1703761,6.9
+,Oregon,41,Asian or Pacific Islander,A-PI,326,4002603,8.1
+,Oregon,41,Black or African American,2054-5,222,2074570,10.7
+,Oregon,41,White,2106-3,29696,76134221,39.0
+,Pennsylvania,42,American Indian or Alaska Native,1002-5,15,955144,Unreliable
+,Pennsylvania,42,Asian or Pacific Islander,A-PI,233,8317229,2.8
+,Pennsylvania,42,Black or African American,2054-5,3371,32597224,10.3
+,Pennsylvania,42,White,2106-3,73092,235448903,31.0
+,Rhode Island,44,American Indian or Alaska Native,1002-5,16,219917,Unreliable
+,Rhode Island,44,Asian or Pacific Islander,A-PI,25,792818,3.2
+,Rhode Island,44,Black or African American,2054-5,157,1846043,8.5
+,Rhode Island,44,White,2106-3,7410,20402986,36.3
+,South Carolina,45,American Indian or Alaska Native,1002-5,33,538560,6.1
+,South Carolina,45,Asian or Pacific Islander,A-PI,75,1576909,4.8
+,South Carolina,45,Black or African American,2054-5,6014,28998507,20.7
+,South Carolina,45,White,2106-3,29954,69565854,43.1
+,South Dakota,46,American Indian or Alaska Native,1002-5,79,1663802,4.7
+,South Dakota,46,Asian or Pacific Islander,A-PI,10,215733,Unreliable
+,South Dakota,46,Black or African American,2054-5,12,322418,Unreliable
+,South Dakota,46,White,2106-3,7611,15734628,48.4
+,Tennessee,47,American Indian or Alaska Native,1002-5,22,588234,3.7
+,Tennessee,47,Asian or Pacific Islander,A-PI,101,2347783,4.3
+,Tennessee,47,Black or African American,2054-5,4558,23941640,19.0
+,Tennessee,47,White,2106-3,46777,111269166,42.0
+,Texas,48,American Indian or Alaska Native,1002-5,103,5519456,1.9
+,Texas,48,Asian or Pacific Islander,A-PI,1005,24351700,4.1
+,Texas,48,Black or African American,2054-5,9754,69326380,14.1
+,Texas,48,White,2106-3,122641,449707278,27.3
+,Utah,49,American Indian or Alaska Native,1002-5,21,985086,2.1
+,Utah,49,Asian or Pacific Islander,A-PI,140,2087669,6.7
+,Utah,49,Black or African American,2054-5,43,906627,4.7
+,Utah,49,White,2106-3,11744,55841017,21.0
+,Vermont,50,White,2106-3,5105,13228533,38.6
+,Virginia,51,American Indian or Alaska Native,1002-5,37,926250,4.0
+,Virginia,51,Asian or Pacific Islander,A-PI,374,10582036,3.5
+,Virginia,51,Black or African American,2054-5,5171,35716305,14.5
+,Virginia,51,White,2106-3,34328,126721925,27.1
+,Washington,53,American Indian or Alaska Native,1002-5,309,3175118,9.7
+,Washington,53,Asian or Pacific Islander,A-PI,1466,13125357,11.2
+,Washington,53,Black or African American,2054-5,907,6916827,13.1
+,Washington,53,White,2106-3,60648,124352232,48.8
+,West Virginia,54,Asian or Pacific Islander,A-PI,12,315447,Unreliable
+,West Virginia,54,Black or African American,2054-5,242,1529922,15.8
+,West Virginia,54,White,2106-3,12802,38230913,33.5
+,Wisconsin,55,American Indian or Alaska Native,1002-5,103,1447107,7.1
+,Wisconsin,55,Asian or Pacific Islander,A-PI,103,3140223,3.3
+,Wisconsin,55,Black or African American,2054-5,785,8444277,9.3
+,Wisconsin,55,White,2106-3,37802,110994429,34.1
+,Wyoming,56,American Indian or Alaska Native,1002-5,24,336343,7.1
+,Wyoming,56,Asian or Pacific Islander,A-PI,13,124915,Unreliable
+,Wyoming,56,Black or African American,2054-5,10,173262,Unreliable
+,Wyoming,56,White,2106-3,3187,11400623,28.0
+---,,,,,,,
+"Dataset: Underlying Cause of Death, 1999-2020",,,,,,,
+Query Parameters:,,,,,,,
+ICD-10 113 Cause List: #Alzheimer disease (G30),,,,,,,
+Group By: State; Race,,,,,,,
+Show Totals: Disabled,,,,,,,
+Show Zero Values: False,,,,,,,
+Show Suppressed: False,,,,,,,
+"Calculate Rates Per: 100,000",,,,,,,
+Rate Options: Default intercensal populations for years 2001-2009 (except Infant Age Groups),,,,,,,
+---,,,,,,,
+Help: See http://wonder.cdc.gov/wonder/help/ucd.html for more information.,,,,,,,
+---,,,,,,,
+"Query Date: Nov 22, 2023 5:24:43 PM",,,,,,,
+---,,,,,,,
+"Suggested Citation: Centers for Disease Control and Prevention, National Center for Health Statistics. National Vital Statistics",,,,,,,
+"System, Mortality 1999-2020 on CDC WONDER Online Database, released in 2021. Data are from the Multiple Cause of Death Files,",,,,,,,
+"1999-2020, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative",,,,,,,
+"Program. Accessed at http://wonder.cdc.gov/ucd-icd10.html on Nov 22, 2023 5:24:43 PM",,,,,,,
+---,,,,,,,
+Messages:,,,,,,,
+1. Totals are not available for these results due to suppression constraints. More Information:,,,,,,,
+http://wonder.cdc.gov/wonder/help/faq.html#Privacy.,,,,,,,
+2. Rows with zero Deaths are hidden. Use Quick Options above to show zero rows.,,,,,,,
+3. Rows with suppressed Deaths are hidden. Use Quick Options above to show suppressed rows.,,,,,,,
+---,,,,,,,
+Caveats:,,,,,,,
+"1. As of April 3, 2017, the underlying cause of death has been revised for 125 deaths in 2014. More information:",,,,,,,
+http://wonder.cdc.gov/wonder/help/ucd.html#2014-Revision.,,,,,,,
+2. Circumstances in Georgia for the years 2008 and 2009 have resulted in unusually high death counts for the ICD-10 cause of,,,,,,,
+"death code R99, ""Other ill-defined and unspecified causes of mortality."" Caution should be used in interpreting these data.",,,,,,,
+More information: http://wonder.cdc.gov/wonder/help/ucd.html#Georgia-Reporting-Anomalies.,,,,,,,
+3. Circumstances in New Jersey for the year 2009 have resulted in unusually high death counts for the ICD-10 cause of death code,,,,,,,
+"R99, ""Other ill-defined and unspecified causes of mortality"" and therefore unusually low death counts in other ICD-10 codes,",,,,,,,
+"most notably R95, ""Sudden Infant Death Syndrome"" and X40-X49, ""Unintentional poisoning."" Caution should be used in",,,,,,,
+interpreting these data. More information: http://wonder.cdc.gov/wonder/help/ucd.html#New-Jersey-Reporting-Anomalies.,,,,,,,
+"4. Circumstances in California resulted in unusually high death counts for the ICD-10 cause of death code R99, ""Other",,,,,,,
+"ill-defined and unspecified causes of mortality"" for deaths occurring in years 2000 and 2001. Caution should be used in",,,,,,,
+interpreting these data. More information: http://wonder.cdc.gov/wonder/help/ucd.html#California-Reporting-Anomalies.,,,,,,,
+5. Data are Suppressed when the data meet the criteria for confidentiality constraints. More information:,,,,,,,
+http://wonder.cdc.gov/wonder/help/ucd.html#Assurance of Confidentiality.,,,,,,,
+6. Death rates are flagged as Unreliable when the rate is calculated with a numerator of 20 or less. More information:,,,,,,,
+http://wonder.cdc.gov/wonder/help/ucd.html#Unreliable.,,,,,,,
+7. Information included on the death certificate about the race and Hispanic ethnicity of the decedent is reported by the,,,,,,,
+"funeral director as provided by an informant, often the surviving next of kin, or, in the absence of an informant, on the basis",,,,,,,
+of observation. Race and ethnicity information from the census is by self-report. To the extent that race and Hispanic origin,,,,,,,
+"are inconsistent between these two data sources, death rates will be biased. More information:",,,,,,,
+http://wonder.cdc.gov/wonder/help/ucd.html#Racial Differences.,,,,,,,
+"8. The population figures for year 2020 are bridged-race estimates of the July 1 resident population, from the Vintage 2020",,,,,,,
+"postcensal series released by NCHS on September 22, 2021. The population figures for year 2019 are bridged-race estimates of the",,,,,,,
+"July 1 resident population, from the Vintage 2019 postcensal series released by NCHS on July 9, 2020. The population figures for",,,,,,,
+"year 2018 are bridged-race estimates of the July 1 resident population, from the Vintage 2018 postcensal series released by NCHS",,,,,,,
+"on June 25, 2019. The population figures for year 2017 are bridged-race estimates of the July 1 resident population, from the",,,,,,,
+"Vintage 2017 postcensal series released by NCHS on June 27, 2018. The population figures for year 2016 are bridged-race",,,,,,,
+"estimates of the July 1 resident population, from the Vintage 2016 postcensal series released by NCHS on June 26, 2017. The",,,,,,,
+"population figures for year 2015 are bridged-race estimates of the July 1 resident population, from the Vintage 2015 postcensal",,,,,,,
+"series released by NCHS on June 28, 2016. The population figures for year 2014 are bridged-race estimates of the July 1 resident",,,,,,,
+"population, from the Vintage 2014 postcensal series released by NCHS on June 30, 2015. The population figures for year 2013 are",,,,,,,
+"bridged-race estimates of the July 1 resident population, from the Vintage 2013 postcensal series released by NCHS on June 26,",,,,,,,
+"2014. The population figures for year 2012 are bridged-race estimates of the July 1 resident population, from the Vintage 2012",,,,,,,
+"postcensal series released by NCHS on June 13, 2013. The population figures for year 2011 are bridged-race estimates of the July",,,,,,,
+"1 resident population, from the Vintage 2011 postcensal series released by NCHS on July 18, 2012. Population figures for 2010",,,,,,,
+are April 1 Census counts. The population figures for years 2001 - 2009 are bridged-race estimates of the July 1 resident,,,,,,,
+"population, from the revised intercensal county-level 2000 - 2009 series released by NCHS on October 26, 2012. Population",,,,,,,
+figures for 2000 are April 1 Census counts. Population figures for 1999 are from the 1990-1999 intercensal series of July 1,,,,,,,
+estimates. Population figures for the infant age groups are the number of live births. <br/><b>Note:</b> Rates and population,,,,,,,
+"figures for years 2001 - 2009 differ slightly from previously published reports, due to use of the population estimates which",,,,,,,
+were available at the time of release.,,,,,,,
+9. The population figures used in the calculation of death rates for the age group 'under 1 year' are the estimates of the,,,,,,,
+resident population that is under one year of age. More information: http://wonder.cdc.gov/wonder/help/ucd.html#Age Group.,,,,,,,

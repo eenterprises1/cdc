@@ -105,7 +105,7 @@ Let's make some general observations:
 
 -   Population went from 280 millions in 1999 to 330 in 2020. This is an approximate growth of 18%.
 -   In the same period, death increased by 16%, which is less than population growth.
--   The Crude Death Rate, which is simply the number of deaths divided by the total population reflects this fact going down to 665 from 680. This means that the death rate went down 2.2%.
+-   The Crude Death Rate, which is simply the number of deaths divided by the total population times 100,000 reflects this fact going down to 665 from 680. This means that the death rate went down 2.2%.
 -   However, and more surprising, age adjusted death rate reduced 29%.
 
 A good way to compare the trends, would be to observe the cumulative perceptual growth of each metric, in a single time series plot:
@@ -319,6 +319,7 @@ Matching these values with the previous cleveland dot plots, we can say that Mis
 
 
 
+
 ### Analyzing Alzheimer's Disease
 
 Apparently the states most affected by Alzheimer's are in the southern part of the United States. Given the possible geographical dependence, we propose to corroborate the information with the following geospatial visualization.
@@ -343,7 +344,7 @@ df_map <- merge(states_map, df_rank1, by.x = "region", by.y = "State", all.x = T
 #We plot the map
 ggplot(data = df_map, aes(x = long, y = lat, group = group, fill = Top10Percent)) +
     geom_polygon(color = "black") +
-    scale_fill_manual(values = c("Top 12%" = "#843722", "Below Top 12%" = "#ffe0bd"), 
+    scale_fill_manual(values = c("Top 12%" = "red", "Below Top 12%" = "grey"), 
                       labels = c("Below Top 12%", "Top 12%")) +
     labs(fill = "Category") +
     theme_bw() +
@@ -351,7 +352,7 @@ ggplot(data = df_map, aes(x = long, y = lat, group = group, fill = Top10Percent)
           axis.text.x = element_blank(), axis.text.y = element_blank(),
           axis.title.x = element_blank(), axis.title.y = element_blank()) +
     coord_fixed(1.4) +
-    labs(title = "Top 12% of States by Percent Change in Death Rates due to Alzheimer's")
+    labs(title = "Top 6 States with highest Death Rates due to Alzheimer's") + theme(legend.position="none")
 
 ```
 We can clearly see a cluster in the south-east of the U.S. This cluster concentrates the 12% that saw the biggest increase in deaths due to Alzhmeier's (age-adjusted).
@@ -378,8 +379,8 @@ cdc_usa_race <- cdc_usa_race |> pivot_longer(cols = -Year, names_to = "Alzheimer
 #Creating the time series plot
 ggplot(cdc_usa_race, aes(x = Year, y = `Cumulative Change`, color = Alzheimer)) +
   geom_line(size = 1.3) +
-  labs(title = "Cumulative Percentual Change ('99-'20) - Alzheimer - Age Adjusted Death Rate", x = "Year",
-       y = "Cumulative Percentual Change", color = "Race") +
+  labs(title = "Cumulative Percentage Change ('99-'20) - Alzheimer - Age Adjusted Death Rate", x = "Year",
+       y = "Cumulative Percentage Change", color = "Race") +
   theme_minimal() +
   theme(legend.position = "bottom") +
   scale_y_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8))+
@@ -401,7 +402,7 @@ cdc_usa_race_pop = cdc_usa_race_pop |> select(State, Black)
 
 
 #We calculate the 88th percentile (top 12% threshold)
-cdc_usa_race_pop_threshold <- quantile(cdc_usa_race_pop$Black, probs = 0.75, na.rm = TRUE)
+cdc_usa_race_pop_threshold <- quantile(cdc_usa_race_pop$Black, probs = 0.80, na.rm = TRUE)
 
 #We create a new variable
 cdc_usa_race_pop$TopPercent <- ifelse(cdc_usa_race_pop$Black > cdc_usa_race_pop_threshold, "Top 25%", "Below Top 25%")
@@ -417,7 +418,7 @@ df_map <- merge(states_map, cdc_usa_race_pop, by.x = "region", by.y = "State", a
 #We plot the map
 ggplot(data = df_map, aes(x = long, y = lat, group = group, fill = TopPercent)) +
     geom_polygon(color = "black") +
-    scale_fill_manual(values = c("Top 25%" = "#843722", "Below Top 25%" = "#ffe0bd"), 
+    scale_fill_manual(values = c("Top 25%" = "blue", "Below Top 25%" = "grey"), 
                       labels = c("Below Top 25%", "Top 25%")) +
     labs(fill = "Category") +
     theme_bw() +
@@ -425,10 +426,51 @@ ggplot(data = df_map, aes(x = long, y = lat, group = group, fill = TopPercent)) 
           axis.text.x = element_blank(), axis.text.y = element_blank(),
           axis.title.x = element_blank(), axis.title.y = element_blank()) +
     coord_fixed(1.4) +
-    labs(title = "Top 25% of States with more Black People")
+    labs(title = "Top 10 States with highest proportion of Black People") + theme(legend.position="none")
+
+# df_map %>% filter(TopPercent =="Top 25%") %>% distinct(region)
 
 ```
 Although not perfect, we see a strong correlation that supports the study: southern states have the most share of black people, and it coincides with the states that have had higher increases of deaths due to Alzheimer's disease.
+
+
+
+```{r message=FALSE}
+df_life_expectancy <- read_csv("NCHS_-_Death_rates_and_life_expectancy_at_birth_20231111.csv")
+#df_life_expectancy
+
+df_life_expectancy_1939_to_1960 = df_life_expectancy %>% filter(Race == "All Races") %>% filter(Sex == "Both Sexes") %>% filter(Year >= 1939) %>% filter(Year <= 1960)  %>% select(-Race,-Sex,-`Age-adjusted Death Rate`)
+#df_life_expectancy_1939_to_1960
+
+alzheimer_crude = cdc_usa %>% filter(Cause == "Alzheimer's disease") %>% select(Year, Cause,Crude_Rate)
+#alzheimer_crude
+
+expectancy_alzheimer_regression_2 = cbind(alzheimer_crude,df_life_expectancy_1939_to_1960)
+
+#expectancy_alzheimer_regression_2 # this is the table
+
+ggplot(expectancy_alzheimer_regression_2 %>% select(`Crude_Rate`,`Average Life Expectancy (Years)`), aes(x = `Average Life Expectancy (Years)`, y = `Crude_Rate`)) +
+  geom_point() + 
+  geom_smooth(method = "lm") + 
+  labs(x = "Average Life Expectancy", y = "Crude Rate", title = "Scatterplot Regression for Alzheimer's Crude Rate vs Life Expectancy (1999 - 2020)") + 
+  labs(caption = "Correlation coefficient R = 0.88 ") +
+  theme(plot.caption = element_text(hjust=.1))
+
+
+
+```
+
+
+
+```{r}
+y = expectancy_alzheimer_regression_2$`Crude_Rate`
+x = expectancy_alzheimer_regression_2$`Average Life Expectancy (Years)`
+
+regression_model_cumul_growth <- lm(y ~ x)
+cor.test(y,x)
+
+```
+According to CDC, the Alzheimer’s onset is around 60 years old. It’s interesting to note that there has been a general increase in life expectancy for people born between 1939 and 1960. In 1999, they would have reached 60 years old, which is around the age of first onset. The Life expectancy rose from 63.7 to 69.7 years old. Naturally, we see a very high positive correlation (0.88) between the increase of deaths due to Alzheimer’s disease and the rise in life expectancy.
 
 
 
@@ -451,7 +493,20 @@ df_opiod_state_arranged %>% filter(State == 'West Virginia')
 
 
 
-df_opiod_state_arranged %>% filter(Year < 2017) %>% group_by(State) %>% summarize(Avg = mean(OpiodDispenseRatePer100)) %>% arrange(desc(Avg)) %>% filter(Avg > 115)
+df_opiod_state_arranged %>% filter(Year <= 2020) %>% group_by(State) %>% summarize(Avg = mean(OpiodDispenseRatePer100)) %>% arrange(desc(Avg)) %>% filter(Avg > 95)
+
+
+z = df_opiod_state_arranged %>% filter(Year <= 2020) %>% group_by(State) %>% summarize(Avg = mean(OpiodDispenseRatePer100)) %>% arrange(desc(Avg)) %>% filter(Avg > 95)
+z_reverse = z[order(z$Avg), ]
+z_reverse
+
+# ggplot(df_opiod_state_arranged %>% filter(Year <= 2020) %>% group_by(State) %>% summarize(Avg = mean(OpiodDispenseRatePer100)) %>% arrange(desc(Avg)) %>% filter(Avg > 95), aes(x = State, y = Avg)) +
+#   geom_bar(stat = "identity", fill = '#8B4513')
+  
+
+my_cols <- c("blue", "darkgreen", "orange")
+dotchart(z_reverse$Avg, labels = z_reverse$State,gcolor = "green",
+         cex = 0.9, xlab = "Opioid Dispense Rate Per 100", main = "Top 8 Highest States with Average Opioid Dispense Rate for 2006-2020")
 
 
 
@@ -460,7 +515,7 @@ df_opiod_state_arranged %>% filter(Year < 2017) %>% group_by(State) %>% summariz
 We see that West Virginia has the highest average dispensing rate 
 
 ```{r}
-df_opiod_state_arranged_top5_states = df_opiod_state_arranged %>% filter(State == "West Virginia" | State == "Alabama" | State == "Tennessee" | State == "Kentucky" | State == "Arkansas")
+df_opiod_state_arranged_top5_states = df_opiod_state_arranged %>% filter(State == "West Virginia" | State == "Alabama" | State == "Tennessee" | State == "Kentucky" | State == "Arkansas" | State == "Mississippi" | State == "Oklahoma" | State == "Louisiana")
 
 df_opiod_state_arranged_top5_states
   
@@ -475,10 +530,52 @@ ggplot(df_opiod_state_arranged_top5_states, aes(x = as.numeric(Year), y = OpiodD
 
 
 ```{r}
-cude_rate_states = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Unintentional injuries")
-cude_rate_states %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg))
+top5_states_adj_rate_unint = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Unintentional injuries") %>% filter(Year > 2005)
+top5_states_adj_rate_unint = top5_states_adj_rate_unint %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg)) %>% filter(Avg > 57)# %>% filter(Avg > 57.4)
+top5_states_adj_rate_unint
+
+w = top5_states_adj_rate_unint
+w
+
+w_reverse = w[order(w$Avg), ]
+w_reverse
+
+
+
+dotchart(w_reverse$Avg, labels = w_reverse$State,gcolor = "green",
+         cex = 0.9, xlab = "Age Adjusted Death Rate", main = "Top 8 Highest States w/ Avg Age-Adj Death Rate for Unintentional '06-'20")
+
 ```
 
+
+```{r}
+selected_top5 = cdc_dataset %>% filter(Cause == "Unintentional injuries") %>% 
+  filter(State == "West Virginia" | State == "New Mexico" | State == "Kentucky" | State == "Mississippi" | State == "Alaska" | State == "Wyoming" | State == "Oklahoma" | State == "Tennessee")  %>% filter(Year > 2005)
+
+
+  
+selected_top5
+
+
+ggplot(selected_top5, aes(x = as.numeric(Year), y = Age_Adj_Rate, color = State)) +
+  geom_line(size = 1) +
+  geom_point() +
+  theme_minimal() +
+  theme(legend.position = "bottom") 
+
+```
+
+```{r}
+opiod_top8 = df_opiod_state_arranged_top5_states %>% distinct(State)
+opiod_top8$State
+
+death_rate_top8 = selected_top5 %>% distinct(State)
+death_rate_top8$State
+
+intersect(opiod_top8$State,death_rate_top8$State)
+```
+
+We see that chooseing 8 states that have had the highest average death rate from 2006 to 2020, and choosing 8 states that have had the highest average opiod dispensing, 5 states intersect. 
 
 
 
@@ -487,6 +584,116 @@ cude_rate_states %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>%
 Didnt manage to arrive here today.
 
 
+```{r}
+top10_avg_suicide_states = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Suicide") %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg)) %>% filter(Avg > 16.9)
+top10_avg_suicide_states
+```
 
 
+```{r}
+as.vector(top10_avg_suicide_states %>% distinct(State))
+```
+
+```{r}
+lowest_population_density_states$
+```
+
+
+```{r}
+united_states_by_area <- read_csv("united-states-by-area.csv")
+# View(united_states_by_area)
+
+united_states_by_area_density = united_states_by_area %>% select(state,densityMi) %>% arrange(densityMi)
+lowest_population_density_states = united_states_by_area_density[1:10,]
+lowest_population_density_states
+```
+
+
+
+##############
+```{r}
+united_states_by_area_density
+
+colnames(united_states_by_area_density) <- c('State','densityMi')
+united_states_by_area_density
+```
+
+
+
+```{r}
+avg_suicide_rate = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Suicide") %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg))
+avg_suicide_rate
+```
+```{r}
+merged_df <- merge(united_states_by_area_density, avg_suicide_rate, by = "State")
+merged_df
+```
+```{r}
+boxplot(united_states_by_area_density$densityMi)
+```
+
+
+
+```{r}
+ggplot(merged_df, aes(x = log(densityMi), y = Avg)) + geom_point() + geom_smooth(method = "lm") + 
+  theme(plot.caption = element_text(hjust=.1))
+```
+```{r}
+y = merged_df$Avg
+x = log(merged_df$densityMi)
+regression_model_cumul_growth <- lm(y ~ x)
+cor.test(y,x)
+summary(regression_model_cumul_growth)
+```
+
+```{r}
+summary_gdp <- read_csv("SASUMMARY__ALL_AREAS_1998_2022.csv")
+View(summary_gdp)
+
+summary_gdp_only = summary_gdp %>% filter(Description == "Gross domestic product (GDP)") %>% select(GeoName,`2017`,`2018`,`2019`) %>% filter(GeoName != 'United States')
+summary_gdp_only = summary_gdp_only %>% mutate(AvgGDP = (as.numeric(`2017`)+as.numeric(`2018`)+as.numeric(`2019`)) / 3)
+summary_gdp_only
+
+```
+```{r}
+colnames(summary_gdp_only) <- c('State','2017','2018','2019','AvgGDP')
+summary_gdp_only
+```
+
+```{r}
+merged_df2 <- merge(merged_df, summary_gdp_only, by = "State")
+merged_df2
+```
+
+```{r}
+boxplot(merged_df2$AvgGDP)
+
+merged_df2 %>% arrange(desc(AvgGDP))
+```
+
+```{r}
+merged_df2
+```
+
+```{r}
+y = merged_df2$Avg
+
+x = log(merged_df2$densityMi)
+z = log(merged_df2$AvgGDP)
+
+regression_model_cumul_growth_densityMil_AvgGDP <- lm(y ~ x + z)
+summary(regression_model_cumul_growth_densityMil_AvgGDP)
+```
+```{r}
+
+y = merged_df2$Avg
+x = log(merged_df2$AvgGDP)
+# x = merged_df2$AvgGDP
+
+summary(lm(y ~ x))
+```
+```{r}
+ggplot(merged_df2, aes(x = log(AvgGDP), y = Avg)) + geom_point() + geom_smooth(method = "lm") + 
+  theme(plot.caption = element_text(hjust=.1))
+```
 

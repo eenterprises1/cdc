@@ -20,24 +20,23 @@ We are going to work with data related to deaths published by the The Centers fo
 
 ### Description of the data
 
-- Format: The dataset is publicly available in CSV files in the following website: https://wonder.cdc.gov/ucd-icd10.html 
-- Frequency: Annually updated from 1999 to 2020
-- Features: key features include causes of death, demographic information (race, sex, age) and geographic location (state).
-- Dimensions: the dataset provides the following metrics:
-  - Deaths: number of deaths that ocurred in a specific year, for a specific race, sex, state.
-  - Population: the total popoulation for that specific year, race, state etc.
-  - Crude Death Rate: number of deaths divided total population
-  - Age Adjusted Death Rate: number o deaths adjusted by age
-- Specific description: The main dataset has 37290 rows and 8 columns.
+-   Format: The dataset is publicly available in CSV files in the following website: https://wonder.cdc.gov/ucd-icd10.html
+-   Frequency: Annually updated from 1999 to 2020
+-   Features: key features include causes of death, demographic information (race, sex, age) and geographic location (state).
+-   Dimensions: the dataset provides the following metrics:
+    -   Deaths: number of deaths that ocurred in a specific year, for a specific race, sex, state.
+    -   Population: the total popoulation for that specific year, race, state etc.
+    -   Crude Death Rate: number of deaths divided total population
+    -   Age Adjusted Death Rate: number o deaths adjusted by age
+-   Specific description: The main dataset has 37290 rows and 8 columns.
 
 It is important to differentiate between age-adjusted death rate, deaths and crude death rate. While the three of them provide information about mortality, we will focus on Age-Adjusted-Death-Rate: the **Crude Rate** is a measure of the number of deaths in a given population, scaled to the size of that population, per unit of time. It is not adjusted for the age distribution of a population. An increase in the Crude Rate could be due to several factors, including an increase in the absolute number of deaths, a growing proportion of older individuals in the population who are more likely to die, or a decrease in the overall population size. **On the other hand**, the Age Adjusted Rate, or Age Adjusted Death Rate, is a mortality rate statistically modified to eliminate the effect of different age distributions in different populations. This rate is typically used to allow comparisons between populations that may have different age structures. A good explanation of the different can be found here: https://www.health.ny.gov/diseases/chronic/ageadj.htm
 
-- Importing the data: the dataset can be obtained frm the CDC webiste in a CSV format. Then we will import it into R using read_csv() function. The dataset will be stored in the repository.
-- Note any issues / problems with the data: 
-  - In general there are no problems with the data in terms of inconsistencies. Numbers are sound and we did not encounter any number that seemed to be inherently wrong. However, the CDC does not calculate Age-Adjusted-Death-Rate or Crude-Death-Rate when the number of absolute Deaths is less than or equal to 10. Instead, they are labeled as Unrealiable. In any case, the number would be quite small, and we can treat Unreliable measures as zero.
+-   Importing the data: the dataset can be obtained frm the CDC webiste in a CSV format. Then we will import it into R using read_csv() function. The dataset will be stored in the repository.
+-   Note any issues / problems with the data:
+    -   In general there are no problems with the data in terms of inconsistencies. Numbers are sound and we did not encounter any number that seemed to be inherently wrong. However, the CDC does not calculate Age-Adjusted-Death-Rate or Crude-Death-Rate when the number of absolute Deaths is less than or equal to 10. Instead, they are labeled as Unrealiable. In any case, the number would be quite small, and we can treat Unreliable measures as zero.
 
 We can take a look to the first few rows of the dataset:
-
 
 ```{r message=FALSE}
 library(readr)
@@ -45,7 +44,6 @@ cdc_dataset = read_csv("NCHS_Leading_Causes_of_Death_United_States_2020.csv")
 print(head(cdc_dataset, 20))
 rm(cdc_dataset)
 ```
-
 
 ## Research plan
 
@@ -59,6 +57,4 @@ Describe any patterns you discover in missing values. If no values are missing, 
 
 (suggested: 2 graphs plus commentary)
 
-
 The dataset contains missing values for entries regarded as Unreliable by the CDC. These values consists of calculations coming from number of deaths less than 20. We can check if this is definition is correct:
-
