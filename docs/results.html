@@ -882,46 +882,15 @@ sample estimates:
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>united_states_by_area <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"united-states-by-area.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 50 Columns: 14
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr  (1): state
-dbl (13): fips, densityMi, pop2023, pop2022, pop2020, pop2019, pop2010, grow...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View(united_states_by_area)</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>united_states_by_area_density <span class="ot">=</span> united_states_by_area <span class="sc">%&gt;%</span> <span class="fu">select</span>(state,densityMi) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(densityMi)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(united_states_by_area_density) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'State'</span>,<span class="st">'densityMi'</span>)</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>united_states_by_area_density</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 50 × 2
-   State        densityMi
-   &lt;chr&gt;            &lt;dbl&gt;
- 1 Alaska            1.28
- 2 Wyoming           6.01
- 3 Montana           7.83
- 4 North Dakota     11.3 
- 5 South Dakota     12.2 
- 6 New Mexico       17.4 
- 7 Idaho            23.9 
- 8 Nebraska         25.7 
- 9 Nevada           29.2 
-10 Kansas           35.9 
-# ℹ 40 more rows</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>lowest_population_density_states <span class="ot">=</span> united_states_by_area_density[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>lowest_population_density_states</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>united_states_by_area <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"united-states-by-area.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># View(united_states_by_area)</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>united_states_by_area_density <span class="ot">=</span> united_states_by_area <span class="sc">%&gt;%</span> <span class="fu">select</span>(state,densityMi) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(densityMi)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(united_states_by_area_density) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'State'</span>,<span class="st">'densityMi'</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co">#united_states_by_area_density</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>lowest_population_density_states <span class="ot">=</span> united_states_by_area_density[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>lowest_population_density_states</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 2
@@ -942,53 +911,16 @@ dbl (13): fips, densityMi, pop2023, pop2022, pop2020, pop2019, pop2010, grow...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>lowest_population_density_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 1
-   State       
-   &lt;chr&gt;       
- 1 Alaska      
- 2 Wyoming     
- 3 Montana     
- 4 North Dakota
- 5 South Dakota
- 6 New Mexico  
- 7 Idaho       
- 8 Nebraska    
- 9 Nevada      
-10 Kansas      </code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.vector</span>(top10_avg_suicide_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>$State
- [1] "Wyoming"    "Alaska"     "Montana"    "New Mexico" "Nevada"    
- [6] "Idaho"      "Utah"       "Colorado"   "Oklahoma"   "Arizona"   </code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> lowest_population_density_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span>State</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "Alaska"       "Wyoming"      "Montana"      "North Dakota" "South Dakota"
- [6] "New Mexico"   "Idaho"        "Nebraska"     "Nevada"       "Kansas"      </code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> top10_avg_suicide_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>b<span class="sc">$</span>State</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "Wyoming"    "Alaska"     "Montana"    "New Mexico" "Nevada"    
- [6] "Idaho"      "Utah"       "Colorado"   "Oklahoma"   "Arizona"   </code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(a<span class="sc">$</span>State,b<span class="sc">$</span>State)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lowest_population_density_states %&gt;% distinct(State)</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">#as.vector(top10_avg_suicide_states %&gt;% distinct(State))</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> lowest_population_density_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co">#a$State</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> top10_avg_suicide_states <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(State)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co">#b$State</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(a<span class="sc">$</span>State,b<span class="sc">$</span>State)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Alaska"     "Wyoming"    "Montana"    "New Mexico" "Idaho"     
@@ -999,24 +931,24 @@ dbl (13): fips, densityMi, pop2023, pop2022, pop2020, pop2019, pop2010, grow...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>avg_suicide_rate <span class="ot">=</span> cdc_dataset <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">"United States"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Cause <span class="sc">==</span> <span class="st">"Suicide"</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(State) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg =</span> <span class="fu">mean</span>(Age_Adj_Rate)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Avg))</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># avg_suicide_rate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>avg_suicide_rate <span class="ot">=</span> cdc_dataset <span class="sc">%&gt;%</span> <span class="fu">filter</span>(State <span class="sc">!=</span> <span class="st">"United States"</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Cause <span class="sc">==</span> <span class="st">"Suicide"</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(State) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg =</span> <span class="fu">mean</span>(Age_Adj_Rate)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Avg))</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># avg_suicide_rate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>merged_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(united_states_by_area_density, avg_suicide_rate, <span class="at">by =</span> <span class="st">"State"</span>)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># merged_df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>merged_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(united_states_by_area_density, avg_suicide_rate, <span class="at">by =</span> <span class="st">"State"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># merged_df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(united_states_by_area_density<span class="sc">$</span>densityMi,</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Boxplot of Population Density per Square Mile"</span>,  </span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"States"</span>,                    </span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Population density (# of people per sq. mile)"</span>)             </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(united_states_by_area_density<span class="sc">$</span>densityMi,</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Boxplot of Population Density per Square Mile"</span>,  </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"States"</span>,                    </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Population density (# of people per sq. mile)"</span>)             </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
@@ -1026,8 +958,8 @@ dbl (13): fips, densityMi, pop2023, pop2022, pop2020, pop2019, pop2010, grow...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(merged_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(densityMi), <span class="at">y =</span> Avg)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span>.<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(merged_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(densityMi), <span class="at">y =</span> Avg)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span>.<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
@@ -1036,10 +968,10 @@ dbl (13): fips, densityMi, pop2023, pop2022, pop2020, pop2019, pop2010, grow...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> merged_df<span class="sc">$</span>Avg</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">log</span>(merged_df<span class="sc">$</span>densityMi)</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>regression_model_cumul_growth <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(y,x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> merged_df<span class="sc">$</span>Avg</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">log</span>(merged_df<span class="sc">$</span>densityMi)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>regression_model_cumul_growth <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(y,x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1056,7 +988,7 @@ sample estimates:
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(regression_model_cumul_growth)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(regression_model_cumul_growth)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>We observe a remarkable pattern: suicide is highly (negatively) correlated with population density. Hence, areas that have high population density tend to have a significantly low rates of suicide. Areas that have low population density tend to have high rates of suicide. The correlation coefficient found here is -0.86, which is quite high.</p>

@@ -618,14 +618,14 @@ lowest_population_density_states
 
 
 ```{r}
-lowest_population_density_states %>% distinct(State)
-as.vector(top10_avg_suicide_states %>% distinct(State))
+# lowest_population_density_states %>% distinct(State)
+#as.vector(top10_avg_suicide_states %>% distinct(State))
 
 a = lowest_population_density_states %>% distinct(State)
-a$State
+#a$State
 
 b = top10_avg_suicide_states %>% distinct(State)
-b$State
+#b$State
 
 intersect(a$State,b$State)
 
