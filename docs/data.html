@@ -96,6 +96,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -180,6 +182,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#data-collection" id="toc-data-collection" class="nav-link" data-scroll-target="#data-collection"><span class="header-section-number">2.1.1</span> Data collection</a></li>
   <li><a href="#description-of-the-data" id="toc-description-of-the-data" class="nav-link" data-scroll-target="#description-of-the-data"><span class="header-section-number">2.1.2</span> Description of the data</a></li>
+  <li><a href="#importing-the-data" id="toc-importing-the-data" class="nav-link" data-scroll-target="#importing-the-data"><span class="header-section-number">2.1.3</span> Importing the Data</a></li>
+  <li><a href="#data-analysis-limitations-and-concerns" id="toc-data-analysis-limitations-and-concerns" class="nav-link" data-scroll-target="#data-analysis-limitations-and-concerns"><span class="header-section-number">2.1.4</span> Data Analysis Limitations and Concerns</a></li>
   </ul></li>
   <li><a href="#research-plan" id="toc-research-plan" class="nav-link" data-scroll-target="#research-plan"><span class="header-section-number">2.2</span> Research plan</a></li>
   <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</a></li>
@@ -206,55 +210,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>Identify one or more data sources that you propose to draw on for the project.</p>
-<ul>
-<li>For each, describe how the data are collected and by whom.</li>
-<li>Describe the format of the data, the frequency of updates, dimensions, and any other relevant information.</li>
-<li>Note any issues / problems with the data, either known or that you discover.</li>
-<li>Explain how you plan to import the data.</li>
-<li>Carefully document your sources with links to the precise data sources that you used. If that is not possible (for example if your data is not available online, then explain that clearly.)</li>
-</ul>
-<p>(suggested: 1 page)</p>
-<p>CDC Leading Causes of Death Dataset is the primary data source for our project.</p>
+<p>The CDC Leading Causes of Death Data set is the primary data source for our project.</p>
 <section id="technical-description" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="technical-description"><span class="header-section-number">2.1</span> Technical description</h2>
 <section id="data-collection" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="data-collection"><span class="header-section-number">2.1.1</span> Data collection</h3>
-<p>We are going to work with data related to deaths published by the The Centers for Disease Control and Prevention (CDC). The data is collected by the Centers for Disease Control and Prevention (CDC), specifically by the National Center for Health Statistics (NCHS). This involves gathering mortality and population data from the National Vital Statistics System (NVSS), which receives information from state and local health departments in the United States.</p>
+<p>We will primarily work with data related to causes of deaths published by the Centers for Disease Control and Prevention (CDC). The data is collected by the CDC, specifically by the National Center for Health Statistics (NCHS). This involves gathering mortality and population data from the National Vital Statistics System (NVSS), which receives information from state and local health departments in the United States.</p>
 </section>
 <section id="description-of-the-data" class="level3" data-number="2.1.2">
 <h3 data-number="2.1.2" class="anchored" data-anchor-id="description-of-the-data"><span class="header-section-number">2.1.2</span> Description of the data</h3>
 <ul>
-<li>Format: The dataset is publicly available in CSV files in the following website: https://wonder.cdc.gov/ucd-icd10.html</li>
+<li>Format: The data set is publicly available in CSV files on the following website: <a href="https://wonder.cdc.gov/ucd-icd10.html">link</a></li>
 <li>Frequency: Annually updated from 1999 to 2020</li>
-<li>Features: key features include causes of death, demographic information (race, sex, age) and geographic location (state).</li>
-<li>Dimensions: the dataset provides the following metrics:
+<li>Features: Key features include causes of death, demographic information (race, sex, age), and geographic location (state).</li>
+<li>Dimensions: the data set provides the following metrics:
 <ul>
-<li>Deaths: number of deaths that ocurred in a specific year, for a specific race, sex, state.</li>
-<li>Population: the total popoulation for that specific year, race, state etc.</li>
-<li>Crude Death Rate: number of deaths divided total population</li>
-<li>Age Adjusted Death Rate: number o deaths adjusted by age</li>
+<li>Deaths: number of deaths that occurred in a specific year for a specific race, sex, or state.</li>
+<li>Population: the total population for that specific year, race, state, etc.</li>
+<li>Crude Death Rate: the number of deaths divided by the total population.</li>
+<li>Age-Adjusted Death Rate: number of deaths adjusted by age.</li>
 </ul></li>
-<li>Specific description: The main dataset has 37290 rows and 8 columns.</li>
+<li>Specific description: The primary data set has 37290 rows and 8 columns.</li>
 </ul>
-<p>It is important to differentiate between age-adjusted death rate, deaths and crude death rate. While the three of them provide information about mortality, we will focus on Age-Adjusted-Death-Rate: the <strong>Crude Rate</strong> is a measure of the number of deaths in a given population, scaled to the size of that population, per unit of time. It is not adjusted for the age distribution of a population. An increase in the Crude Rate could be due to several factors, including an increase in the absolute number of deaths, a growing proportion of older individuals in the population who are more likely to die, or a decrease in the overall population size. <strong>On the other hand</strong>, the Age Adjusted Rate, or Age Adjusted Death Rate, is a mortality rate statistically modified to eliminate the effect of different age distributions in different populations. This rate is typically used to allow comparisons between populations that may have different age structures. A good explanation of the different can be found here: https://www.health.ny.gov/diseases/chronic/ageadj.htm</p>
-<ul>
-<li>Importing the data: the dataset can be obtained frm the CDC webiste in a CSV format. Then we will import it into R using read_csv() function. The dataset will be stored in the repository.</li>
-<li>Note any issues / problems with the data:
-<ul>
-<li>In general there are no problems with the data in terms of inconsistencies. Numbers are sound and we did not encounter any number that seemed to be inherently wrong. However, the CDC does not calculate Age-Adjusted-Death-Rate or Crude-Death-Rate when the number of absolute Deaths is less than or equal to 10. Instead, they are labeled as Unrealiable. In any case, the number would be quite small, and we can treat Unreliable measures as zero.</li>
-</ul></li>
-</ul>
-<p>We can take a look to the first few rows of the dataset:</p>
+<p>It is important to differentiate between Age-Adjusted Death Rate, Deaths, and Crude Death Rate. While the three provide information about mortality, we will mostly focus on the Age-Adjusted-Death-Rate. The <strong>Crude Rate</strong> measures the number of deaths in a given population divided by the size of that population.</p>
+<p><span class="math display">\[
+\text{Crude Rate} = \frac{\text{Number of Deaths}}{\text{Population}} * 100,000
+\]</span></p>
+<p>An increase in the number of deaths will cause a rise in the Crude Death Rate. However, this can be misleading in populations with a growing number of elderly people, who naturally have a higher likelihood of dying.</p>
+<p>On the other hand, the <strong>Age-Adjusted Death Rate</strong> is a mortality rate statistically modified to eliminate the effect of different age distributions in different populations. This rate allows comparisons between populations with different age structures. A good explanation of the difference can be found <a href="https://www.health.ny.gov/diseases/chronic/ageadj.htm">here</a>. As a formula, it can be defined as,</p>
+<p><span class="math display">\[
+\text{Age-Adj Death Rate} = \sum_{i \in \text{Age-Groups}} (w_i \times \text{CrudeRate}_i)\times 100,000
+\]</span></p>
+<p>The Age-Adjusted Death Rate is essentially a weighted average of Crude Rates for different age groups. In this metric, each additional death adds <span class="math inline">\(w_i\times1\)</span> to the total, whereas in the Crude Rate, its contribution is a fixed (and higher) value of <span class="math inline">\(1\)</span>. For populations with a significant percentage of individuals aged 85 and above, the number of deaths is adjusted by the group’s weight. This adjustment yields a metric that facilitates the comparison of mortality rates across diverse populations.</p>
+<p>There are some other data sets that we anticipate using from the CDC (e.g., data relevant to opioid dispense rates). One such data set that seems promising to answer some of the questions that we will pose later is the following <a href="https://www.cdc.gov/drugoverdose/rxrate-maps/state2020.html">link</a>. This particular data set will need to be manually compiled as it provides data for the years 2006-2020 with 3 columns: State, Abbreviation, and Opioid Dispensing Rate per 100. The dimensions are 51x3. However, there is such a data set for each year.</p>
+</section>
+<section id="importing-the-data" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="importing-the-data"><span class="header-section-number">2.1.3</span> Importing the Data</h3>
+<p>The data set can be obtained from the <a href="https://wonder.cdc.gov/ucd-icd10.html">CDC website</a> in a CSV format. We will store the data set in the repository and import it into R using the read_csv() function.</p>
+</section>
+<section id="data-analysis-limitations-and-concerns" class="level3" data-number="2.1.4">
+<h3 data-number="2.1.4" class="anchored" data-anchor-id="data-analysis-limitations-and-concerns"><span class="header-section-number">2.1.4</span> Data Analysis Limitations and Concerns</h3>
+<p>Overall, the data is consistent, and the figures appear accurate, with no inherent discrepancies observed. However, it’s important to note that the CDC refrains from calculating Age-Adjusted Death Rates or Crude Death Rates when the total number of deaths is 10 or fewer, labeling these instances as ‘Unreliable’. While the actual numbers in such cases would be minimal, it’s reasonable to consider these ‘Unreliable’ values as zero for analytical purposes. We will speak more about this in the Missing value analysis section.</p>
+<p>We can take a look at the first few rows of the data set:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cdc_dataset <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"NCHS_Leading_Causes_of_Death_United_States_2020.csv"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(cdc_dataset, <span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(cdc_dataset, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 × 8
+<pre><code># A tibble: 10 × 8
     Year `113 Cause Name`      `Cause Name` State Deaths Population `Crude Rate`
    &lt;dbl&gt; &lt;chr&gt;                 &lt;chr&gt;        &lt;chr&gt;  &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
  1  1999 Tuberculosis (A16-A1… Tuberculosis Alab…     16    4430141         NA  
@@ -267,16 +273,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  8  1999 Diabetes mellitus (E… Diabetes     Alab…   1341    4430141         30.3
  9  1999 Nutritional deficien… Nutritional… Alab…     85    4430141          1.9
 10  1999 Meningitis (G00,G03)  Meningitis   Alab…     11    4430141         NA  
-11  1999 Parkinson disease (G… Parkinson d… Alab…    207    4430141          4.7
-12  1999 Alzheimer disease (G… Alzheimer's… Alab…    772    4430141         17.4
-13  1999 Diseases of heart (I… Heart disea… Alab…  13419    4430141        303. 
-14  1999 Essential hypertensi… Essential h… Alab…    313    4430141          7.1
-15  1999 Cerebrovascular dise… Stroke       Alab…   3148    4430141         71.1
-16  1999 Atherosclerosis (I70) Atheroscler… Alab…    215    4430141          4.9
-17  1999 Aortic aneurysm and … Aortic aneu… Alab…    224    4430141          5.1
-18  1999 Influenza and pneumo… Influenza a… Alab…   1228    4430141         27.7
-19  1999 Chronic lower respir… CLRD         Alab…   2179    4430141         49.2
-20  1999 Pneumoconioses and c… Pneumoconio… Alab…     20    4430141          0.5
 # ℹ 1 more variable: `Age Adjusted Rate` &lt;dbl&gt;</code></pre>
 </div>
 </div>
@@ -284,14 +280,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="research-plan" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="research-plan"><span class="header-section-number">2.2</span> Research plan</h2>
-<p>Explain in detail how your data will enable you to answer your research questions from the introduction.</p>
-<p>(suggested: 1 page)</p>
+<p>The comprehensive data on causes of death is provided by the CDC. It includes crude and age-adjusted rates and death tolls by state, race, and year, and serves as a solid foundation for addressing our research questions.</p>
+<p>First, we will identify the top 10 highest causes of death historically over the last two decades. Then, we will address a more interesting question. We will distinguish which causes of death whose rates appear to be steady and identify the causes of death that appear to be aggressively increasing. In several instances, we anticipate that this will require us to compare time series and choose adequate metrics in order to appropriately make such comparisons. Conveniently, the age-adjusted death rate gives us an accurate glimpse while taking into account the distribution of the age groups in the US.</p>
+<p>A particularly interesting question that we want to answer is to identify which causes have had the fastest rate of growth in terms of age-adjusted death rate. For example, a potent question to answer would be the following: have certain causes of death been on the increase or on the decrease in the last two decades? If so, are there any outliers among them, especially if we break down geographically by state? This would require careful analysis of percentage change year-by-year and analyzing the data by state. Intuitively, we are aware that certain causes of death will show up in our research (one specific example that we anticipate seeing is the deaths due to the opioid epidemic, which has been ongoing for almost a decade now). Indubitably, we expect to find surprising results.</p>
+<p>The research plan depends on exploring the causes of death on a state-by-state basis. This will uncover states with disproportionately high death rates from specific causes, highlighting regions where healthcare investment may be urgently needed. It will be remarkably informative to see which states fare well with certain rising causes of death, and which states are exhibiting alarming rates in comparison to others. Ideally, finding correlations that help explain death rates would be helpful. Identifying such trends can help policymakers and professionals (e.g., doctors, nurses, mental health professionals, representatives) have a clearer understanding of the reasons behind the spikes in deaths and hopefully help guide them towards adequate solutions to mitigate the quickly rising causes of death.</p>
 </section>
 <section id="missing-value-analysis" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</h2>
-<p>Describe any patterns you discover in missing values. If no values are missing, graphs should still be included showing that.</p>
-<p>(suggested: 2 graphs plus commentary)</p>
-<p>The dataset contains missing values for entries regarded as Unreliable by the CDC. These values consists of calculations coming from number of deaths less than 20. We can check if this is definition is correct:</p>
+<p>According to the <a href="https://wonder.cdc.gov/wonder/help/ucd.html">CDC</a>: “<em>Statistics representing fewer than ten persons (0-9) are suppressed. Rates are marked as “unreliable” when the death count is less than 20.”</em> The reason they cite to to protect individual privacy and confidentiality. In theory, this ensures that data cannot be used to identify or infer information about specific individuals while maintaining ethical standards in data handling and reporting.</p>
+<p>For this reason, our data set contains N/A values in Age-Adjusted Death Rate and Crude Rate for Deaths lower than 20. Moreover, there are no entries having Deaths less than 10. We can confirm this by looking at the summary() of the column Deaths being 10:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Searching for the minimum value registered for Deaths</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cdc_dataset<span class="sc">$</span>Deaths)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     10      50     203    2618     866  725192 </code></pre>
+</div>
+</div>
+<p>This confirms that the data set consists of entries having Deaths greater than or equal than 10.</p>
+<p>Finally, we can see the distribution of Deaths for N/A’s. The values should be higher than 10, and less than or equal to 20. Otherwise, there are inconsistencies:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(cdc_dataset, <span class="fu">is.na</span>(<span class="st">`</span><span class="at">Age Adjusted Rate</span><span class="st">`</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>max_death <span class="ot">&lt;-</span> <span class="fu">max</span>(filtered_data<span class="sc">$</span>Deaths, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(filtered_data, <span class="fu">aes</span>(<span class="at">x =</span> Deaths)) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="dv">9</span>, <span class="at">fill =</span> <span class="st">"turquoise"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">9</span><span class="sc">:</span>max_death <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of Deaths where Age Adjusted Death Rate is NA"</span>, <span class="at">x =</span> <span class="st">"Deaths"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>)<span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>As we can see, the minimum value is 10 and the maximum is 19. This means that all NAs have values lower than 20 as the CDC stated.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Libraries</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Subset</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>na_count <span class="ot">&lt;-</span> cdc_dataset <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">NA_Count =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(<span class="st">`</span><span class="at">Age Adjusted Rate</span><span class="st">`</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(NA_Count))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#plot</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(na_count, <span class="fu">aes</span>(<span class="at">x =</span> NA_Count, <span class="at">y =</span> <span class="fu">reorder</span>(<span class="st">`</span><span class="at">Cause Name</span><span class="st">`</span>, NA_Count))) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">'black'</span>) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Count of NAs in Age Adjusted Rate by Cause"</span>, <span class="at">x =</span> <span class="st">"Number of NAs"</span>, <span class="at">y =</span> <span class="st">"Cause Name"</span>) <span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+<p>Thus, turning N/A’s into 0’s is the the practical solution given they represent extremely very numbers.</p>
 
 
 </section>
