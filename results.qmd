@@ -475,14 +475,9 @@ According to the CDC, Alzheimer’s onset is around 60 years old. It’s interes
 
 ### Analyzing Unintentional Injuries
 
-A bulk of what is categorized under unintentional injuries is drug overdoses. Over the last few years, the opioid epidemic has made national headlines (e.g., opioid epidemic). The CDC has stated that "prescription opioids (natural and semi-synthetic opioids and methadone) increasing since at least 1999.”
+A bulk of what is categorized under unintentional injuries are drug overdoses. Over the last few years, the opioid epidemic has made national headlines. The CDC has stated that "prescription opioids (natural and semi-synthetic opioids and methadone) increasing since at least 1999.”
 
-https://www.cdc.gov/opioids/data/analysis-resources.html#:~:text=The%20first%20wave%20began%20with,increasing%20since%20at%20least%201999.&text=The%20second%20wave%20began%20in,in%20overdose%20deaths%20involving%20heroin
-
-The CDC describes that there have been several waves of deaths. The increasing rate of opioid prescriptions since 1999 has been contributing to overdose deaths. Unfortunately, this coincides with another phenomenon: fentanyl trafficking. This became a crisis in 2014. What is referred to as the "third wave" of deaths started after 2013. This is an extremely dramatic increase in overdose deaths. Additionally, Purdue Pharma has been at the center of a controversy due to illegal kickbacks to doctors and as well as health records company. One of the things that became interesting to look into is prescription opiod dispense rate by state.
-
-
-https://www.dea.gov/sites/default/files/2020-03/DEA_GOV_DIR-008-20%20Fentanyl%20Flow%20in%20the%20United%20States_0.pdf
+The CDC describes that there have been several waves of deaths. The increasing rate of opioid prescriptions since 1999 has been contributing to overdose deaths. Unfortunately, this coincides with another phenomenon: fentanyl trafficking. This became a crisis in 2014. What is referred to as the "third wave" of deaths started after 2013. This is an extremely dramatic increase in overdose deaths. Additionally, Purdue Pharma has been at the center of a controversy due to illegal kickbacks to doctors and as well as health records company. One of the things that became interesting to look into is prescription opioid dispense rate by state.
 
 One of the things that became interesting to look into is the prescription opioid dispense rate by state. This data set is available from the CDC.
 
