@@ -270,7 +270,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="results_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The bar chart above identifies 10 most common causes of death in the United States aggregated from year 1999 to 2020. It’s is visible that heart disease and cancer account for a significant bulk of all deaths. We will focus our analysis on these.</p>
+<p>The bar chart above identifies the 10 most common causes of death in the United States aggregated from year 1999 to 2020. It is visible that heart disease and cancer account for a significant bulk of all deaths. We will focus our analysis on these. The results in the bar chart are consistent with the common knowledge that suggests that heart disease and cancer are among the leading causes of death in the US. Remarkably, the deaths resulting from these 10 causes are almost 90% of the total figure of deaths.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -280,11 +280,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># rm(cdc_usa_summary)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Notice that the deaths incorporated in these 10 categories, are almost 90% of the total figure of deaths.</p>
 </section>
 <section id="understanding-overall-trends" class="level3" data-number="3.1.2">
 <h3 data-number="3.1.2" class="anchored" data-anchor-id="understanding-overall-trends"><span class="header-section-number">3.1.2</span> Understanding overall trends</h3>
-<p>As population grows, deaths (with a lag) will eventually grow. We would like to understand the interplay between population growth, deaths growth, and the evolution of death rates since 1999. For this, we will create metrics and facet them in time series.</p>
+<p>As the population grows, deaths (albeit with a lag) will also eventually grow. We would like to understand the interplay between population growth, death growth, and the changes in the death rates since 1999. The results that we aim to elucidate is to find out which mortality rates have remained consistent and which are swiftly increasing For this, we will create metrics and facet them in time series.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -320,14 +319,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="results_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Let’s make some general observations:</p>
+<p>At this point, we ought to make some general observations:</p>
 <ul>
-<li>Population went from 280 millions in 1999 to 330 in 2020. This is an approximate growth of 18%.</li>
-<li>In the same period, death increased by 16%, which is less than population growth.</li>
-<li>The Crude Death Rate, which is simply the number of deaths divided by the total population times 100,000 reflects this fact going down to 665 from 680. This means that the death rate went down 2.2%.</li>
-<li>However, and more surprising, age adjusted death rate reduced 29%.</li>
+<li>Population went from 280 million in 1999 to 330 million in 2020. This is an approximate growth of 18%.</li>
+<li>During the same time period, death increased by 16%, which is less than population growth.</li>
+<li>The Crude Death Rate (i.e.&nbsp;the number of deaths divided by the total population times 100,000) reflects this: we see a decrease from 680 to 665 This means that the death rate went down 2.2%.</li>
+<li>However, and more surprisingly, the age-adjusted death rate decreased by 29%.</li>
 </ul>
-<p>A good way to compare the trends, would be to observe the cumulative perceptual growth of each metric, in a single time series plot:</p>
+<p>A useful way to compare these trends would be to observe the cumulative percentage growth of each metric visualized in a single time series plot:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -346,34 +345,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating the time series plot</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cdc_usa_grouped_cum, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">Cumulative Change</span><span class="st">`</span>, <span class="at">color =</span> Metric)) <span class="sc">+</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cumulative Percentual Change (1999-2020)"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, </span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Cumulative Percentual Change"</span>, <span class="at">color =</span> <span class="st">"Metric"</span>) <span class="sc">+</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(), <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>))<span class="sc">+</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>labels_for_metric <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Age-Adjusted Rate"</span>, <span class="st">"Crude Rate"</span>, <span class="st">"Deaths"</span>, <span class="st">"Population"</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cdc_usa_grouped_cum, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">Cumulative Change</span><span class="st">`</span>, <span class="at">color =</span> Metric)) <span class="sc">+</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cumulative Percentage Change by Year (1999-2020)"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, </span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Cumulative Percentage Change"</span>, <span class="at">color =</span> <span class="st">"Metric"</span>) <span class="sc">+</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(), <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>))<span class="sc">+</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">10</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>General observations:</p>
+<p>Some key observations:</p>
 <ul>
 <li>As stated before, population growth has been steady in the period.</li>
-<li>Between 1999 and 2012, Total Deaths were approximately constant while the population grew steadily. This provoked the Crude Rate to decrease sharply (denominator increasing). However, from 2013 to 2020, we observed a sharp increase in Deaths, growing around 10% in 7 years. Interestingly, 6% was given from 2013 to 2019 and 4% in 2020. The issue is that COVID-19 exacerbated the severity of other diseases, causing more deaths, which were categorized not as COVID-19 directly. Remember that in this dataset, we omit COVID-19, but we, in fact, see an effect from the pandemic, which is seen in the spikes of 2020.</li>
+<li>Between 1999 and 2012, Total Deaths were approximately constant while the population grew steadily. This caused the Crude Rate to decrease sharply (denominator increasing). However, from 2013 to 2020, we observed a sharp increase in Deaths, growing around 10% in 7 years. An issue we should mention is that COVID-19 exacerbated the severity of other diseases, causing more deaths, which were categorized not as COVID-19 directly. For this dataset, though COVID-19 is omitted, the effect of the pandemic is visible as spikes in 2020.</li>
 <li>Although population growth lost some steam from 2013 to 2020, the real cause of the increase in the crude rate of deaths is a sharp increase in deaths.</li>
-<li>While the crude rate increased considerably during the period, the age-adjusted death rate kept decreasing. This metric takes into consideration the age distribution of people. If deaths increase because people are aging, it assigns a lesser weight to the metric by weighting by age buckets. This means the metric can be compared across populations with different age structures. Overall, we can say that the increase in deaths has been primarily due to an aging population.</li>
-<li>We can observe how the population has aged by observing the Population Pyramids for the United States in the image below. The U.S. Census Bureau created the Pyramid Population charts that show how the US has aged in the last two decades.</li>
-<li>We say in aggregate because we will break down by cause and see if we can confirm this intuition.</li>
+<li>While the crude rate increased considerably during the period, the age-adjusted death rate kept decreasing. This metric takes into consideration the age distribution of people. If deaths increase because people are aging, it assigns a lesser weight to the metric by weighing the age buckets. This means the metric can be compared across populations with different age structures. Overall, we can say that the increase in deaths has been primarily due to an aging population.</li>
+<li>We can observe how the population has aged by observing the Population Pyramids for the United States in the image below. The U.S. Census Bureau created the Pyramid Population charts that show how the US has aged in the last two decades. We will later break down by cause and see if we can confirm this intuition.</li>
 <li>Finally, the relatively milder uptick in the Age-Adjusted-Death-Rate in 2020 versus the Crude Rate can be interpreted as COVID causing more deaths in elderly people. The last went up 3.5% that year, while the former was 4.5%.</li>
 </ul>
 <p><img src="https://www.census.gov/content/dam/Census/library/stories/2023/05/aging-united-states-population-fewer-children-in-2020-figure-2.jpg" class="img-fluid" style="width:110.0%"></p>
 </section>
 <section id="understanding-the-underlying-causes-of-death" class="level3" data-number="3.1.3">
 <h3 data-number="3.1.3" class="anchored" data-anchor-id="understanding-the-underlying-causes-of-death"><span class="header-section-number">3.1.3</span> Understanding the underlying causes of death</h3>
-<p>According to the CDC, the best metric to study death evolution is using age-adjusted death rates. We then begin by investigating the evolution of age adjusted death rate across time.</p>
+<p>According to the CDC, the best metric to study the evolution of death rates is using age-adjusted death rates. We then begin by investigating age-adjusted death rates across time.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -393,12 +394,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We can make the following observations:</p>
 <ul>
-<li>As seen before, the overall age adjusted death rate in the United States is in aggregate decreasing since 1999</li>
-<li>However, not all causes share the same decreasing shape. For instance, Alzheimer’s, Unintentional injuries and suicide, have been increasing dramatically.</li>
-<li>Overall, Cancer, CLRD (Chronic lower respiratory diseases), Heart diseases, Kidney diseases and Strokes have shown an impressive reduction in deaths.</li>
-<li>Diabetes seems to be a cause for concern, but it can be explained by COVID-19: “Several underlying medical conditions can increase the risk of severe illness and a higher likelihood of lethality if a person contracts COVID-19, including diabetes”.</li>
+<li>As seen before, the overall age-adjusted death rate in the United States has in aggregate decreased since 1999.</li>
+<li>However, not all causes share the same decreasing shape. For instance, Alzheimer’s, Unintentional injuries, and suicide have been increasing dramatically.</li>
+<li>Overall, Cancer, CLRD (Chronic lower respiratory diseases), Heart diseases, Kidney diseases, and Strokes have shown an impressive reduction in deaths.</li>
+<li>Diabetes seems to be a cause for concern, but could possibly be explained by the COVID-19 spike (i.e.&nbsp;“…underlying medical conditions can increase the risk of severe illness and a higher likelihood of lethality if a person contracts COVID-19, including diabetes.”</li>
 </ul>
-<p>The different types of causes don’t share the same dimensions. We can compare the evolution of these death-rates calculating the percentual growth over time:</p>
+<p>Since different types of causes don’t share the same dimensions, we can compare the changes in death rates by investigating the percentage growth over time:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -424,7 +425,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating the time series plot</span></span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cdc_usa_wider, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">Cumulative Change</span><span class="st">`</span>, <span class="at">color =</span> Metric)) <span class="sc">+</span></span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cumulative Change - Age Adj. Death Rate"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Cumulative Percentual Change"</span>, <span class="at">color =</span> <span class="st">"Metric"</span>) <span class="sc">+</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cumulative Change in Age Adjusted Death Rates"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Cumulative Percentage Change"</span>, <span class="at">color =</span> <span class="st">"Metric"</span>) <span class="sc">+</span></span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>) <span class="sc">+</span></span>
 <span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(), <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">8</span>))<span class="sc">+</span></span>
@@ -435,8 +436,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="results_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>With the cumulative percentage time series graph broken down by cause, we can see some interesting trends and better understand the trends over time. In particular, deaths caused by Alzheimer’s disease is aggressively increasing year by year. Unintentional injuries and suicide are the number two and number three fastest growing causes of death, respectively. Additionally, we can note that stroke, influenza and pneumonia, and heart disease have actually been decreasing during the same time of 1999-2020. Those we should note that death from Stroke, Influenza and pneumonia, and heart disease diseases showed a decreasing trend until 2012, but then began to grow again.</p>
-<p>The overall trend is downward for the age adjusted death rate. However, we have identified three causes that show a different behavior. Now we will try to identify which states are leading in these metrics.</p>
+<p>With the cumulative percentage time series graph broken down by cause, we can pinpoint some interesting trends and better understand the results over time. In particular, deaths caused by Alzheimer’s disease are aggressively increasing year by year. Unintentional injuries and suicide are the number two and number three fastest-growing causes of death, respectively. Additionally, we can note that stroke, influenza/pneumonia, and heart disease have actually been decreasing during the same time of 1999-2020. We should note that death from stroke, influenza/pneumonia, and heart disease showed a decreasing trend until 2012, but then began to grow again.</p>
+<p>The overall trend is downward for the age-adjusted death rate. However, we have identified three causes that show different behavior. We will now shift our focus to Alzheimer’s disease, unintentional injuries, and suicide. We will identify which states are leading in these metrics. We suspect some states might come up as outliers.</p>
 </section>
 <section id="disaggregating-by-state" class="level3" data-number="3.1.4">
 <h3 data-number="3.1.4" class="anchored" data-anchor-id="disaggregating-by-state"><span class="header-section-number">3.1.4</span> Disaggregating by state</h3>
@@ -458,7 +459,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Cleveland</span></span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rank1, <span class="fu">aes</span>(<span class="at">x =</span> PercentChange, <span class="at">y =</span> <span class="fu">reorder</span>(State, PercentChange))) <span class="sc">+</span></span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Alzheimer's Disease %Chg. in Age Adj. Death Rate"</span>, <span class="at">x =</span> <span class="st">"Percentage Change 1999 to 2020"</span>, <span class="at">y =</span> <span class="st">'State'</span>) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Alzheimer's %Chg. in Age-Adj Death Rate"</span>, <span class="at">x =</span> <span class="st">"Percentage Change 1999 to 2020"</span>, <span class="at">y =</span> <span class="st">'State'</span>) <span class="sc">+</span></span>
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
@@ -470,7 +471,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="results_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="528"></p>
 </div>
 </div>
-<p>We can see that Mississippi, Arkansas and Alabama have seen the largest increase, while Maine, Maryland and Montana are the smallest.</p>
+<p>We can see that Mississippi, Arkansas, and Alabama have seen the largest increase, while Maine, Maryland, and Montana are the smallest.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -501,7 +502,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="results_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="528"></p>
 </div>
 </div>
-<p>We can see that Rhode Island, West Virginia, and Massachusetts have seen the largest increase, while Idaho, Nebraska and Alabama are the smallest.</p>
+<p>We can see that Rhode Island, West Virginia, and Massachusetts have seen the largest increase, while Idaho, Nebraska, and Alabama are the smallest.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -532,8 +533,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="results_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="528"></p>
 </div>
 </div>
-<p>We can see that Vermont, Iowa and Kansas have seen the largest increase, while California, Rhode Island and Nevada are the smallest.</p>
-<p>It is interesting to note that in the case of Alzheimer’s, Unintentional Injuries and Suicide, the three diseases exhibit increasing age adjusted rates in the period. There are only a few exceptions such as Nevada and Rhode Island in Suicide or Maine in Alzheimer’s where a decreasing rate has been seen. For this reason, we believe it is worth looking at box plots to identify outliers and find explanations for them.</p>
+<p>We can see that Vermont, Iowa, and Kansas have seen the largest increase, while California, Rhode Island, and Nevada are the smallest.</p>
+<p>It is interesting to note that in the case of Alzheimer’s, Unintentional Injuries, and Suicide exhibit increasing age-adjusted rates in the period. There are only a few exceptions such as Nevada and Rhode Island in Suicide or Maine in Alzheimer’s where a decreasing rate has been seen. For this reason, we believe it is worth looking at box plots to identify outliers and find explanations for them.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -552,12 +553,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="results_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Matching these values with the previous cleveland dot plots, we can say that Mississippi is an outlier for Alzheimer. Rhode Island and West Virginia are outliers for Unintentional Injuries. Finally, Suicide seems to not have any outlier. From the boxplots we also notice that the three causes are skewed to the right.</p>
+<p>Matching these values with the previous Cleveland dot plots, we can say that Mississippi is an outlier for Alzheimer’s. Rhode Island and West Virginia are outliers for Unintentional Injuries. Finally, Suicide does not seem to not have any outliers. From the boxplots, we also notice that the three causes are skewed to the right.</p>
 </section>
 <section id="analyzing-alzheimers-disease" class="level3" data-number="3.1.5">
 <h3 data-number="3.1.5" class="anchored" data-anchor-id="analyzing-alzheimers-disease"><span class="header-section-number">3.1.5</span> Analyzing Alzheimer’s Disease</h3>
-<p>Apparently the states most affected by Alzheimer’s are in the southern part of the United States. Given the possible geographical dependence, we propose to corroborate the information with the following geospatial visualization.</p>
-<p>To make the differences more notorious, we are going to paint the top 12% of States in terms growing deaths due to Alzheimer.</p>
+<p>Apparently, the states most affected by Alzheimer’s are in the southern part of the United States. Given the possible geographical dependence, we propose to corroborate the information with the following geospatial visualization.</p>
+<p>We will identify the top 6 states, which have the highest growing deaths due to Alzheimer’s.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -592,8 +593,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="results_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>We can clearly see a cluster in the south-east of the U.S. This cluster concentrates the 12% that saw the biggest increase in deaths due to Alzhmeier’s (age-adjusted).</p>
-<p>According to this study: https://www.nia.nih.gov/news/data-shows-racial-disparities-alzheimers-disease-diagnosis-between-black-and-white-research, black people are almost twice more likely to develop dementia due to a higher exposure to risk factors. For this reason, we will investigate black race distribution by state.</p>
+<p>This cluster identifies 6 southern states that have had the largest increase in deaths due to Alzheimer’s (age-adjusted).</p>
+<p>According to this study: https://www.nia.nih.gov/news/data-shows-racial-disparities-alzheimers-disease-diagnosis-between-black-and-white-research, black people are almost twice more likely to develop dementia due to higher exposure to risk factors. For this reason, we will investigate black race distribution by state.</p>
 <p>First, let’s take a look if there is indeed a difference between the Age-Adjusted Death Rate of Black vs White people:</p>
 <div class="cell">
 <details>
@@ -626,8 +627,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="results_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>In fact, we can clearly see a difference between white and black people: the later having increased its death rate by 160% vs 95% during the last 20 years.</p>
-<p>Let’s see then the distribution of black people by state. We will take the averages across the time period:</p>
+<p>In fact, we can see a difference in age-adjusted death dates when broken down by race. The black population has seen an increase in its death rate by over 160%. Conversely, the White population has seen an increase of 95% during the same last 20 years.</p>
+<p>Next, we can explore the distribution of the Black population by state. We will take an averages across this time period. This following chart identifies 10 states that have the highest proportion of Black population in the US:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -674,7 +675,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df_map %&gt;% filter(TopPercent =="Top 25%") %&gt;% distinct(region)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Although not perfect, we see a strong correlation that supports the study: select southern states have a higher proportion of the population comprised of black people, and it coincides with the states that have had higher increases of deaths due to Alzheimer’s disease.</p>
+<p>Although not perfect, there is some overlap. We see a strong correlation that supports the study: select southern states have a higher proportion of the population comprised of Black people, and it coincides with the states that have had higher increases in deaths due to Alzheimer’s disease.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -725,11 +726,15 @@ sample estimates:
 0.8783436 </code></pre>
 </div>
 </div>
-<p>According to CDC, the Alzheimer’s onset is around 60 years old. It’s interesting to note that there has been a general increase in life expectancy for people born between 1939 and 1960. In 1999, they would have reached 60 years old, which is around the age of first onset. The Life expectancy rose from 63.7 to 69.7 years old. Naturally, we see a very high positive correlation (0.88) between the increase of deaths due to Alzheimer’s disease and the rise in life expectancy.</p>
+<p>According to the CDC, Alzheimer’s onset is around 60 years old. It’s interesting to note that there has been a general increase in life expectancy for people born between 1939 and 1960. In 1999, they would have reached 60 years old, which is around the age of first onset. Life expectancy rose from 63.7 to 69.7 years old. Naturally, we see a very high positive correlation (0.88) between the increase in deaths due to Alzheimer’s disease and the rise in life expectancy.</p>
 </section>
 <section id="analyzing-unintentional-injuries" class="level3" data-number="3.1.6">
 <h3 data-number="3.1.6" class="anchored" data-anchor-id="analyzing-unintentional-injuries"><span class="header-section-number">3.1.6</span> Analyzing Unintentional Injuries</h3>
-<p>A large bulk of what is under unintentional injuries is drug overdoses.</p>
+<p>A bulk of what is categorized under unintentional injuries is drug overdoses. Over the last few years, the opioid epidemic has made national headlines (e.g., opioid epidemic). The CDC has stated that “prescription opioids (natural and semi-synthetic opioids and methadone) increasing since at least 1999.”</p>
+<p>https://www.cdc.gov/opioids/data/analysis-resources.html#:~:text=The%20first%20wave%20began%20with,increasing%20since%20at%20least%201999.&amp;text=The%20second%20wave%20began%20in,in%20overdose%20deaths%20involving%20heroin</p>
+<p>The CDC describes that there have been several waves of deaths. The increasing rate of opioid prescriptions since 1999 has been contributing to overdose deaths. Unfortunately, this coincides with another phenomenon: fentanyl trafficking. This became a crisis in 2014. What is referred to as the “third wave” of deaths started after 2013. This is an extremely dramatic increase in overdose deaths. Additionally, Purdue Pharma has been at the center of a controversy due to illegal kickbacks to doctors and as well as health records company. One of the things that became interesting to look into is prescription opiod dispense rate by state.</p>
+<p>https://www.dea.gov/sites/default/files/2020-03/DEA_GOV_DIR-008-20%20Fentanyl%20Flow%20in%20the%20United%20States_0.pdf</p>
+<p>One of the things that became interesting to look into is the prescription opioid dispense rate by state. This data set is available from the CDC.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -761,7 +766,7 @@ sample estimates:
 <p><img src="results_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Averaging the rate of opioid dispense rate (via phramancies and medical facilities), here are top 8 highest states that were dispensing the most amount of perscription opioids.</p>
+<p>Averaging the rate of opioid dispensing (via pharmacies and medical facilities), here are the top 8 highest states that were dispensing the most amount of prescription opioids.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -781,7 +786,7 @@ sample estimates:
 <p><img src="results_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>We can observe that these states accelerate in dispensing opioids and then dramatically decrease the opiod dispensing around 2012.</p>
+<p>Utilizing a time series, we can observe that these states accelerated in dispensing opioids and then dramatically decreased the opioid dispensing around 2012. Naturally, it’s interesting to see which states have had the highest death rates due to unintentional injuries.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -826,7 +831,7 @@ sample estimates:
 <p><img src="results_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>What is interesting about the Unintentional deaths in these top 8 states is that they start to climb. This could be due to the fact that people initially developed addictions during the years of aggressive dispensing. Then, after a few years, the death rates started to increase.</p>
+<p>What is notable about the Unintentional deaths in these top 8 states is that they start to climb. This could be due to the fact that people initially developed addictions during the years of aggressive dispensing. Then, after a few years’ delay, the death rates started to increase, especially with the arrival of fentanyl.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -843,11 +848,11 @@ sample estimates:
 [5] "Mississippi"  </code></pre>
 </div>
 </div>
-<p>We see that choosing 8 states that have had the highest average death rate from 2006 to 2020 and choosing 8 states that have had the highest average opioid dispensing, we can see that 5 of states intersect. There is significant overlap between the states that had the highest average opioid dispensing rates and the states that had the highest average death rates.</p>
+<p>We see that by choosing 8 states that have had the highest average death rate from 2006 to 2020 and choosing 8 states that have had the highest average opioid dispensing, we can see that 5 of the states intersect. There is significant overlap between the states that had the highest average opioid dispensing rates and the states that had the highest average death rates.</p>
 </section>
 <section id="analyzing-suicide" class="level3" data-number="3.1.7">
 <h3 data-number="3.1.7" class="anchored" data-anchor-id="analyzing-suicide"><span class="header-section-number">3.1.7</span> Analyzing Suicide</h3>
-<p>This topic is extremely broad and difficult to summarize. There are many life factors such as depression, mental illness, lack of access to mental health care, isolation, and quality of life that can contribute to the rising rates. However, there is peculiar pattern that emerges in terms of population density and suicide rates. Consider these top 10 states with highest average suicide rates:</p>
+<p>This topic is extremely broad and difficult to summarize. There are many life factors such as depression, mental illness, lack of access to mental health care, isolation, and quality of life that can contribute to the rising rates. However, there is a peculiar pattern that emerges in terms of population density and suicide rates. Consider these top 10 states with the highest average suicide rates:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -865,7 +870,7 @@ sample estimates:
 </details>
 <div class="cell-output-display">
 
-<div class="tabwid"><style>.cl-37fd0fd0{}.cl-37f86e08{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-37fa50ba{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-37fa50c4{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-37fa5dd0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-37fa5dda{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-37fa5ddb{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-37fa5de4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-37fa5de5{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-37fa5de6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-37fd0fd0"><thead><tr style="overflow-wrap:break-word;"><th class="cl-37fa5dd0"><p class="cl-37fa50ba"><span class="cl-37f86e08">State</span></p></th><th class="cl-37fa5dda"><p class="cl-37fa50c4"><span class="cl-37f86e08">Avg</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-37fa5ddb"><p class="cl-37fa50ba"><span class="cl-37f86e08">Wyoming</span></p></td><td class="cl-37fa5de4"><p class="cl-37fa50c4"><span class="cl-37f86e08">22.60</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-37fa5ddb"><p class="cl-37fa50ba"><span class="cl-37f86e08">Alaska</span></p></td><td class="cl-37fa5de4"><p class="cl-37fa50c4"><span class="cl-37f86e08">22.56</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-37fa5ddb"><p class="cl-37fa50ba"><span class="cl-37f86e08">Montana</span></p></td><td class="cl-37fa5de4"><p class="cl-37fa50c4"><span class="cl-37f86e08">22.15</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-37fa5ddb"><p class="cl-37fa50ba"><span class="cl-37f86e08">New Mexico</span></p></td><td class="cl-37fa5de4"><p class="cl-37fa50c4"><span class="cl-37f86e08">20.64</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-37fa5ddb"><p class="cl-37fa50ba"><span class="cl-37f86e08">Nevada</span></p></td><td class="cl-37fa5de4"><p class="cl-37fa50c4"><span class="cl-37f86e08">19.44</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-37fa5ddb"><p class="cl-37fa50ba"><span class="cl-37f86e08">Idaho</span></p></td><td class="cl-37fa5de4"><p class="cl-37fa50c4"><span class="cl-37f86e08">18.53</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-37fa5ddb"><p class="cl-37fa50ba"><span class="cl-37f86e08">Utah</span></p></td><td class="cl-37fa5de4"><p class="cl-37fa50c4"><span class="cl-37f86e08">18.44</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-37fa5ddb"><p class="cl-37fa50ba"><span class="cl-37f86e08">Colorado</span></p></td><td class="cl-37fa5de4"><p class="cl-37fa50c4"><span class="cl-37f86e08">18.01</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-37fa5ddb"><p class="cl-37fa50ba"><span class="cl-37f86e08">Oklahoma</span></p></td><td class="cl-37fa5de4"><p class="cl-37fa50c4"><span class="cl-37f86e08">16.98</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-37fa5de5"><p class="cl-37fa50ba"><span class="cl-37f86e08">Arizona</span></p></td><td class="cl-37fa5de6"><p class="cl-37fa50c4"><span class="cl-37f86e08">16.93</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-c1acba18{}.cl-c1a941ee{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c1aac708{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1aac712{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1aad112{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1aad113{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1aad114{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1aad11c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1aad11d{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1aad11e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-c1acba18"><thead><tr style="overflow-wrap:break-word;"><th class="cl-c1aad112"><p class="cl-c1aac708"><span class="cl-c1a941ee">State</span></p></th><th class="cl-c1aad113"><p class="cl-c1aac712"><span class="cl-c1a941ee">Avg</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-c1aad114"><p class="cl-c1aac708"><span class="cl-c1a941ee">Wyoming</span></p></td><td class="cl-c1aad11c"><p class="cl-c1aac712"><span class="cl-c1a941ee">22.60</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1aad114"><p class="cl-c1aac708"><span class="cl-c1a941ee">Alaska</span></p></td><td class="cl-c1aad11c"><p class="cl-c1aac712"><span class="cl-c1a941ee">22.56</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1aad114"><p class="cl-c1aac708"><span class="cl-c1a941ee">Montana</span></p></td><td class="cl-c1aad11c"><p class="cl-c1aac712"><span class="cl-c1a941ee">22.15</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1aad114"><p class="cl-c1aac708"><span class="cl-c1a941ee">New Mexico</span></p></td><td class="cl-c1aad11c"><p class="cl-c1aac712"><span class="cl-c1a941ee">20.64</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1aad114"><p class="cl-c1aac708"><span class="cl-c1a941ee">Nevada</span></p></td><td class="cl-c1aad11c"><p class="cl-c1aac712"><span class="cl-c1a941ee">19.44</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1aad114"><p class="cl-c1aac708"><span class="cl-c1a941ee">Idaho</span></p></td><td class="cl-c1aad11c"><p class="cl-c1aac712"><span class="cl-c1a941ee">18.53</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1aad114"><p class="cl-c1aac708"><span class="cl-c1a941ee">Utah</span></p></td><td class="cl-c1aad11c"><p class="cl-c1aac712"><span class="cl-c1a941ee">18.44</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1aad114"><p class="cl-c1aac708"><span class="cl-c1a941ee">Colorado</span></p></td><td class="cl-c1aad11c"><p class="cl-c1aac712"><span class="cl-c1a941ee">18.01</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1aad114"><p class="cl-c1aac708"><span class="cl-c1a941ee">Oklahoma</span></p></td><td class="cl-c1aad11c"><p class="cl-c1aac712"><span class="cl-c1a941ee">16.98</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1aad11d"><p class="cl-c1aac708"><span class="cl-c1a941ee">Arizona</span></p></td><td class="cl-c1aad11e"><p class="cl-c1aac712"><span class="cl-c1a941ee">16.93</span></p></td></tr></tbody></table></div>
 </div>
 <details>
 <summary>Code</summary>
@@ -873,7 +878,7 @@ sample estimates:
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># formattable()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>These states have had the highest suicide rate on average from 1999 to 2020. We can see that there is interesting relationship between where most suicide tend to occur and the type of state it is. In particular, many of these states tend to have a sparsely population density. In other words, the land mass tends to be big compared to the population residing on that land mass. We import a data set to isolate states that have the lower population density. Consider this next table of lowest population densities in US by state:</p>
+<p>These states have had the highest suicide rate on average from 1999 to 2020. We can see that there is an interesting relationship between where most suicides tend to occur and the type of state it is. In particular, many of these states tend to have a sparse population density. In other words, the land mass tends to be big compared to the population residing on that land mass. We import a data set to isolate states that have a lower population density. Consider this next table of lowest population densities in the US by state:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -891,7 +896,7 @@ sample estimates:
 </details>
 <div class="cell-output-display">
 
-<div class="tabwid"><style>.cl-38092fc2{}.cl-38052936{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3806dd94{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3806dd9e{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3806e820{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3806e821{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3806e82a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3806e82b{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3806e82c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3806e834{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-38092fc2"><thead><tr style="overflow-wrap:break-word;"><th class="cl-3806e820"><p class="cl-3806dd94"><span class="cl-38052936">State</span></p></th><th class="cl-3806e821"><p class="cl-3806dd9e"><span class="cl-38052936">densityMi</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-3806e82a"><p class="cl-3806dd94"><span class="cl-38052936">Alaska</span></p></td><td class="cl-3806e82b"><p class="cl-3806dd9e"><span class="cl-38052936">1.28</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3806e82a"><p class="cl-3806dd94"><span class="cl-38052936">Wyoming</span></p></td><td class="cl-3806e82b"><p class="cl-3806dd9e"><span class="cl-38052936">6.01</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3806e82a"><p class="cl-3806dd94"><span class="cl-38052936">Montana</span></p></td><td class="cl-3806e82b"><p class="cl-3806dd9e"><span class="cl-38052936">7.83</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3806e82a"><p class="cl-3806dd94"><span class="cl-38052936">North Dakota</span></p></td><td class="cl-3806e82b"><p class="cl-3806dd9e"><span class="cl-38052936">11.31</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3806e82a"><p class="cl-3806dd94"><span class="cl-38052936">South Dakota</span></p></td><td class="cl-3806e82b"><p class="cl-3806dd9e"><span class="cl-38052936">12.18</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3806e82a"><p class="cl-3806dd94"><span class="cl-38052936">New Mexico</span></p></td><td class="cl-3806e82b"><p class="cl-3806dd9e"><span class="cl-38052936">17.40</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3806e82a"><p class="cl-3806dd94"><span class="cl-38052936">Idaho</span></p></td><td class="cl-3806e82b"><p class="cl-3806dd9e"><span class="cl-38052936">23.88</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3806e82a"><p class="cl-3806dd94"><span class="cl-38052936">Nebraska</span></p></td><td class="cl-3806e82b"><p class="cl-3806dd9e"><span class="cl-38052936">25.67</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3806e82a"><p class="cl-3806dd94"><span class="cl-38052936">Nevada</span></p></td><td class="cl-3806e82b"><p class="cl-3806dd9e"><span class="cl-38052936">29.23</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3806e82c"><p class="cl-3806dd94"><span class="cl-38052936">Kansas</span></p></td><td class="cl-3806e834"><p class="cl-3806dd9e"><span class="cl-38052936">35.92</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-c1b5a4d4{}.cl-c1b2b0d0{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c1b3f454{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1b3f45e{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1b3fc74{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1b3fc7e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1b3fc88{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1b3fc89{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1b3fc8a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1b3fc92{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-c1b5a4d4"><thead><tr style="overflow-wrap:break-word;"><th class="cl-c1b3fc74"><p class="cl-c1b3f454"><span class="cl-c1b2b0d0">State</span></p></th><th class="cl-c1b3fc7e"><p class="cl-c1b3f45e"><span class="cl-c1b2b0d0">densityMi</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-c1b3fc88"><p class="cl-c1b3f454"><span class="cl-c1b2b0d0">Alaska</span></p></td><td class="cl-c1b3fc89"><p class="cl-c1b3f45e"><span class="cl-c1b2b0d0">1.28</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1b3fc88"><p class="cl-c1b3f454"><span class="cl-c1b2b0d0">Wyoming</span></p></td><td class="cl-c1b3fc89"><p class="cl-c1b3f45e"><span class="cl-c1b2b0d0">6.01</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1b3fc88"><p class="cl-c1b3f454"><span class="cl-c1b2b0d0">Montana</span></p></td><td class="cl-c1b3fc89"><p class="cl-c1b3f45e"><span class="cl-c1b2b0d0">7.83</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1b3fc88"><p class="cl-c1b3f454"><span class="cl-c1b2b0d0">North Dakota</span></p></td><td class="cl-c1b3fc89"><p class="cl-c1b3f45e"><span class="cl-c1b2b0d0">11.31</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1b3fc88"><p class="cl-c1b3f454"><span class="cl-c1b2b0d0">South Dakota</span></p></td><td class="cl-c1b3fc89"><p class="cl-c1b3f45e"><span class="cl-c1b2b0d0">12.18</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1b3fc88"><p class="cl-c1b3f454"><span class="cl-c1b2b0d0">New Mexico</span></p></td><td class="cl-c1b3fc89"><p class="cl-c1b3f45e"><span class="cl-c1b2b0d0">17.40</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1b3fc88"><p class="cl-c1b3f454"><span class="cl-c1b2b0d0">Idaho</span></p></td><td class="cl-c1b3fc89"><p class="cl-c1b3f45e"><span class="cl-c1b2b0d0">23.88</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1b3fc88"><p class="cl-c1b3f454"><span class="cl-c1b2b0d0">Nebraska</span></p></td><td class="cl-c1b3fc89"><p class="cl-c1b3f45e"><span class="cl-c1b2b0d0">25.67</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1b3fc88"><p class="cl-c1b3f454"><span class="cl-c1b2b0d0">Nevada</span></p></td><td class="cl-c1b3fc89"><p class="cl-c1b3f45e"><span class="cl-c1b2b0d0">29.23</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-c1b3fc8a"><p class="cl-c1b3f454"><span class="cl-c1b2b0d0">Kansas</span></p></td><td class="cl-c1b3fc92"><p class="cl-c1b3f45e"><span class="cl-c1b2b0d0">35.92</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 <div class="cell">
@@ -913,7 +918,7 @@ sample estimates:
 [6] "Nevada"    </code></pre>
 </div>
 </div>
-<p>There is a peculiar pattern that emerges. Comparing the top 10 states for lowest population density and the top 8 states for the highest suicide rate, there is an overlap of 6 states.</p>
+<p>There is a peculiar pattern that emerges. Comparing the top 10 states for the lowest population density and the top 8 states for the highest suicide rate, there is an overlap of 6 states.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -940,12 +945,13 @@ sample estimates:
 <p><img src="results_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>We see that there are some outliers in terms of population density (i.e.&nbsp;6 states are very densely populated). The distribution is right skewed. This is a good candidate to do a log transform to further analyze the data in terms of how it relates to the average suicide rate over the last 20 years. After joining the data on state, we can run a linear regression.</p>
+<p>We see that there are some outliers in terms of population density (i.e.&nbsp;6 states are very densely populated). The distribution is right-skewed. This is a good candidate to do a log transform to further analyze the data in terms of how it relates to the average suicide rate over the last 20 years. After joining the data on the state, we can run a linear regression.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(merged_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(densityMi), <span class="at">y =</span> Avg)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span>.<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span>.<span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">"Correlation coefficient R = -0.860 "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
@@ -977,7 +983,7 @@ sample estimates:
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(regression_model_cumul_growth)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>We observe a remarkable pattern: suicide is highly (negatively) correlated with population density. Hence, areas that have high population density tend to have a significantly low rates of suicide. Areas that have low population density tend to have high rates of suicide. The correlation coefficient found here is -0.86, which is quite high.</p>
+<p>We observe a remarkable pattern: suicide is highly (negatively) correlated with population density. For example, Wyoming has a suicide rate that is over 3 times higher than New York. Hence, areas that have high population density tend to have lower rates of suicide. Areas that have low population density tend to have high rates of suicide. The correlation coefficient found here is -0.86, which is quite high.</p>
 
 
 </section>

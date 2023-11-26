@@ -56,7 +56,7 @@ ggplot(cdc_usa_summary, aes(x = reorder(Cause, Total_Deaths), y = Total_Deaths))
   theme_minimal()
 ```
 
-The bar chart above identifies 10 most common causes of death in the United States aggregated from year 1999 to 2020. It's is visible that heart disease and cancer account for a significant bulk of all deaths. We will focus our analysis on these.
+The bar chart above identifies the 10 most common causes of death in the United States aggregated from year 1999 to 2020. It is visible that heart disease and cancer account for a significant bulk of all deaths. We will focus our analysis on these. The results in the bar chart are consistent with the common knowledge that suggests that heart disease and cancer are among the leading causes of death in the US. Remarkably, the deaths resulting from these 10 causes are almost 90% of the total figure of deaths.
 
 ```{r}
 #Filtering cdc_dataset by the top 10 Cause Name from cdc_usa_summary
@@ -65,11 +65,10 @@ cdc_usa  <- cdc_usa[cdc_usa$Cause %in%  cdc_usa_summary$Cause, ]
 # rm(cdc_usa_summary)
 ```
 
-Notice that the deaths incorporated in these 10 categories, are almost 90% of the total figure of deaths.
 
 ### Understanding overall trends
 
-As population grows, deaths (with a lag) will eventually grow. We would like to understand the interplay between population growth, deaths growth, and the evolution of death rates since 1999. For this, we will create metrics and facet them in time series.
+As the population grows, deaths (albeit with a lag) will also eventually grow. We would like to understand the interplay between population growth, death growth, and the changes in the death rates since 1999. The results that we aim to elucidate is to find out which mortality rates have remained consistent and which are swiftly increasing For this, we will create metrics and facet them in time series.
 
 ```{r warning=FALSE}
 #Grouping by Year and State, and summarizing the data. We can take min(Population) to keep the population of that year
@@ -101,14 +100,14 @@ ggplot(cdc_usa_long, aes(x = Year, y = Value)) +
   theme_bw()
 ```
 
-Let's make some general observations:
+At this point, we ought to make some general observations:
 
--   Population went from 280 millions in 1999 to 330 in 2020. This is an approximate growth of 18%.
--   In the same period, death increased by 16%, which is less than population growth.
--   The Crude Death Rate, which is simply the number of deaths divided by the total population times 100,000 reflects this fact going down to 665 from 680. This means that the death rate went down 2.2%.
--   However, and more surprising, age adjusted death rate reduced 29%.
+-   Population went from 280 million in 1999 to 330 million in 2020. This is an approximate growth of 18%.
+-   During the same time period, death increased by 16%, which is less than population growth.
+-   The Crude Death Rate (i.e. the number of deaths divided by the total population times 100,000) reflects this: we see a decrease from 680 to 665 This means that the death rate went down 2.2%.
+-   However, and more surprisingly, the age-adjusted death rate decreased by 29%.
 
-A good way to compare the trends, would be to observe the cumulative perceptual growth of each metric, in a single time series plot:
+A useful way to compare these trends would be to observe the cumulative percentage growth of each metric visualized in a single time series plot:
 
 ```{r}
 #Calculating cumulative percentual change for each column
@@ -126,32 +125,34 @@ cdc_usa_grouped_cum <- cdc_usa_grouped_cum |>
 
 
 #Creating the time series plot
+
+labels_for_metric <- c("Age-Adjusted Rate", "Crude Rate", "Deaths", "Population")
+
 ggplot(cdc_usa_grouped_cum, aes(x = Year, y = `Cumulative Change`, color = Metric)) +
   geom_line(size = 1.3) +
-  labs(title = "Cumulative Percentual Change (1999-2020)", x = "Year", 
-       y = "Cumulative Percentual Change", color = "Metric") +
+  labs(title = "Cumulative Percentage Change by Year (1999-2020)", x = "Year", 
+       y = "Cumulative Percentage Change", color = "Metric") +
   theme_minimal() +
   theme(legend.position = "bottom") +
   scale_y_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8))+
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 10))
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) 
 
 ```
 
-General observations:
+Some key observations:
 
 -   As stated before, population growth has been steady in the period.
--   Between 1999 and 2012, Total Deaths were approximately constant while the population grew steadily. This provoked the Crude Rate to decrease sharply (denominator increasing). However, from 2013 to 2020, we observed a sharp increase in Deaths, growing around 10% in 7 years. Interestingly, 6% was given from 2013 to 2019 and 4% in 2020. The issue is that COVID-19 exacerbated the severity of other diseases, causing more deaths, which were categorized not as COVID-19 directly. Remember that in this dataset, we omit COVID-19, but we, in fact, see an effect from the pandemic, which is seen in the spikes of 2020.
+-   Between 1999 and 2012, Total Deaths were approximately constant while the population grew steadily. This caused the Crude Rate to decrease sharply (denominator increasing). However, from 2013 to 2020, we observed a sharp increase in Deaths, growing around 10% in 7 years. An issue we should mention is that COVID-19 exacerbated the severity of other diseases, causing more deaths, which were categorized not as COVID-19 directly. For this dataset, though COVID-19 is omitted, the effect of the pandemic is visible as spikes in 2020.
 -   Although population growth lost some steam from 2013 to 2020, the real cause of the increase in the crude rate of deaths is a sharp increase in deaths.
--   While the crude rate increased considerably during the period, the age-adjusted death rate kept decreasing. This metric takes into consideration the age distribution of people. If deaths increase because people are aging, it assigns a lesser weight to the metric by weighting by age buckets. This means the metric can be compared across populations with different age structures. Overall, we can say that the increase in deaths has been primarily due to an aging population.
--   We can observe how the population has aged by observing the Population Pyramids for the United States in the image below. The U.S. Census Bureau created the Pyramid Population charts that show how the US has aged in the last two decades.
--   We say in aggregate because we will break down by cause and see if we can confirm this intuition.
+-   While the crude rate increased considerably during the period, the age-adjusted death rate kept decreasing. This metric takes into consideration the age distribution of people. If deaths increase because people are aging, it assigns a lesser weight to the metric by weighing the age buckets. This means the metric can be compared across populations with different age structures. Overall, we can say that the increase in deaths has been primarily due to an aging population.
+-   We can observe how the population has aged by observing the Population Pyramids for the United States in the image below. The U.S. Census Bureau created the Pyramid Population charts that show how the US has aged in the last two decades. We will later break down by cause and see if we can confirm this intuition.
 -   Finally, the relatively milder uptick in the Age-Adjusted-Death-Rate in 2020 versus the Crude Rate can be interpreted as COVID causing more deaths in elderly people. The last went up 3.5% that year, while the former was 4.5%.
 
 ![](https://www.census.gov/content/dam/Census/library/stories/2023/05/aging-united-states-population-fewer-children-in-2020-figure-2.jpg){width="110%"}
 
 ### Understanding the underlying causes of death
 
-According to the CDC, the best metric to study death evolution is using age-adjusted death rates. We then begin by investigating the evolution of age adjusted death rate across time.
+According to the CDC, the best metric to study the evolution of death rates is using age-adjusted death rates. We then begin by investigating age-adjusted death rates across time.
 
 ```{r}
 #Creating a faceting chart, which will have age adjusted death rates by cause of death:
@@ -167,12 +168,12 @@ ggplot(df_usa_cause, aes(x = Year, y = Age_Adj_Rate, group = Cause, color = Caus
 
 We can make the following observations:
 
--   As seen before, the overall age adjusted death rate in the United States is in aggregate decreasing since 1999
--   However, not all causes share the same decreasing shape. For instance, Alzheimer's, Unintentional injuries and suicide, have been increasing dramatically.
--   Overall, Cancer, CLRD (Chronic lower respiratory diseases), Heart diseases, Kidney diseases and Strokes have shown an impressive reduction in deaths.
--   Diabetes seems to be a cause for concern, but it can be explained by COVID-19: "Several underlying medical conditions can increase the risk of severe illness and a higher likelihood of lethality if a person contracts COVID-19, including diabetes".
+-   As seen before, the overall age-adjusted death rate in the United States has in aggregate decreased since 1999.
+-   However, not all causes share the same decreasing shape. For instance, Alzheimer's, Unintentional injuries, and suicide have been increasing dramatically.
+-   Overall, Cancer, CLRD (Chronic lower respiratory diseases), Heart diseases, Kidney diseases, and Strokes have shown an impressive reduction in deaths.
+-   Diabetes seems to be a cause for concern, but could possibly be explained by the COVID-19 spike (i.e. "...underlying medical conditions can increase the risk of severe illness and a higher likelihood of lethality if a person contracts COVID-19, including diabetes."
 
-The different types of causes don't share the same dimensions. We can compare the evolution of these death-rates calculating the percentual growth over time:
+Since different types of causes don't share the same dimensions, we can compare the changes in death rates by investigating the percentage growth over time:
 
 ```{r}
 cdc_usa_wider <- df_usa_cause |> 
@@ -197,7 +198,7 @@ color_blind_friendly <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
 #Creating the time series plot
 ggplot(cdc_usa_wider, aes(x = Year, y = `Cumulative Change`, color = Metric)) +
   geom_line(size = 1) +
-  labs(title = "Cumulative Change - Age Adj. Death Rate", x = "Year", y = "Cumulative Percentual Change", color = "Metric") +
+  labs(title = "Cumulative Change in Age Adjusted Death Rates", x = "Year", y = "Cumulative Percentage Change", color = "Metric") +
   theme_minimal() +
   theme(legend.position = "right") +
   scale_y_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8))+
@@ -206,9 +207,9 @@ ggplot(cdc_usa_wider, aes(x = Year, y = `Cumulative Change`, color = Metric)) +
 
 ```
 
-With the cumulative percentage time series graph broken down by cause, we can see some interesting trends and better understand the trends over time. In particular, deaths caused by Alzheimer's disease is aggressively increasing year by year. Unintentional injuries and suicide are the number two and number three fastest growing causes of death, respectively. Additionally, we can note that stroke, influenza and pneumonia, and heart disease have actually been decreasing during the same time of 1999-2020. Those we should note that death from Stroke, Influenza and pneumonia, and heart disease diseases showed a decreasing trend until 2012, but then began to grow again.
+With the cumulative percentage time series graph broken down by cause, we can pinpoint some interesting trends and better understand the results over time. In particular, deaths caused by Alzheimer's disease are aggressively increasing year by year. Unintentional injuries and suicide are the number two and number three fastest-growing causes of death, respectively. Additionally, we can note that stroke, influenza/pneumonia, and heart disease have actually been decreasing during the same time of 1999-2020. We should note that death from stroke, influenza/pneumonia, and heart disease showed a decreasing trend until 2012, but then began to grow again.
 
-The overall trend is downward for the age adjusted death rate. However, we have identified three causes that show a different behavior. Now we will try to identify which states are leading in these metrics.
+The overall trend is downward for the age-adjusted death rate. However, we have identified three causes that show different behavior. We will now shift our focus to Alzheimer's disease, unintentional injuries, and suicide. We will identify which states are leading in these metrics. We suspect some states might come up as outliers.
 
 
 
@@ -232,7 +233,7 @@ df_rank1 <- df_rank1 %>%
 #Cleveland
 ggplot(df_rank1, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   geom_point(size = 3, color = "darkgreen") +
-  labs(title = "Alzheimer's Disease %Chg. in Age Adj. Death Rate", x = "Percentage Change 1999 to 2020", y = 'State') +
+  labs(title = "Alzheimer's %Chg. in Age-Adj Death Rate", x = "Percentage Change 1999 to 2020", y = 'State') +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
@@ -241,7 +242,7 @@ ggplot(df_rank1, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   theme(legend.position = "none")
 ```
 
-We can see that Mississippi, Arkansas and Alabama have seen the largest increase, while Maine, Maryland and Montana are the smallest.
+We can see that Mississippi, Arkansas, and Alabama have seen the largest increase, while Maine, Maryland, and Montana are the smallest.
 
 
 ```{r, fig.height=7, fig.width= 5.5}
@@ -269,7 +270,7 @@ ggplot(df_rank2, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   theme(legend.position = "none")
 ```
 
-We can see that Rhode Island, West Virginia, and Massachusetts have seen the largest increase, while Idaho, Nebraska and Alabama are the smallest.
+We can see that Rhode Island, West Virginia, and Massachusetts have seen the largest increase, while Idaho, Nebraska, and Alabama are the smallest.
 
 ```{r, fig.height=7, fig.width= 5.5}
 #Filter the data for the specified conditions
@@ -296,11 +297,10 @@ ggplot(df_rank3, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   theme(legend.position = "none")
 ```
 
-We can see that Vermont, Iowa and Kansas have seen the largest increase, while California, Rhode Island and Nevada are the smallest.
+We can see that Vermont, Iowa, and Kansas have seen the largest increase, while California, Rhode Island, and Nevada are the smallest.
 
 
-
-It is interesting to note that in the case of Alzheimer's, Unintentional Injuries and Suicide, the three diseases exhibit increasing age adjusted rates in the period. There are only a few exceptions such as Nevada and Rhode Island in Suicide or Maine in Alzheimer's where a decreasing rate has been seen. For this reason, we believe it is worth looking at box plots to identify outliers and find explanations for them.
+It is interesting to note that in the case of Alzheimer's, Unintentional Injuries, and Suicide exhibit increasing age-adjusted rates in the period. There are only a few exceptions such as Nevada and Rhode Island in Suicide or Maine in Alzheimer's where a decreasing rate has been seen. For this reason, we believe it is worth looking at box plots to identify outliers and find explanations for them.
 
 ```{r}
 df_box <- rbind(
@@ -315,16 +315,16 @@ ggplot(df_box, aes(x = Cause, y = PercentChange)) +
   scale_y_continuous(labels = scales::percent)
 
 ```
-Matching these values with the previous cleveland dot plots, we can say that Mississippi is an outlier for Alzheimer. Rhode Island and West Virginia are outliers for Unintentional Injuries. Finally, Suicide seems to not have any outlier. From the boxplots we also notice that the three causes are skewed to the right. 
+Matching these values with the previous Cleveland dot plots, we can say that Mississippi is an outlier for Alzheimer's. Rhode Island and West Virginia are outliers for Unintentional Injuries. Finally, Suicide does not seem to not have any outliers. From the boxplots, we also notice that the three causes are skewed to the right. 
 
 
 
 
 ### Analyzing Alzheimer's Disease
 
-Apparently the states most affected by Alzheimer's are in the southern part of the United States. Given the possible geographical dependence, we propose to corroborate the information with the following geospatial visualization.
+Apparently, the states most affected by Alzheimer's are in the southern part of the United States. Given the possible geographical dependence, we propose to corroborate the information with the following geospatial visualization.
 
-To make the differences more notorious, we are going to paint the top 12% of States in terms growing deaths due to Alzheimer.
+We will identify the top 6 states, which have the highest growing deaths due to Alzheimer's.
 
 ```{r}
 #We calculate the 88th percentile (top 12% threshold)
@@ -355,9 +355,9 @@ ggplot(data = df_map, aes(x = long, y = lat, group = group, fill = Top10Percent)
     labs(title = "Top 6 States with highest Death Rates due to Alzheimer's") + theme(legend.position="none")
 
 ```
-We can clearly see a cluster in the south-east of the U.S. This cluster concentrates the 12% that saw the biggest increase in deaths due to Alzhmeier's (age-adjusted).
+This cluster identifies 6 southern states that have had the largest increase in deaths due to Alzheimer's (age-adjusted). 
 
-According to this study: https://www.nia.nih.gov/news/data-shows-racial-disparities-alzheimers-disease-diagnosis-between-black-and-white-research, black people are almost twice more likely to develop dementia due to a higher exposure to risk factors. For this reason, we will investigate black race distribution by state.
+According to this study: https://www.nia.nih.gov/news/data-shows-racial-disparities-alzheimers-disease-diagnosis-between-black-and-white-research, black people are almost twice more likely to develop dementia due to higher exposure to risk factors. For this reason, we will investigate black race distribution by state.
 
 First, let's take a look if there is indeed a difference between the Age-Adjusted Death Rate of Black vs White people:
 
@@ -386,11 +386,10 @@ ggplot(cdc_usa_race, aes(x = Year, y = `Cumulative Change`, color = Alzheimer)) 
   scale_y_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8))+
   scale_x_continuous(breaks = scales::pretty_breaks(n = 10))
 ```
-In fact, we can clearly see a difference between white and black people: the later having increased its death rate by 160% vs 95% during the last 20 years.
+In fact, we can see a difference in age-adjusted death dates when broken down by race. The black population has seen an increase in its death rate by over 160%. Conversely, the White population has seen an increase of 95% during the same last 20 years.
 
 
-
-Let's see then the distribution of black people by state. We will take the averages across the time period:
+Next, we can explore the distribution of the Black population by state. We will take an averages across this time period. This following chart identifies 10 states that have the highest proportion of Black population in the US:
 
 ```{r message=FALSE}
 cdc_usa_race_pop = read_csv("NCHS_United_States_2020_Race_Distribution.csv")
@@ -431,7 +430,7 @@ ggplot(data = df_map, aes(x = long, y = lat, group = group, fill = TopPercent)) 
 # df_map %>% filter(TopPercent =="Top 25%") %>% distinct(region)
 
 ```
-Although not perfect, we see a strong correlation that supports the study: select southern states have a higher proportion of the population comprised of black people, and it coincides with the states that have had higher increases of deaths due to Alzheimer's disease.
+Although not perfect, there is some overlap. We see a strong correlation that supports the study: select southern states have a higher proportion of the population comprised of Black people, and it coincides with the states that have had higher increases in deaths due to Alzheimer's disease.
 
 
 
@@ -470,19 +469,31 @@ regression_model_cumul_growth <- lm(y ~ x)
 cor.test(y,x)
 
 ```
-According to CDC, the Alzheimer’s onset is around 60 years old. It’s interesting to note that there has been a general increase in life expectancy for people born between 1939 and 1960. In 1999, they would have reached 60 years old, which is around the age of first onset. The Life expectancy rose from 63.7 to 69.7 years old. Naturally, we see a very high positive correlation (0.88) between the increase of deaths due to Alzheimer’s disease and the rise in life expectancy.
+According to the CDC, Alzheimer’s onset is around 60 years old. It’s interesting to note that there has been a general increase in life expectancy for people born between 1939 and 1960. In 1999, they would have reached 60 years old, which is around the age of first onset. Life expectancy rose from 63.7 to 69.7 years old. Naturally, we see a very high positive correlation (0.88) between the increase in deaths due to Alzheimer’s disease and the rise in life expectancy.
 
 
 
 ### Analyzing Unintentional Injuries
 
-A large bulk of what is under unintentional injuries is drug overdoses. 
+A bulk of what is categorized under unintentional injuries is drug overdoses. Over the last few years, the opioid epidemic has made national headlines (e.g., opioid epidemic). The CDC has stated that "prescription opioids (natural and semi-synthetic opioids and methadone) increasing since at least 1999.”
+
+https://www.cdc.gov/opioids/data/analysis-resources.html#:~:text=The%20first%20wave%20began%20with,increasing%20since%20at%20least%201999.&text=The%20second%20wave%20began%20in,in%20overdose%20deaths%20involving%20heroin
+
+The CDC describes that there have been several waves of deaths. The increasing rate of opioid prescriptions since 1999 has been contributing to overdose deaths. Unfortunately, this coincides with another phenomenon: fentanyl trafficking. This became a crisis in 2014. What is referred to as the "third wave" of deaths started after 2013. This is an extremely dramatic increase in overdose deaths. Additionally, Purdue Pharma has been at the center of a controversy due to illegal kickbacks to doctors and as well as health records company. One of the things that became interesting to look into is prescription opiod dispense rate by state.
+
+
+https://www.dea.gov/sites/default/files/2020-03/DEA_GOV_DIR-008-20%20Fentanyl%20Flow%20in%20the%20United%20States_0.pdf
+
+One of the things that became interesting to look into is the prescription opioid dispense rate by state. This data set is available from the CDC.
 
 ```{r warning=FALSE}
 library(readr)
 df_opiod <- read_csv("NCHS_Opiod_Dispense.csv", show_col_types = FALSE)
 
 ```
+
+
+
 
 
 ```{r warning=FALSE}
@@ -508,7 +519,7 @@ dotchart(z_reverse$Avg, labels = z_reverse$State,
 
 ```
 
-Averaging the rate of opioid dispense rate (via phramancies and medical facilities), here are top 8 highest states that were dispensing the most amount of perscription opioids. 
+Averaging the rate of opioid dispensing (via pharmacies and medical facilities), here are the top 8 highest states that were dispensing the most amount of prescription opioids. 
 
 
 ```{r warning=FALSE}
@@ -526,7 +537,7 @@ ggplot(df_opiod_state_arranged_top5_states, aes(x = as.numeric(Year), y = OpiodD
  
 
 ```
-We can observe that these states accelerate in dispensing opioids and then dramatically decrease the opiod dispensing around 2012. 
+Utilizing a time series, we can observe that these states accelerated in dispensing opioids and then dramatically decreased the opioid dispensing around 2012. Naturally, it's interesting to see which states have had the highest death rates due to unintentional injuries.
 
 
 ```{r}
@@ -548,6 +559,8 @@ dotchart(w_reverse$Avg, labels = w_reverse$State,gcolor = "green",
 ```
 
 
+
+
 ```{r}
 selected_top5 = cdc_dataset %>% filter(Cause == "Unintentional injuries") %>% 
   filter(State == "West Virginia" | State == "New Mexico" | State == "Kentucky" | State == "Mississippi" | State == "Alaska" | State == "Wyoming" | State == "Oklahoma" | State == "Tennessee")  %>% filter(Year > 2005)
@@ -566,7 +579,7 @@ ggplot(selected_top5, aes(x = as.numeric(Year), y = Age_Adj_Rate, color = State)
 
 ```
 
-What is interesting about the Unintentional deaths in these top 8 states is that they start to climb. This could be due to the fact that  people initially developed addictions during the years of aggressive dispensing. Then, after a few years, the death rates started to increase. 
+What is notable about the Unintentional deaths in these top 8 states is that they start to climb. This could be due to the fact that people initially developed addictions during the years of aggressive dispensing. Then, after a few years' delay, the death rates started to increase, especially with the arrival of fentanyl. 
 
 
 ```{r}
@@ -579,13 +592,13 @@ death_rate_top8 = selected_top5 %>% distinct(State)
 intersect(opiod_top8$State,death_rate_top8$State)
 ```
 
-We see that choosing 8 states that have had the highest average death rate from 2006 to 2020 and choosing 8 states that have had the highest average opioid dispensing, we can see that 5 of states intersect. There is significant overlap between the states that had the highest average opioid dispensing rates and the states that had the highest average death rates. 
+We see that by choosing 8 states that have had the highest average death rate from 2006 to 2020 and choosing 8 states that have had the highest average opioid dispensing, we can see that 5 of the states intersect. There is significant overlap between the states that had the highest average opioid dispensing rates and the states that had the highest average death rates. 
 
 
 
 ### Analyzing Suicide
 
-This topic is extremely broad and difficult to summarize. There are many life factors such as depression, mental illness, lack of access to mental health care, isolation, and quality of life that can contribute to the rising rates. However, there is peculiar pattern that emerges in terms of population density and suicide rates.  Consider these top 10 states with highest average suicide rates:
+This topic is extremely broad and difficult to summarize. There are many life factors such as depression, mental illness, lack of access to mental health care, isolation, and quality of life that can contribute to the rising rates. However, there is a peculiar pattern that emerges in terms of population density and suicide rates.  Consider these top 10 states with the highest average suicide rates:
 
 ```{r}
 top10_avg_suicide_states = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Suicide") %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg)) %>% filter(Avg > 16.9)
@@ -605,7 +618,7 @@ flextable(top10_avg_suicide_states %>% mutate(across(where(is.numeric), ~round(.
 
 
 ```
-These states have had the highest suicide rate on average from 1999 to 2020. We can see that there is interesting relationship between where most suicide tend to occur and the type of state it is. In particular, many of these states tend to have a sparsely population density. In other words, the land mass tends to be big compared to the population residing on that land mass. We import a data set to isolate states that have the lower population density. Consider this next table of lowest population densities in US by state:
+These states have had the highest suicide rate on average from 1999 to 2020. We can see that there is an interesting relationship between where most suicides tend to occur and the type of state it is. In particular, many of these states tend to have a sparse population density. In other words, the land mass tends to be big compared to the population residing on that land mass. We import a data set to isolate states that have a lower population density. Consider this next table of lowest population densities in the US by state:
 
 
 
@@ -644,7 +657,7 @@ intersect(a$State,b$State)
 
 ```
 
-There is a peculiar pattern that emerges. Comparing the top 10 states for lowest population density and the top 8 states for the highest suicide rate, there is an overlap of 6 states.
+There is a peculiar pattern that emerges. Comparing the top 10 states for the lowest population density and the top 8 states for the highest suicide rate, there is an overlap of 6 states.
 
 ```{r}
 avg_suicide_rate = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Suicide") %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg))
@@ -671,7 +684,7 @@ boxplot(united_states_by_area_density$densityMi,
 
 ```
 
-We see that there are some outliers in terms of population density (i.e. 6 states are very densely populated). The distribution is right skewed. This is a good candidate to do a log transform to further analyze the data in terms of how it relates to the average suicide rate over the last 20 years. After joining the data on state, we can run a linear regression. 
+We see that there are some outliers in terms of population density (i.e. 6 states are very densely populated). The distribution is right-skewed. This is a good candidate to do a log transform to further analyze the data in terms of how it relates to the average suicide rate over the last 20 years. After joining the data on the state, we can run a linear regression. 
 
 
 
@@ -679,7 +692,8 @@ We see that there are some outliers in terms of population density (i.e. 6 state
 
 ```{r message = FALSE}
 ggplot(merged_df, aes(x = log(densityMi), y = Avg)) + geom_point() + geom_smooth(method = "lm") + 
-  theme(plot.caption = element_text(hjust=.1))
+  theme(plot.caption = element_text(hjust=.1)) + 
+  labs(caption = "Correlation coefficient R = -0.860 ")
 ```
 ```{r}
 y = merged_df$Avg
@@ -689,4 +703,4 @@ cor.test(y,x)
 # summary(regression_model_cumul_growth)
 ```
 
-We observe a remarkable pattern: suicide is highly (negatively) correlated with population density. Hence, areas that have high population density tend to have a significantly low rates of suicide. Areas that have low population density tend to have high rates of suicide. The correlation coefficient found here is -0.86, which is quite high. 
+We observe a remarkable pattern: suicide is highly (negatively) correlated with population density. For example, Wyoming has a suicide rate that is over 3 times higher than New York. Hence, areas that have high population density tend to have lower rates of suicide. Areas that have low population density tend to have high rates of suicide. The correlation coefficient found here is -0.86, which is quite high. 

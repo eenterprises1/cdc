@@ -23,7 +23,7 @@ We will primarily work with data related to causes of deaths published by the Ce
 It is important to differentiate between Age-Adjusted Death Rate, Deaths, and Crude Death Rate. While the three provide information about mortality, we will mostly focus on the Age-Adjusted-Death-Rate. The **Crude Rate** measures the number of deaths in a given population divided by the size of that population.
 
 $$
-\text{Crude Rate} = \frac{\text{Number of Deaths}}{\text{Population}} * 100,000
+\small { \text{Crude Rate} = \frac{\text{Number of Deaths}}{\text{Population}} \times 100,000 }
 $$
 
 An increase in the number of deaths will cause a rise in the Crude Death Rate. However, this can be misleading in populations with a growing number of elderly people, who naturally have a higher likelihood of dying.
@@ -31,10 +31,10 @@ An increase in the number of deaths will cause a rise in the Crude Death Rate. H
 On the other hand, the **Age-Adjusted Death Rate** is a mortality rate statistically modified to eliminate the effect of different age distributions in different populations. This rate allows comparisons between populations with different age structures. A good explanation of the difference can be found [here](https://www.health.ny.gov/diseases/chronic/ageadj.htm). As a formula, it can be defined as,
 
 $$
-\text{Age-Adj Death Rate} = \sum_{i \in \text{Age-Groups}} (w_i \times \text{CrudeRate}_i)\times 100,000
+\small { \text{Age-Adj Death Rate} = \sum_{i \in \text{Age-Groups}} (w_i \times \text{CrudeRate}_i)\times 100,000 }
 $$
 
-The Age-Adjusted Death Rate is essentially a weighted average of Crude Rates for different age groups. In this metric, each additional death adds $w_i\times1$ to the total, whereas in the Crude Rate, its contribution is a fixed (and higher) value of $1$. For populations with a significant percentage of individuals aged 85 and above, the number of deaths is adjusted by the group's weight. This adjustment yields a metric that facilitates the comparison of mortality rates across diverse populations.
+The Age-Adjusted Death Rate is essentially a weighted average of Crude Rates for different age groups. In this metric, each additional death adds $w_i\times CrudeRate_i$ to the total, whereas in the Crude Rate, its contribution is a fixed (and higher) value of $1$. For populations with a significant percentage of individuals aged 85 and above, the number of deaths is adjusted by the group's weight. This adjustment yields a metric that facilitates the comparison of mortality rates across diverse populations.
 
 There are some other data sets that we anticipate using from the CDC (e.g., data relevant to opioid dispense rates). One such data set that seems promising to answer some of the questions that we will pose later is the following [link](https://www.cdc.gov/drugoverdose/rxrate-maps/state2020.html). This particular data set will need to be manually compiled as it provides data for the years 2006-2020 with 3 columns: State, Abbreviation, and Opioid Dispensing Rate per 100. The dimensions are 51x3. However, there is such a data set for each year.
 
