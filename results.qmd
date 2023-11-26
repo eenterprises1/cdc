@@ -8,6 +8,8 @@
 
 *The number of graphs will vary by project; we suggest a target of 10. (A plot with multiple facets counts as 1 graph). If you go over, make sure they are high quality and include commentary. A project with 10 good graphs plus commentary will receive a better grade than a project with 10 good graphs and 10 mediocre ones.*
 
+
+
 ```{r message=FALSE}
 library(dplyr)
 library(readr)
