@@ -1,5 +1,6 @@
 # Results
 
+```{=html}
 <!--
 
 
@@ -14,7 +15,7 @@
 *The number of graphs will vary by project; we suggest a target of 10. (A plot with multiple facets counts as 1 graph). If you go over, make sure they are high quality and include commentary. A project with 10 good graphs plus commentary will receive a better grade than a project with 10 good graphs and 10 mediocre ones.*
 
 -->
-
+```
 ```{r message=FALSE}
 library(dplyr)
 library(readr)
@@ -71,7 +72,6 @@ cdc_dataset <- cdc_dataset[cdc_dataset$Cause %in%  cdc_usa_summary$Cause, ]
 cdc_usa  <- cdc_usa[cdc_usa$Cause %in%  cdc_usa_summary$Cause, ]
 # rm(cdc_usa_summary)
 ```
-
 
 ### Understanding overall trends
 
@@ -218,11 +218,7 @@ With the cumulative percentage time series graph broken down by cause, we can pi
 
 The overall trend is downward for the age-adjusted death rate. However, we have identified three causes that show different behavior. We will now shift our focus to Alzheimer's disease, unintentional injuries, and suicide. We will identify which states are leading in these metrics. We suspect some states might come up as outliers.
 
-
-
-
 ### Disaggregating by state
-
 
 ```{r, fig.height=7, fig.width= 5.5}
 #Filter the data for the specified conditions
@@ -250,7 +246,6 @@ ggplot(df_rank1, aes(x = PercentChange, y = reorder(State, PercentChange))) +
 ```
 
 We can see that Mississippi, Arkansas, and Alabama have seen the largest increase, while Maine, Maryland, and Montana are the smallest.
-
 
 ```{r, fig.height=7, fig.width= 5.5}
 #Filter the data for the specified conditions
@@ -306,7 +301,6 @@ ggplot(df_rank3, aes(x = PercentChange, y = reorder(State, PercentChange))) +
 
 We can see that Vermont, Iowa, and Kansas have seen the largest increase, while California, Rhode Island, and Nevada are the smallest.
 
-
 It is interesting to note that in the case of Alzheimer's, Unintentional Injuries, and Suicide exhibit increasing age-adjusted rates in the period. There are only a few exceptions such as Nevada and Rhode Island in Suicide or Maine in Alzheimer's where a decreasing rate has been seen. For this reason, we believe it is worth looking at box plots to identify outliers and find explanations for them.
 
 ```{r}
@@ -322,10 +316,8 @@ ggplot(df_box, aes(x = Cause, y = PercentChange)) +
   scale_y_continuous(labels = scales::percent)
 
 ```
-Matching these values with the previous Cleveland dot plots, we can say that Mississippi is an outlier for Alzheimer's. Rhode Island and West Virginia are outliers for Unintentional Injuries. Finally, Suicide does not seem to not have any outliers. From the boxplots, we also notice that the three causes are skewed to the right. 
 
-
-
+Matching these values with the previous Cleveland dot plots, we can say that Mississippi is an outlier for Alzheimer's. Rhode Island and West Virginia are outliers for Unintentional Injuries. Finally, Suicide does not seem to not have any outliers. From the boxplots, we also notice that the three causes are skewed to the right.
 
 ### Analyzing Alzheimer's Disease
 
@@ -362,7 +354,8 @@ ggplot(data = df_map, aes(x = long, y = lat, group = group, fill = Top10Percent)
     labs(title = "Top 6 States with highest Death Rates due to Alzheimer's") + theme(legend.position="none")
 
 ```
-This cluster identifies 6 southern states that have had the largest increase in deaths due to Alzheimer's (age-adjusted). 
+
+This cluster identifies 6 southern states that have had the largest increase in deaths due to Alzheimer's (age-adjusted).
 
 According to this study: https://www.nia.nih.gov/news/data-shows-racial-disparities-alzheimers-disease-diagnosis-between-black-and-white-research, black people are almost twice more likely to develop dementia due to higher exposure to risk factors. For this reason, we will investigate black race distribution by state.
 
@@ -393,8 +386,8 @@ ggplot(cdc_usa_race, aes(x = Year, y = `Cumulative Change`, color = Alzheimer)) 
   scale_y_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8))+
   scale_x_continuous(breaks = scales::pretty_breaks(n = 10))
 ```
-In fact, we can see a difference in age-adjusted death dates when broken down by race. The black population has seen an increase in its death rate by over 160%. Conversely, the White population has seen an increase of 95% during the same last 20 years.
 
+In fact, we can see a difference in age-adjusted death dates when broken down by race. The black population has seen an increase in its death rate by over 160%. Conversely, the White population has seen an increase of 95% during the same last 20 years.
 
 Next, we can explore the distribution of the Black population by state. We will take an averages across this time period. This following chart identifies 10 states that have the highest proportion of Black population in the US:
 
@@ -437,9 +430,8 @@ ggplot(data = df_map, aes(x = long, y = lat, group = group, fill = TopPercent)) 
 # df_map %>% filter(TopPercent =="Top 25%") %>% distinct(region)
 
 ```
+
 Although not perfect, there is some overlap. We see a strong correlation that supports the study: select southern states have a higher proportion of the population comprised of Black people, and it coincides with the states that have had higher increases in deaths due to Alzheimer's disease.
-
-
 
 ```{r message=FALSE}
 df_life_expectancy <- read_csv("NCHS_-_Death_rates_and_life_expectancy_at_birth_20231111.csv")
@@ -466,8 +458,6 @@ ggplot(expectancy_alzheimer_regression_2 %>% select(`Crude_Rate`,`Average Life E
 
 ```
 
-
-
 ```{r}
 y = expectancy_alzheimer_regression_2$`Crude_Rate`
 x = expectancy_alzheimer_regression_2$`Average Life Expectancy (Years)`
@@ -476,13 +466,12 @@ regression_model_cumul_growth <- lm(y ~ x)
 cor.test(y,x)
 
 ```
-According to the CDC, Alzheimer’s onset is around 60 years old. It’s interesting to note that there has been a general increase in life expectancy for people born between 1939 and 1960. In 1999, they would have reached 60 years old, which is around the age of first onset. Life expectancy rose from 63.7 to 69.7 years old. Naturally, we see a very high positive correlation (0.88) between the increase in deaths due to Alzheimer’s disease and the rise in life expectancy.
 
-
+According to the CDC, Alzheimer's onset is around 60 years old. It's interesting to note that there has been a general increase in life expectancy for people born between 1939 and 1960. In 1999, they would have reached 60 years old, which is around the age of first onset. Life expectancy rose from 63.7 to 69.7 years old. Naturally, we see a very high positive correlation (0.88) between the increase in deaths due to Alzheimer's disease and the rise in life expectancy.
 
 ### Analyzing Unintentional Injuries
 
-A bulk of what is categorized under unintentional injuries are drug overdoses. Over the last few years, the opioid epidemic has made national headlines. The CDC has stated that "prescription opioids (natural and semi-synthetic opioids and methadone) increasing since at least 1999.”
+A bulk of what is categorized under unintentional injuries are drug overdoses. Over the last few years, the opioid epidemic has made national headlines. The CDC has stated that "prescription opioids (natural and semi-synthetic opioids and methadone) increasing since at least 1999."
 
 The CDC describes that there have been several waves of deaths. The increasing rate of opioid prescriptions since 1999 has been contributing to overdose deaths. Unfortunately, this coincides with another phenomenon: fentanyl trafficking. This became a crisis in 2014. What is referred to as the "third wave" of deaths started after 2013. This is an extremely dramatic increase in overdose deaths. Additionally, Purdue Pharma has been at the center of a controversy due to illegal kickbacks to doctors and as well as health records company. One of the things that became interesting to look into is prescription opioid dispense rate by state.
 
@@ -493,10 +482,6 @@ library(readr)
 df_opiod <- read_csv("NCHS_Opiod_Dispense.csv", show_col_types = FALSE)
 
 ```
-
-
-
-
 
 ```{r warning=FALSE}
 
@@ -521,8 +506,7 @@ dotchart(z_reverse$Avg, labels = z_reverse$State,
 
 ```
 
-Averaging the rate of opioid dispensing (via pharmacies and medical facilities), here are the top 8 highest states that were dispensing the most amount of prescription opioids. 
-
+Averaging the rate of opioid dispensing (via pharmacies and medical facilities), here are the top 8 highest states that were dispensing the most amount of prescription opioids.
 
 ```{r warning=FALSE}
 df_opiod_state_arranged_top5_states = df_opiod_state_arranged %>% filter(State == "West Virginia" | State == "Alabama" | State == "Tennessee" | State == "Kentucky" | State == "Arkansas" | State == "Mississippi" | State == "Oklahoma" | State == "Louisiana")
@@ -539,8 +523,8 @@ ggplot(df_opiod_state_arranged_top5_states, aes(x = as.numeric(Year), y = OpiodD
  
 
 ```
-Utilizing a time series, we can observe that these states accelerated in dispensing opioids and then dramatically decreased the opioid dispensing around 2012. Naturally, it's interesting to see which states have had the highest death rates due to unintentional injuries.
 
+Utilizing a time series, we can observe that these states accelerated in dispensing opioids and then dramatically decreased the opioid dispensing around 2012. Naturally, it's interesting to see which states have had the highest death rates due to unintentional injuries.
 
 ```{r}
 top5_states_adj_rate_unint = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Unintentional injuries") %>% filter(Year > 2005)
@@ -560,9 +544,6 @@ dotchart(w_reverse$Avg, labels = w_reverse$State,gcolor = "green",
 
 ```
 
-
-
-
 ```{r}
 selected_top5 = cdc_dataset %>% filter(Cause == "Unintentional injuries") %>% 
   filter(State == "West Virginia" | State == "New Mexico" | State == "Kentucky" | State == "Mississippi" | State == "Alaska" | State == "Wyoming" | State == "Oklahoma" | State == "Tennessee")  %>% filter(Year > 2005)
@@ -581,8 +562,7 @@ ggplot(selected_top5, aes(x = as.numeric(Year), y = Age_Adj_Rate, color = State)
 
 ```
 
-What is notable about the Unintentional deaths in these top 8 states is that they start to climb. This could be due to the fact that people initially developed addictions during the years of aggressive dispensing. Then, after a few years' delay, the death rates started to increase, especially with the arrival of fentanyl. 
-
+What is notable about the Unintentional deaths in these top 8 states is that they start to climb. This could be due to the fact that people initially developed addictions during the years of aggressive dispensing. Then, after a few years' delay, the death rates started to increase, especially with the arrival of fentanyl.
 
 ```{r}
 opiod_top8 = df_opiod_state_arranged_top5_states %>% distinct(State)
@@ -594,13 +574,11 @@ death_rate_top8 = selected_top5 %>% distinct(State)
 intersect(opiod_top8$State,death_rate_top8$State)
 ```
 
-We see that by choosing 8 states that have had the highest average death rate from 2006 to 2020 and choosing 8 states that have had the highest average opioid dispensing, we can see that 5 of the states intersect. There is significant overlap between the states that had the highest average opioid dispensing rates and the states that had the highest average death rates. 
-
-
+We see that by choosing 8 states that have had the highest average death rate from 2006 to 2020 and choosing 8 states that have had the highest average opioid dispensing, we can see that 5 of the states intersect. There is significant overlap between the states that had the highest average opioid dispensing rates and the states that had the highest average death rates.
 
 ### Analyzing Suicide
 
-This topic is extremely broad and difficult to summarize. There are many life factors such as depression, mental illness, lack of access to mental health care, isolation, and quality of life that can contribute to the rising rates. However, there is a peculiar pattern that emerges in terms of population density and suicide rates.  Consider these top 10 states with the highest average suicide rates:
+This topic is extremely broad and difficult to summarize. There are many life factors such as depression, mental illness, lack of access to mental health care, isolation, and quality of life that can contribute to the rising rates. However, there is a peculiar pattern that emerges in terms of population density and suicide rates. Consider these top 10 states with the highest average suicide rates:
 
 ```{r}
 top10_avg_suicide_states = cdc_dataset %>% filter(State != "United States") %>% filter(Cause == "Suicide") %>% group_by(State) %>% summarize(Avg = mean(Age_Adj_Rate)) %>% arrange(desc(Avg)) %>% filter(Avg > 16.9)
@@ -620,11 +598,8 @@ flextable(top10_avg_suicide_states %>% mutate(across(where(is.numeric), ~round(.
 
 
 ```
+
 These states have had the highest suicide rate on average from 1999 to 2020. We can see that there is an interesting relationship between where most suicides tend to occur and the type of state it is. In particular, many of these states tend to have a sparse population density. In other words, the land mass tends to be big compared to the population residing on that land mass. We import a data set to isolate states that have a lower population density. Consider this next table of lowest population densities in the US by state:
-
-
-
-
 
 ```{r}
 united_states_by_area <- read_csv("united-states-by-area.csv", show_col_types = FALSE)
@@ -640,8 +615,6 @@ lowest_population_density_states = united_states_by_area_density[1:10,]
 flextable(lowest_population_density_states %>% mutate(across(where(is.numeric), ~round(., 2))))
 
 ```
-
-
 
 ```{r}
 # lowest_population_density_states %>% distinct(State)
@@ -667,16 +640,11 @@ avg_suicide_rate = cdc_dataset %>% filter(State != "United States") %>% filter(C
 
 ```
 
-
-
 ```{r}
 merged_df <- merge(united_states_by_area_density, avg_suicide_rate, by = "State")
 # merged_df
 
 ```
-
-
-
 
 ```{r}
 boxplot(united_states_by_area_density$densityMi,
@@ -686,17 +654,14 @@ boxplot(united_states_by_area_density$densityMi,
 
 ```
 
-We see that there are some outliers in terms of population density (i.e. 6 states are very densely populated). The distribution is right-skewed. This is a good candidate to do a log transform to further analyze the data in terms of how it relates to the average suicide rate over the last 20 years. After joining the data on the state, we can run a linear regression. 
-
-
-
-
+We see that there are some outliers in terms of population density (i.e. 6 states are very densely populated). The distribution is right-skewed. This is a good candidate to do a log transform to further analyze the data in terms of how it relates to the average suicide rate over the last 20 years. After joining the data on the state, we can run a linear regression.
 
 ```{r message = FALSE}
 ggplot(merged_df, aes(x = log(densityMi), y = Avg)) + geom_point() + geom_smooth(method = "lm") + 
   theme(plot.caption = element_text(hjust=.1)) + 
   labs(caption = "Correlation coefficient R = -0.860 ")
 ```
+
 ```{r}
 y = merged_df$Avg
 x = log(merged_df$densityMi)
@@ -705,4 +670,71 @@ cor.test(y,x)
 # summary(regression_model_cumul_growth)
 ```
 
-We observe a remarkable pattern: suicide is highly (negatively) correlated with population density. For example, Wyoming has a suicide rate that is over 3 times higher than New York. Hence, areas that have high population density tend to have lower rates of suicide. Areas that have low population density tend to have high rates of suicide. The correlation coefficient found here is -0.86, which is quite high. 
+We observe a remarkable pattern: suicide is highly (negatively) correlated with population density. For example, Wyoming has a suicide rate that is over 3 times higher than New York. Hence, areas that have high population density tend to have lower rates of suicide. Areas that have low population density tend to have high rates of suicide. The correlation coefficient found here is -0.86, which is quite high.
+
+
+
+
+
+
+
+# ------------------------------------------------------------
+# ------------------------------------------------------------
+# ------------------------------------------------------------
+# ------------------------------------------------------------
+# ------------------------------------------------------------
+
+```{r}
+library(dplyr)
+
+# Assuming cdc_dataset is your DataFrame
+geofac <- cdc_dataset %>%
+  group_by(State, Cause) %>%
+  arrange(Year) %>%
+  mutate(Earliest_Age_Adj_Rate = first(Age_Adj_Rate),
+         Age_Adj_Growth = (Age_Adj_Rate / Earliest_Age_Adj_Rate) - 1) %>%
+  select(Year, State, Cause, Age_Adj_Growth)
+
+
+
+##Mapping
+state_abbreviations <- c(
+  'Alabama' = 'AL', 'Alaska' = 'AK', 'Arizona' = 'AZ', 'Arkansas' = 'AR', 'California' = 'CA',
+  'Colorado' = 'CO', 'Connecticut' = 'CT', 'Delaware' = 'DE', 'Florida' = 'FL', 'Georgia' = 'GA',
+  'Hawaii' = 'HI', 'Idaho' = 'ID', 'Illinois' = 'IL', 'Indiana' = 'IN', 'Iowa' = 'IA',
+  'Kansas' = 'KS', 'Kentucky' = 'KY', 'Louisiana' = 'LA', 'Maine' = 'ME', 'Maryland' = 'MD',
+  'Massachusetts' = 'MA', 'Michigan' = 'MI', 'Minnesota' = 'MN', 'Mississippi' = 'MS',
+  'Missouri' = 'MO', 'Montana' = 'MT', 'Nebraska' = 'NE', 'Nevada' = 'NV', 'New Hampshire' = 'NH',
+  'New Jersey' = 'NJ', 'New Mexico' = 'NM', 'New York' = 'NY', 'North Carolina' = 'NC',
+  'North Dakota' = 'ND', 'Ohio' = 'OH', 'Oklahoma' = 'OK', 'Oregon' = 'OR', 'Pennsylvania' = 'PA',
+  'Rhode Island' = 'RI', 'South Carolina' = 'SC', 'South Dakota' = 'SD', 'Tennessee' = 'TN',
+  'Texas' = 'TX', 'Utah' = 'UT', 'Vermont' = 'VT', 'Virginia' = 'VA', 'Washington' = 'WA',
+  'West Virginia' = 'WV', 'Wisconsin' = 'WI', 'Wyoming' = 'WY'
+)
+geofac$State <- sapply(geofac$State, function(x) state_abbreviations[x])
+geofac <- na.omit(geofac)
+
+
+
+
+
+
+
+```
+
+
+
+```{r}
+ggplot(geofac, aes(Year, Age_Adj_Growth)) +
+  geom_line() +
+  facet_geo(~ State, grid = "us_state_grid2") +
+  scale_x_continuous(labels = function(x) paste0("'", substr(x, 3, 4))) +
+  ylab("Growth in Alzheimer's disease")
+
+```
+
+
+
+
+
+
