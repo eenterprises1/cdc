@@ -82,7 +82,7 @@ summary(cdc_dataset$Deaths)
 
 This confirms that the data set consists of entries having Deaths greater than or equal than 10.
 
-Finally, we can see the distribution of Deaths for N/A's. The values should be higher than 10, and less than or equal to 20. Otherwise, there are inconsistencies:
+Finally, we can see the distribution of Deaths for NAs. The values should be higher than 10, and less than or equal to 20. Otherwise, there are inconsistencies:
 
 ```{r, message=FALSE}
 # Load necessary library
