@@ -439,7 +439,7 @@ ggplot(data = df_map, aes(x = long, y = lat, group = group, fill = TopPercent)) 
 ```
 Although not perfect, there is some overlap. We see a strong correlation that supports the study: select southern states have a higher proportion of the population comprised of Black people, and it coincides with the states that have had higher increases in deaths due to Alzheimer's disease.
 
-
+Additionally, according to the CDC, Alzheimer’s onset is around 60 years old. It’s interesting to note that there has been a general increase in life expectancy for people born between 1939 and 1960. In 1999, they would have reached 60 years old, which is around the age of first onset. Life expectancy rose from 63.7 to 69.7 years old. Naturally, we see a very high positive correlation (0.88) between the increase in deaths due to Alzheimer’s disease and the rise in life expectancy.
 
 ```{r message=FALSE}
 df_life_expectancy <- read_csv("NCHS_-_Death_rates_and_life_expectancy_at_birth_20231111.csv")
@@ -476,7 +476,7 @@ regression_model_cumul_growth <- lm(y ~ x)
 cor.test(y,x)
 
 ```
-According to the CDC, Alzheimer’s onset is around 60 years old. It’s interesting to note that there has been a general increase in life expectancy for people born between 1939 and 1960. In 1999, they would have reached 60 years old, which is around the age of first onset. Life expectancy rose from 63.7 to 69.7 years old. Naturally, we see a very high positive correlation (0.88) between the increase in deaths due to Alzheimer’s disease and the rise in life expectancy.
+
 
 
 

@@ -59,7 +59,7 @@ d3.csv('https://raw.githubusercontent.com/eenterprises1/practice/main/df_growth_
             var filteredData = rows.filter(row => row.Cause === cause);
             var maxRate = Math.max(...filteredData.map(row => parseFloat(row.LatestRate)));
 
-            var baseSize = 1; // Base size of the bubbles
+            var baseSize = 2; // Base size of the bubbles
             var scalingFactor = 35; // Factor to amplify differences
 
             var data = [{
@@ -96,6 +96,7 @@ d3.csv('https://raw.githubusercontent.com/eenterprises1/practice/main/df_growth_
             };
 
             Plotly.newPlot("plot", data, layout, {showLink: false});
+            //Plotly.react("plot2", data, layout, {showLink: false});
         }
 
         //Function to update both maps
