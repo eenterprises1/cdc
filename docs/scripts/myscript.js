@@ -1,12 +1,6 @@
 // add your JavaScript/D3 to this file
 
 
-// JavaScript Code
-
-//So far reading from this source... I was unable to change it before.
-
-// d3.csv('https://raw.githubusercontent.com/igcc2023/Temp/main/df_growth.csv')
-
 d3.csv('https://raw.githubusercontent.com/eenterprises1/practice/main/df_growth_filtered.csv')
     .then(function(rows) {
         //Common Functions and Variables for both maps
