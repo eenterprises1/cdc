@@ -1,4 +1,4 @@
-# 5. Conclusion
+# Conclusion
 Discuss: main takeaways of your exploration, limitations, future directions, lessons learned.
 
 (suggested: 1 page)

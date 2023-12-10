@@ -11,15 +11,19 @@ Interactive graphs must follow all of the best practices as with static graphs i
 Your D3/javascript code should be added to a .js file in the scripts/ folder of your repo. I will provide more information on how to do this.
 
 
-
 <style>
   * {
     font-family: sans-serif;
   }
 </style> 
 
-<div id="plot">
+
+<div id="plot" style="width: 900px; height: 550px;">
+
 </div>
 
+<script src="plotly-2.27.0.min.js""></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="scripts/myscript.js"></script>
+
+
