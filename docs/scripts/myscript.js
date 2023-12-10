@@ -4,7 +4,9 @@
 // JavaScript Code
 
 //So far reading from this source... I was unable to change it before.
-d3.csv('https://raw.githubusercontent.com/igcc2023/Temp/main/df_growth.csv')
+
+// d3.csv('https://raw.githubusercontent.com/igcc2023/Temp/main/df_growth.csv')
+d3.csv('https://raw.githubusercontent.com/eenterprises1/practice/main/df_growth_filtered.csv')
     .then(function(rows) {
         //Common Functions and Variables for both maps
         function unpack(rows, key) {
@@ -71,7 +73,7 @@ d3.csv('https://raw.githubusercontent.com/igcc2023/Temp/main/df_growth.csv')
                 lat: unpack(filteredData, 'Lat'),
                 lon: unpack(filteredData, 'Long'),
                 text: unpack(filteredData, 'Name').map((name, i) =>
-                    `${name}<br>Deaths p/100k People: ${filteredData[i].LatestRate}`),
+                    `${name}<br>Deaths per 100,000 people: ${filteredData[i].LatestRate}`),
                 marker: {
                     size: unpack(filteredData, 'LatestRate').map(rate => baseSize + scalingFactor * (rate / maxRate)),
                     line: {

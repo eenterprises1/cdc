@@ -51,5 +51,17 @@ states_data <- read_csv("lat-lon-by-state.csv")
 df <- left_join(df, states_data, by = "State")
 
 
+
 #Save as a pdf
 write.csv(df, "df_growth.csv", row.names = FALSE)
+
+
+# FILTERED:
+df_filtered = df %>% filter(Cause == "Alzheimer's disease" | Cause == "Suicide" | Cause == "Unintentional injuries")
+df_filtered
+
+
+#Save as a pdf filtered
+write.csv(df_filtered, "df_growth_filtered.csv", row.names = FALSE)
+
+
