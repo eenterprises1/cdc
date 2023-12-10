@@ -28,7 +28,7 @@ $$
 
 An increase in the number of deaths will cause a rise in the Crude Death Rate. However, this can be misleading in populations with a growing number of elderly people, who naturally have a higher likelihood of dying.
 
-On the other hand, the **Age-Adjusted Death Rate** is a mortality rate statistically modified to eliminate the effect of different age distributions in different populations. This rate allows comparisons between populations with different age structures. A good explanation of the difference can be found [here](https://www.health.ny.gov/diseases/chronic/ageadj.htm). As a formula, it can be defined as,
+On the other hand, the **Age-Adjusted Death Rate** is a mortality rate statistically modified to eliminate the effect of different age distributions in different populations. This rate allows comparisons between populations with different age structures. A good explanation of the difference can be found [here](https://www.health.ny.gov/diseases/chronic/ageadj.htm). As a formula, it can be defined as:
 
 $$
 \small { \text{Age-Adj Death Rate} = \sum_{i \in \text{Age-Groups}} (w_i \times \text{CrudeRate}_i)\times 100,000 }
@@ -40,7 +40,7 @@ There are some other data sets that we anticipate using from the CDC (e.g., data
 
 ### Importing the Data
 
-The data set can be obtained from the [CDC website](https://wonder.cdc.gov/ucd-icd10.html) in a CSV format. We will store the data set in the repository and import it into R using the read_csv() function. The second data set regarding opioid dispense rate is carefully imported year by year into a spreadsheet table and exported as a CSV file. Similarly, the next step is ti import it into R using the read_csv() function.
+The data set can be obtained from the [CDC website](https://wonder.cdc.gov/ucd-icd10.html) in a CSV format. We will store the data set in the repository and import it into R using the read_csv() function. The second data set regarding opioid dispense rate is carefully imported year by year into a spreadsheet table and exported as a CSV file. Similarly, the next step is to import it into R using the read_csv() function.
 
 ### Data Analysis Limitations and Concerns
 
@@ -65,7 +65,7 @@ The comprehensive data on causes of death is provided by the CDC. It includes cr
 
 First, we will identify the top 10 highest causes of death historically over the last two decades. Then, we will address a more interesting question. We will distinguish which causes of death whose rates appear to be steady and identify the causes of death that appear to be aggressively increasing. In several instances, we anticipate that this will require us to compare time series and choose adequate metrics in order to appropriately make such comparisons. Conveniently, the age-adjusted death rate gives us an accurate glimpse while taking into account the distribution of the age groups in the US.
 
-A particularly interesting question that we want to answer is to identify which causes have had the fastest rate of growth in terms of age-adjusted death rate. For example, a potent question to answer would be the following: have certain causes of death been on the increase or on the decrease in the last two decades? If so, are there any outliers among them, especially if we break down geographically by state? This would require careful analysis of percentage change year-by-year and analyzing the data by state. Intuitively, we are aware that certain causes of death will show up in our research (one specific example that we anticipate seeing is the deaths due to the opioid epidemic, which has been ongoing for almost a decade now). Indubitably, we expect to find surprising results.
+A particularly interesting question that we want to answer is to identify which causes have had the fastest rate of growth in terms of age-adjusted death rate. For example, a potent question to answer would be the following: have certain causes of death been on the increase or the decrease in the last two decades? If so, are there any outliers among them, especially if we break down geographically by state? This would require careful analysis of percentage change year-by-year and analyzing the data by state. Intuitively, we are aware that certain causes of death will show up in our research (one specific example that we anticipate seeing is the deaths due to the opioid epidemic, which has been ongoing for almost a decade now). Indubitably, we expect to find surprising results.
 
 The research plan depends on exploring the causes of death on a state-by-state basis. This will uncover states with disproportionately high death rates from specific causes, highlighting regions where healthcare investment may be urgently needed. It will be remarkably informative to see which states fare well with certain rising causes of death, and which states are exhibiting alarming rates in comparison to others. Ideally, finding correlations that help explain death rates would be helpful. Identifying such trends can help policymakers and professionals (e.g., doctors, nurses, mental health professionals, representatives) have a clearer understanding of the reasons behind the spikes in deaths and hopefully help guide them towards adequate solutions to mitigate the quickly rising causes of death.
 
