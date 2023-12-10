@@ -3,17 +3,17 @@
 
 // JavaScript Code
 
-
+//So far reading from this source... I was unable to change it before.
 d3.csv('https://raw.githubusercontent.com/igcc2023/Temp/main/df_growth.csv')
     .then(function(rows) {
-        // Common Functions and Variables
+        //Common Functions and Variables for both maps
         function unpack(rows, key) {
             return rows.map(function(row) { return row[key]; });
         }
 
         var causes = [...new Set(rows.map(row => row.Cause))];
 
-        // Function to update the choropleth map
+        //Function to update the choropleth map
         function updateChoropleth(cause) {
             var filteredData = rows.filter(row => row.Cause === cause);
             var [minGrowth, maxGrowth] = getMinMaxGrowth(cause);
@@ -48,16 +48,16 @@ d3.csv('https://raw.githubusercontent.com/igcc2023/Temp/main/df_growth.csv')
             Plotly.newPlot("plot2", data, layout, {showLink: false});
         }
 
-        // Function to calculate min and max growth values
+        //Function to calculate min and max growth values
         function getMinMaxGrowth(cause) {
             var causeData = rows.filter(row => row.Cause === cause);
             var growthValues = causeData.map(row => parseFloat(row.Growth));
             var minGrowth = Math.min(...growthValues);
             var maxGrowth = Math.max(...growthValues);
-            return [minGrowth * 100, maxGrowth * 100]; // Convert to percentage
+            return [minGrowth * 100, maxGrowth * 100];
         }
 
-        // Function to update the scattergeo map
+        //Function to update the scattergeo map
         function updateScatterGeo(cause) {
             var filteredData = rows.filter(row => row.Cause === cause);
             var maxRate = Math.max(...filteredData.map(row => parseFloat(row.LatestRate)));
@@ -101,13 +101,13 @@ d3.csv('https://raw.githubusercontent.com/igcc2023/Temp/main/df_growth.csv')
             Plotly.newPlot("plot", data, layout, {showLink: false});
         }
 
-        // Combined function to update both maps
+        //Function to update both maps
         function updateMaps(cause) {
             updateChoropleth(cause);
             updateScatterGeo(cause);
         }
 
-        // Create a single shared slicer for both maps
+        //Single shared slicer for both maps
         var select = d3.select('#slicer')
             .append('select')
               .attr('id', 'causeSelector')
@@ -123,7 +123,7 @@ d3.csv('https://raw.githubusercontent.com/igcc2023/Temp/main/df_growth.csv')
             .text(function (d) { return d; })
             .attr('value', function (d) { return d; });
 
-        // Initialize both maps
+        //Initialize maps
         updateMaps(causes[0]);
     })
     .catch(function(error) {
