@@ -1,6 +1,6 @@
 library(dplyr)
 
-# Assuming cdc_dataset is your DataFrame
+
 geofac <- cdc_dataset %>%
   group_by(State, Cause) %>%
   arrange(Year) %>%
@@ -12,8 +12,6 @@ geofac <- cdc_dataset %>%
 
 
 
-
-##Mapping
 state_abbreviations <- c(
   'Alabama' = 'AL', 'Alaska' = 'AK', 'Arizona' = 'AZ', 'Arkansas' = 'AR', 'California' = 'CA',
   'Colorado' = 'CO', 'Connecticut' = 'CT', 'Delaware' = 'DE', 'Florida' = 'FL', 'Georgia' = 'GA',
@@ -30,12 +28,13 @@ state_abbreviations <- c(
 geofac$State <- sapply(geofac$State, function(x) state_abbreviations[x])
 geofac <- na.omit(geofac)
 
+
+#Filtering the dataset
 geofac <- geofac |> filter(Cause %in% c("Alzheimer's disease"))
 
 
 
 
-#Doing geofacet
 ggplot(geofac, aes(Year, Age_Adj_Growth)) +
   geom_line(size = 1.2, color = "#F78C6C") +
   facet_geo(~ State, grid = "us_state_grid2") +
