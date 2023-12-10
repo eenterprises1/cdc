@@ -39,13 +39,6 @@
     "href": "d3graph.html",
     "title": "4  Interactive graph",
     "section": "",
-    "text": "Instructions:\n\nSelect one of the top 10 causes of death in the United States from the slicer.\nThe first map will show which estates have the highest death rate per 100,000 people.\n\nFor instance, 58 people died from Alzheimer’s in Mississippi in 2020.\n\nThe second map will show which estates have seen the most significant increase in this rate from 1999 to 2020.\n\nIf in 1999 1 person was dying from Cancer and in 2020 2 were dying because of Cancer, then the growth has been 100% in the death rate.\n\n\nLet’s take for Example Alzheimer’s Disease and concentrate on Missisipi.\n\nThe bubble map tells us that Missisipi has the highest death rate due to Alzheimer in the United States: 58 deaths pero 100,000 people.\nMoreover, not only it has the highest death rate, but it has seen the largest growth since 1999 in this metric: 336% increase.\nAlthough not visible in this interactive chart, we provided an explanaition in the results section: race could explain the differences.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSource:\nhttps://plotly.com/javascript/bubble-maps/\nhttps://plotly.com/javascript/choropleth-maps/"
-  },
-  {
-    "objectID": "conclusion.html",
-    "href": "conclusion.html",
-    "title": "5  5. Conclusion",
-    "section": "",
-    "text": "Discuss: main takeaways of your exploration, limitations, future directions, lessons learned.\n(suggested: 1 page)"
+    "text": "Instructions:\n\nSelect one of the top 3 causes of death in the United States from the options menu.\nThe first map (i.e. the map with bubbles) will show which states have the highest death rate per 100,000 people.\nThe second map (i.e. the heatmap) will show which states have seen the most significant increase expressed as a percentage change from 1999 to 2020.\n\n\nFor example: consider choosing Alzheimer’s Disease and focusing on Mississippi. The bubble map shows that Mississippi has had the highest age adjusted death rate due to Alzheimer in the United States: 58 deaths per 100,000 people. Moreover, not only it has the highest death rate, but it has seen the largest growth since 1999 in this metric: 336% increase. \n\n\n\n\n\n\n\n\n\n\n\n\n\nSource:\nhttps://plotly.com/javascript/bubble-maps/\nhttps://plotly.com/javascript/choropleth-maps/"
   }
 ]

@@ -65,7 +65,7 @@ d3.csv('https://raw.githubusercontent.com/eenterprises1/practice/main/df_growth_
             var maxRate = Math.max(...filteredData.map(row => parseFloat(row.LatestRate)));
 
             var baseSize = 1; // Base size of the bubbles
-            var scalingFactor = 65; // Factor to amplify differences
+            var scalingFactor = 35; // Factor to amplify differences
 
             var data = [{
                 type: 'scattergeo',
