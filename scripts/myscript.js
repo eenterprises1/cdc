@@ -6,6 +6,7 @@
 //So far reading from this source... I was unable to change it before.
 
 // d3.csv('https://raw.githubusercontent.com/igcc2023/Temp/main/df_growth.csv')
+
 d3.csv('https://raw.githubusercontent.com/eenterprises1/practice/main/df_growth_filtered.csv')
     .then(function(rows) {
         //Common Functions and Variables for both maps
@@ -27,19 +28,19 @@ d3.csv('https://raw.githubusercontent.com/eenterprises1/practice/main/df_growth_
                 z: unpack(filteredData, 'Growth').map(x => x * 100),
                 text: unpack(filteredData, 'State').map((state, i) =>
                     `${state}<br>Growth in deaths from '99 to '20: ${parseFloat(filteredData[i].Growth * 100).toFixed(0)}%`),
-                colorscale: 'Viridis',
+                colorscale: 'rdgy',
                 zmin: minGrowth,
                 zmax: maxGrowth
             }];
 
             var layout = {
-                title: 'Death Rate Growth from 1999 to 2020 for: '+ cause,
+                title: 'Death Rate Percentage Growth from 1999 to 2020: '+ cause,
                 geo: {
                     scope: 'usa',
                     countrycolor: 'rgb(255, 255, 255)',
                     showland: true,
                     landcolor: 'rgb(217, 217, 217)',
-                    showlakes: true,
+                    showlakes: false,
                     lakecolor: 'rgb(255, 255, 255)',
                     subunitcolor: 'rgb(255, 255, 255)',
                     lonaxis: {},
@@ -84,7 +85,7 @@ d3.csv('https://raw.githubusercontent.com/eenterprises1/practice/main/df_growth_
             }];
 
             var layout = {
-                title: 'Age-Adjusted Deaths per State for: ' + cause,
+                title: 'Age-Adjusted Deaths per state: ' + cause,
                 showlegend: false,
                 geo: {
                     scope: 'usa',
