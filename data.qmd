@@ -121,4 +121,4 @@ ggplot(na_count, aes(x = NA_Count, y = reorder(`Cause Name`, NA_Count))) +
 
 ```
 
-Thus, turning N/A's into 0's is the the practical solution given they represent extremely very numbers.
+Thus, turning NAs into 0's is the practical solution given they represent extremely small numbers.
