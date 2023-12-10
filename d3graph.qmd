@@ -16,7 +16,7 @@ Let's take for Example Alzheimer's Disease and concentrate on Missisipi.
 
 -   The bubble map tells us that Missisipi has the highest death rate due to Alzheimer in the United States: 58 deaths pero 100,000 people.
 
--   Moreover, not only it has the highest increase, but it has seen the largest growth since 1999 in this metric: 336% increase.
+-   Moreover, not only it has the highest death rate, but it has seen the largest growth since 1999 in this metric: 336% increase.
 
 -   Although not visible in this interactive chart, we provided an explanaition in the results section: race could explain the differences.
 
