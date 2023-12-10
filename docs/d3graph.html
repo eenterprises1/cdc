@@ -160,17 +160,36 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>4 Interactive (or animated) component in D3 d3graph.qmd</p>
-<p>Select one (or more) of your key findings to present in an interactive or animated format using D3. Be thoughtful about how you use interactivity and/or animation: using these features to add value in a way that would not be possible with a static graph.</p>
-<p>Design with the goal of users walking away with a new understanding of the data and a clear understanding of the purpose of the visualization. If the tool is interactive, provide clear instructions on how the user should engage. Thoughtfulness and originality is more important than technical prowess; in all aspects of the project, think quality, not quantity.</p>
-<p>Interactive graphs must follow all of the best practices as with static graphs in terms of perception, labeling, accuracy, etc.</p>
-<p>Your D3/javascript code should be added to a .js file in the scripts/ folder of your repo. I will provide more information on how to do this.</p>
+<p>Instructions:</p>
+<ul>
+<li><p>Select one of the top 10 causes of death in the United States from the slicer.</p></li>
+<li><p>The first map will show which estates have the highest death rate per 100,000 people.</p>
+<ul>
+<li>For instance, 58 people died from Alzheimer’s in Mississippi in 2020.</li>
+</ul></li>
+<li><p>The second map will show which estates have seen the most significant increase in this rate from 1999 to 2020.</p>
+<ul>
+<li>If in 1999 1 person was dying from Cancer and in 2020 2 were dying because of Cancer, then the growth has been 100% in the death rate.</li>
+</ul></li>
+</ul>
+<p>Let’s take for Example Alzheimer’s Disease and concentrate on Missisipi.</p>
+<ul>
+<li><p>The bubble map tells us that Missisipi has the highest death rate due to Alzheimer in the United States: 58 deaths pero 100,000 people.</p></li>
+<li><p>Moreover, not only it has the highest increase, but it has seen the largest growth since 1999 in this metric: 336% increase.</p></li>
+<li><p>Although not visible in this interactive chart, we provided an explanaition in the results section: race could explain the differences.</p></li>
+</ul>
 <style>
   * {
     font-family: sans-serif;
   }
 </style>
-<div id="plot" style="width: 900px; height: 550px;">
+<div id="slicer">
+
+</div>
+<div id="plot" style="width: 800; height: 500px;">
+
+</div>
+<div id="plot2" style="width: 800px; height: 500px;">
 
 </div>
 <script src="plotly-2.27.0.min.js" "=""></script>

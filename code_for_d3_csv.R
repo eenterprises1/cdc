@@ -1,4 +1,7 @@
 library(dplyr)
+library(readr)
+library(tidyverse)
+
 
 #Here we are going to manipulate the data we want to show in our D3 visualization.
 
@@ -41,7 +44,11 @@ state_abbreviations <- c(
   'West Virginia' = 'WV', 'Wisconsin' = 'WI', 'Wyoming' = 'WY'
 )
 df$State <- sapply(df$State, function(x) state_abbreviations[x])
+df <- na.omit(df)
 
+
+states_data <- read_csv("lat-lon-by-state.csv")
+df <- left_join(df, states_data, by = "State")
 
 
 #Save as a pdf
