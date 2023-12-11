@@ -576,7 +576,7 @@ z_reverse = z[order(z$Avg), ]
 
 
 dotchart(z_reverse$Avg, labels = z_reverse$State,
-         cex = 0.9, xlab = "Opioid Dispense Rate Per 100", main = "Top 8 Highest States with Average Opioid Dispense Rate for 2006-2020")
+         cex = 0.9, pch = 19, xlab = "Opioid Dispense Rate Per 100", main = "Top 8 Highest States with Average Opioid Dispense Rate for 2006-2020")
 
 
 
@@ -617,12 +617,14 @@ w_reverse = w[order(w$Avg), ]
 
 
 # dotchart(w_reverse$Avg, labels = w_reverse$State,gcolor = "green",
-#          cex = 0.9, xlab = "Age Adjusted Death Rate", main = "Top 8 Highest States w/ Avg Age-Adj Death Rate for Unintentional '06-'20")
+#          cex = 0.9, xlab = "Age Adjusted Death Rate", main = "Top 8 Highest States w/ Avg Age-Adj Death Rate for Unintent. '06-'20")
 
 # Base dotchart
 dotchart(w_reverse$Avg, labels = w_reverse$State, gcolor = "green",
-         cex = 0.9, xlab = "Age Adjusted Death Rate", 
+         cex = 0.9, xlab = "Age Adjusted Death Rate", pch = 19,
          main = "Top 8 Highest States w/ Avg Age-Adj Death Rate for Unintentional '06-'20")
+
+
 
 
 
