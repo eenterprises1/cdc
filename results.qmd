@@ -58,7 +58,7 @@ cdc_usa_summary <- cdc_usa |> group_by(Cause) |> summarize(Total_Deaths = sum(De
 # Creating the bar chart for top 10 causes
 ggplot(cdc_usa_summary, aes(x = reorder(Cause, Total_Deaths), y = Total_Deaths)) +
   geom_bar(stat = "identity", fill = '#8B4513') +
-  coord_flip() + labs(title = "Most Relevant Causes of Death - 1999 to 2020", y = "Total Number of Deaths (Millions)", x = "Cause Name") + 
+  coord_flip() + labs(title = "Highest Causes of Death (1999 to 2020)", y = "Total Number of Deaths (Millions)", x = "Cause Name") + 
   scale_y_continuous(labels = scales::comma_format(scale = 1e-6), breaks = scales::pretty_breaks(n = 10)) +
   theme_minimal()
 ```
@@ -135,14 +135,35 @@ cdc_usa_grouped_cum <- cdc_usa_grouped_cum |>
 
 labels_for_metric <- c("Age-Adjusted Rate", "Crude Rate", "Deaths", "Population")
 
+# ggplot(cdc_usa_grouped_cum, aes(x = Year, y = `Cumulative Change`, color = Metric)) +
+#   geom_line(size = 1.3) +
+#   labs(title = "Cumulative Percentage Change by Year (1999-2020)", x = "Year", 
+#        y = "Cumulative Percentage Change", color = "Metric") +
+#   theme_minimal() +
+#   theme(legend.position = "bottom") +
+#   scale_y_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8))+
+#   scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) 
+# 
+
+
 ggplot(cdc_usa_grouped_cum, aes(x = Year, y = `Cumulative Change`, color = Metric)) +
   geom_line(size = 1.3) +
-  labs(title = "Cumulative Percentage Change by Year (1999-2020)", x = "Year", 
-       y = "Cumulative Percentage Change", color = "Metric") +
+  scale_color_discrete(labels = labels_for_metric) +  # Custom labels to color legend
+  labs(
+    title = "Cumulative Percentage Change by Year (1999-2020)", 
+    x = "Year", 
+    y = "Cumulative Percentage Change", 
+    color = "Metric Type"  # Change legend title
+  ) +
   theme_minimal() +
   theme(legend.position = "bottom") +
-  scale_y_continuous(labels = scales::percent_format(), breaks = scales::pretty_breaks(n = 8))+
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) 
+  scale_y_continuous(labels = percent_format(), breaks = pretty_breaks(n = 8)) +
+  scale_x_continuous(breaks = pretty_breaks(n = 10))
+
+
+
+
+
 
 ```
 
@@ -295,7 +316,7 @@ df_rank3 <- df_rank3 %>%
 #Cleveland
 ggplot(df_rank3, aes(x = PercentChange, y = reorder(State, PercentChange))) +
   geom_point(size = 3, color = "orange") +
-  labs(title = "Suicide %Chg. in Age Adj. Death Rate", x = "Percentage Change 1999 to 2020", y = 'State') +
+  labs(title = "Suicide %Chg. in Age Adj Death Rate", x = "Percentage Change 1999 to 2020", y = 'State') +
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
@@ -318,7 +339,7 @@ df_box <- rbind(
 
 ggplot(df_box, aes(x = Cause, y = PercentChange)) +
   geom_boxplot(fill = "#A6CF98", color = "black") + 
-  theme_bw() + labs(title = "Box-Plot: Percent Change by Cause - 1999 to 2020 - by States", x = "Cause", y = "Percent Change") +
+  theme_bw() + labs(title = "Percentage Change by Cause for All States (1999 to 2020) ", x = "Cause", y = "Percent Change") +
   scale_y_continuous(labels = scales::percent)
 
 ```
@@ -379,7 +400,7 @@ ggplot(df_all_3_99_to_20, aes(x = Cause, y = PercentChange, fill = Cause)) +
     axis.text.y = element_blank(),  
     axis.text.x = element_text(size = 6, angle = 90, hjust = 1) 
   ) +
-  scale_y_continuous(labels = percent_format()) + labs(y = "Percent Change")  
+  scale_y_continuous(labels = percent_format()) + labs(y = "Percentage Change")  
 
 
 
@@ -622,7 +643,7 @@ w_reverse = w[order(w$Avg), ]
 # Base dotchart
 dotchart(w_reverse$Avg, labels = w_reverse$State, gcolor = "green",
          cex = 0.9, xlab = "Age Adjusted Death Rate", pch = 19,
-         main = "Top 8 Highest States w/ Avg Age-Adj Death Rate for Unintentional '06-'20")
+         main = "Top 8 Highest States w/ Avg Age-Adj Death Rate for Unintent. '06-'20")
 
 
 
@@ -753,6 +774,7 @@ boxplot(united_states_by_area_density$densityMi,
         main = "Boxplot of Population Density per Square Mile",  
         xlab = "States",                    
         ylab = "Population density (# of people per sq. mile)",
+        pch = 16,
         col = "orange")  # Set the color of the boxes
    
 
@@ -771,7 +793,7 @@ ggplot(merged_df, aes(x = log(densityMi), y = Avg)) + geom_point() + geom_smooth
     title = "Average Suicide Rate vs Log Population Density",  # Add your plot title here
     x = "Log of Population Density per Square Mile",  # Title for the x-axis
     y = "Average Suidice Rate",  # Title for the y-axis
-    caption = "Correlation coefficient R = -0.860"
+    caption = "Correlation coefficient R = -0.86"
   ) +
   theme_minimal()
 ```
