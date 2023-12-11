@@ -539,7 +539,7 @@ expectancy_alzheimer_regression_2 = cbind(alzheimer_crude,df_life_expectancy_193
 ggplot(expectancy_alzheimer_regression_2 %>% select(`Crude_Rate`,`Average Life Expectancy (Years)`), aes(x = `Average Life Expectancy (Years)`, y = `Crude_Rate`)) +
   geom_point() + 
   geom_smooth(method = "lm") + 
-  labs(x = "Average Life Expectancy", y = "Crude Rate", title = "Scatterplot Regression for Alzheimer's Crude Rate vs Life Expectancy (1999 - 2020)") + 
+  labs(x = "Average Life Expectancy", y = "Crude Rate", title = "Scatterplot for Alzheimer's Crude Rate vs Life Expectancy (1999 - 2020)") + 
   labs(caption = "Correlation coefficient R = 0.88 ") +
   theme(plot.caption = element_text(hjust=.1)) +
   theme_minimal()
