@@ -411,7 +411,7 @@ df_map <- merge(states_map, df_rank1, by.x = "region", by.y = "State", all.x = T
 #We plot the map
 ggplot(data = df_map, aes(x = long, y = lat, group = group, fill = Top10Percent)) +
     geom_polygon(color = "black") +
-    scale_fill_manual(values = c("Top 12%" = "red", "Below Top 12%" = "grey"), 
+    scale_fill_manual(values = c("Top 12%" = "#95253E", "Below Top 12%" = "grey"), 
                       labels = c("Below Top 12%", "Top 12%")) +
     labs(fill = "Category") +
     theme_bw() +
@@ -446,7 +446,7 @@ cdc_usa_race <- cdc_usa_race |> pivot_longer(cols = -Year, names_to = "Alzheimer
 #Creating the time series plot
 ggplot(cdc_usa_race, aes(x = Year, y = `Cumulative Change`, color = Alzheimer)) +
   geom_line(size = 1.3) +
-  labs(title = "Cumulative Percentage Change ('99-'20) - Alzheimer - Age Adjusted Death Rate", x = "Year",
+  labs(title = "Cumulative Percentage Change ('99-'20): Alzheimer's Age-Adj Death Rate", x = "Year",
        y = "Cumulative Percentage Change", color = "Race") +
   theme_minimal() +
   theme(legend.position = "bottom") +
@@ -484,7 +484,7 @@ df_map <- merge(states_map, cdc_usa_race_pop, by.x = "region", by.y = "State", a
 #We plot the map
 ggplot(data = df_map, aes(x = long, y = lat, group = group, fill = TopPercent)) +
     geom_polygon(color = "black") +
-    scale_fill_manual(values = c("Top 25%" = "blue", "Below Top 25%" = "grey"), 
+    scale_fill_manual(values = c("Top 25%" = "#004E9D", "Below Top 25%" = "grey"), 
                       labels = c("Below Top 25%", "Top 25%")) +
     labs(fill = "Category") +
     theme_bw() +
@@ -520,7 +520,8 @@ ggplot(expectancy_alzheimer_regression_2 %>% select(`Crude_Rate`,`Average Life E
   geom_smooth(method = "lm") + 
   labs(x = "Average Life Expectancy", y = "Crude Rate", title = "Scatterplot Regression for Alzheimer's Crude Rate vs Life Expectancy (1999 - 2020)") + 
   labs(caption = "Correlation coefficient R = 0.88 ") +
-  theme(plot.caption = element_text(hjust=.1))
+  theme(plot.caption = element_text(hjust=.1)) +
+  theme_minimal()
 
 
 
@@ -615,8 +616,15 @@ w_reverse = w[order(w$Avg), ]
 
 
 
-dotchart(w_reverse$Avg, labels = w_reverse$State,gcolor = "green",
-         cex = 0.9, xlab = "Age Adjusted Death Rate", main = "Top 8 Highest States w/ Avg Age-Adj Death Rate for Unintentional '06-'20")
+# dotchart(w_reverse$Avg, labels = w_reverse$State,gcolor = "green",
+#          cex = 0.9, xlab = "Age Adjusted Death Rate", main = "Top 8 Highest States w/ Avg Age-Adj Death Rate for Unintentional '06-'20")
+
+# Base dotchart
+dotchart(w_reverse$Avg, labels = w_reverse$State, gcolor = "green",
+         cex = 0.9, xlab = "Age Adjusted Death Rate", 
+         main = "Top 8 Highest States w/ Avg Age-Adj Death Rate for Unintentional '06-'20")
+
+
 
 ```
 
@@ -742,7 +750,9 @@ merged_df <- merge(united_states_by_area_density, avg_suicide_rate, by = "State"
 boxplot(united_states_by_area_density$densityMi,
         main = "Boxplot of Population Density per Square Mile",  
         xlab = "States",                    
-        ylab = "Population density (# of people per sq. mile)")             
+        ylab = "Population density (# of people per sq. mile)",
+        col = "orange")  # Set the color of the boxes
+   
 
 ```
 
@@ -755,7 +765,13 @@ We see that there are some outliers in terms of population density (i.e. 6 state
 ```{r message = FALSE}
 ggplot(merged_df, aes(x = log(densityMi), y = Avg)) + geom_point() + geom_smooth(method = "lm") + 
   theme(plot.caption = element_text(hjust=.1)) + 
-  labs(caption = "Correlation coefficient R = -0.860 ")
+  labs(
+    title = "Average Suicide Rate vs Log Population Density",  # Add your plot title here
+    x = "Log of Population Density per Square Mile",  # Title for the x-axis
+    y = "Average Suidice Rate",  # Title for the y-axis
+    caption = "Correlation coefficient R = -0.860"
+  ) +
+  theme_minimal()
 ```
 ```{r}
 y = merged_df$Avg
